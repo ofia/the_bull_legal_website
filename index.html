@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Bull Contracts — Legal Process Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d0d10;
+      --surface:   rgba(255,255,255,0.04);
+      --border:    rgba(255,255,255,0.08);
+      --primary:   #f0f0ee;
+      --muted:     rgba(240,240,238,0.45);
+      --accent:    #b38600;
+      --gold:      #FFBD2E;
+      --blue:      #0A84FF;
+      --green:     #00CA4E;
+      --red:       #FF5F5A;
+      --sans:      'Space Grotesk', sans-serif;
+      --mono:      'Space Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--primary);
+      font-family: var(--sans);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ── CANVAS BACKGROUND ── */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 60px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,16,0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-link {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 4px;
+      transition: color 0.15s;
+    }
+
+    .nav-link:hover { color: var(--primary); }
+
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      text-decoration: none;
+      padding: 7px 18px;
+      border-radius: 4px;
+      transition: opacity 0.15s;
+    }
+
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+    }
+
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-label::before,
+    .hero-label::after {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-size: clamp(40px, 7vw, 88px);
+      font-weight: 600;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      max-width: 800px;
+      margin-bottom: 28px;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: clamp(15px, 2vw, 18px);
+      font-weight: 400;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.65;
+      margin-bottom: 48px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      text-decoration: none;
+      padding: 14px 32px;
+      border-radius: 4px;
+      transition: opacity 0.15s;
+    }
+
+    .btn-primary:hover { opacity: 0.85; }
+
+    .btn-ghost {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 14px 32px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.18);
+      color: var(--primary);
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 60px;
+      padding: 48px 24px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-family: var(--mono);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+    }
+
+    .stat-value span { color: var(--accent); }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* ── HOW IT WORKS ── */
+    #how {
+      padding: 120px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      max-width: 560px;
+    }
+
+    .section-sub {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 480px;
+      margin-bottom: 64px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .step {
+      background: var(--bg);
+      padding: 36px 32px;
+      transition: background 0.2s;
+    }
+
+    .step:hover { background: var(--surface); }
+
+    .step-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .step-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── WHO IT'S FOR ── */
+    #who {
+      padding: 120px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 32px 28px;
+      background: var(--surface);
+      transition: border-color 0.2s;
+    }
+
+    .card:hover { border-color: rgba(179,134,0,0.35); }
+
+    .card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 4px;
+      background: rgba(179,134,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .card-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── AI BANNER ── */
+    #ai-banner {
+      padding: 120px 24px;
+      text-align: center;
+    }
+
+    .ai-inner {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(179,134,0,0.3);
+      border-radius: 100px;
+      padding: 6px 14px;
+      margin-bottom: 32px;
+    }
+
+    .ai-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.75); }
+    }
+
+    .ai-title {
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .ai-sub {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 48px;
+    }
+
+    .ai-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .ai-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 6px 12px;
+    }
+
+    /* ── NODE LEGEND STRIP ── */
+    .node-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      padding: 24px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .node-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .node-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 32px 40px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-text {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.10em;
+      color: var(--muted);
+    }
+
+    /* ── GLOW ORBS ── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orb-gold {
+      width: 500px;
+      height: 500px;
+      background: rgba(179,134,0,0.07);
+      top: -100px;
+      left: -100px;
+    }
+
+    .orb-blue {
+      width: 400px;
+      height: 400px;
+      background: rgba(10,132,255,0.05);
+      bottom: 10%;
+      right: -80px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background glow orbs -->
+  <div class="orb orb-gold"></div>
+  <div class="orb orb-blue"></div>
+
+  <!-- Animated node network canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="#" class="nav-logo">The <span>Bull</span> Contracts</a>
+    <div class="nav-links">
+      <a href="#how"   class="nav-link">How it works</a>
+      <a href="#who"   class="nav-link">For who</a>
+      <a href="#"      class="nav-link">Log in</a>
+      <a href="#"      class="nav-cta">Sign up</a>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section id="hero">
+    <div class="hero-label">Legal process intelligence</div>
+    <h1>Every clause.<br/>Every party.<br/><em>Zero admin.</em></h1>
+    <p class="hero-sub">
+      The Bull Contracts turns dense legal agreements into live, trackable process graphs —
+      automated by AI, monitored in real time.
+    </p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">Start free →</a>
+      <a href="#how" class="btn-ghost">See how it works</a>
+    </div>
+  </section>
+
+  <!-- ── NODE LEGEND ── -->
+  <div class="node-strip">
+    <div class="node-item">
+      <div class="node-dot" style="background:#0A84FF"></div>active
+    </div>
+    <div class="node-item">
+      <div class="node-dot" style="background:#FFBD2E"></div>pending
+    </div>
+    <div class="node-item">
+      <div class="node-dot" style="background:#00CA4E"></div>confirmed
+    </div>
+    <div class="node-item">
+      <div class="node-dot" style="background:#FF5F5A"></div>overdue
+    </div>
+    <div class="node-item">
+      <div class="node-dot" style="background:#b38600"></div>payment
+    </div>
+    <div class="node-item">
+      <div class="node-dot" style="background:#9b6bd9"></div>term
+    </div>
+    <div class="node-item">
+      <div class="node-dot" style="background:#3a9e6e"></div>document
+    </div>
+  </div>
+
+  <!-- ── HOW IT WORKS ── -->
+  <section id="how">
+    <div class="section-label">Process</div>
+    <h2 class="section-title">Contract in.<br/>Clarity out.</h2>
+    <p class="section-sub">Upload any agreement. The AI reads it, maps every obligation, and hands the legal team a live dashboard — not a PDF.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01 — Ingest</div>
+        <div class="step-title">Upload the contract</div>
+        <div class="step-desc">PDF, DOCX, or plain text. The system ingests it and begins extraction immediately.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02 — Extract</div>
+        <div class="step-title">AI maps every node</div>
+        <div class="step-desc">Claude identifies all parties, payments, deadlines, terms, and documents — then turns them into a live process graph.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03 — Track</div>
+        <div class="step-title">Status updates automatically</div>
+        <div class="step-desc">Incoming emails, uploads, and confirmations are scanned. Nodes flip from pending → confirmed without anyone touching a keyboard.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04 — Act</div>
+        <div class="step-title">Reminders fire on their own</div>
+        <div class="step-desc">Deadline approaching? The platform emails the right party. Payment overdue? The lawyer gets an alert. Zero manual follow-up.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHO ── -->
+  <section id="who">
+    <div class="section-label">Audience</div>
+    <h2 class="section-title">Built for legal teams at scale.</h2>
+    <p class="section-sub">Anyone managing more contracts than a spreadsheet can hold.</p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg>
+        </div>
+        <div class="card-title">Law Firms</div>
+        <div class="card-desc">Manage hundreds of client contracts in parallel. Never miss a filing deadline or a payment window again.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <div class="card-title">Legal Departments</div>
+        <div class="card-desc">Give in-house counsel a single view of every vendor deal, NDA, and employment agreement — live, not quarterly.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
+        </div>
+        <div class="card-title">Real Estate Developers</div>
+        <div class="card-desc">Track buyer contracts, lease schedules, and vendor agreements across an entire portfolio without a single spreadsheet.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+        </div>
+        <div class="card-title">Any Org with Legal Ops</div>
+        <div class="card-desc">If your team spends hours chasing approvals, sending reminders, and updating status fields — this platform removes all of that.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── AI BANNER ── -->
+  <section id="ai-banner">
+    <div class="ai-inner">
+      <div class="ai-badge">
+        <div class="ai-dot"></div>
+        Powered by Claude AI
+      </div>
+      <h2 class="ai-title">The AI reads the contract.<br/>So you don't have to.</h2>
+      <p class="ai-sub">
+        Every node in the graph is AI-extracted. Every confirmation email is AI-scanned.
+        Every overdue flag is AI-triggered. The legal team makes judgment calls — the machine does everything else.
+      </p>
+      <div class="ai-features">
+        <div class="ai-tag">Contract extraction</div>
+        <div class="ai-tag">Email scanning</div>
+        <div class="ai-tag">Auto status updates</div>
+        <div class="ai-tag">RAG-powered Q&A</div>
+        <div class="ai-tag">Deadline automation</div>
+        <div class="ai-tag">Party notifications</div>
+        <div class="ai-tag">Dispute detection</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-logo">The <span>Bull</span> Contracts</div>
+    <div class="footer-text">Legal process intelligence — built for the modern firm.</div>
+    <div class="footer-text">© 2026</div>
+  </footer>
+
+  <!-- ── CANVAS NODE ANIMATION ── -->
+  <script>
+    const canvas = document.getElementById('bg-canvas')
+    const ctx = canvas.getContext('2d')
+
+    const NODE_COLORS = ['#FFBD2E', '#0A84FF', '#00CA4E', '#FF5F5A', '#b38600', '#9b6bd9', '#3a9e6e']
+    const NODE_COUNT  = 38
+    const LINK_DIST   = 160
+    const SPEED       = 0.28
+
+    let W, H, nodes
+
+    function resize() {
+      W = canvas.width  = window.innerWidth
+      H = canvas.height = window.innerHeight
+    }
+
+    function mkNode() {
+      return {
+        x:   Math.random() * W,
+        y:   Math.random() * H,
+        vx:  (Math.random() - 0.5) * SPEED,
+        vy:  (Math.random() - 0.5) * SPEED,
+        r:   2.5 + Math.random() * 3.5,
+        col: NODE_COLORS[Math.floor(Math.random() * NODE_COLORS.length)],
+      }
+    }
+
+    function init() {
+      resize()
+      nodes = Array.from({ length: NODE_COUNT }, mkNode)
+    }
+
+    function step() {
+      ctx.clearRect(0, 0, W, H)
+
+      // move
+      for (const n of nodes) {
+        n.x += n.vx
+        n.y += n.vy
+        if (n.x < -40)  n.x = W + 40
+        if (n.x > W+40) n.x = -40
+        if (n.y < -40)  n.y = H + 40
+        if (n.y > H+40) n.y = -40
+      }
+
+      // links
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const a = nodes[i], b = nodes[j]
+          const dx = a.x - b.x, dy = a.y - b.y
+          const dist = Math.sqrt(dx*dx + dy*dy)
+          if (dist < LINK_DIST) {
+            const alpha = (1 - dist / LINK_DIST) * 0.18
+            ctx.beginPath()
+            ctx.strokeStyle = `rgba(220,220,215,${alpha * 2.8})`
+            ctx.lineWidth = 0.9
+            ctx.moveTo(a.x, a.y)
+            ctx.lineTo(b.x, b.y)
+            ctx.stroke()
+          }
+        }
+      }
+
+      // dots
+      for (const n of nodes) {
+        const hex = n.col
+        const r = parseInt(hex.slice(1,3),16)
+        const g = parseInt(hex.slice(3,5),16)
+        const b = parseInt(hex.slice(5,7),16)
+
+        // glow
+        const grd = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 3.5)
+        grd.addColorStop(0, `rgba(${r},${g},${b},0.32)`)
+        grd.addColorStop(1, `rgba(${r},${g},${b},0)`)
+        ctx.beginPath()
+        ctx.arc(n.x, n.y, n.r * 3.5, 0, Math.PI * 2)
+        ctx.fillStyle = grd
+        ctx.fill()
+
+        // solid dot
+        ctx.beginPath()
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2)
+        ctx.fillStyle = n.col
+        ctx.fill()
+      }
+
+      requestAnimationFrame(step)
+    }
+
+    window.addEventListener('resize', () => { resize() })
+
+    init()
+    step()
+  </script>
+
+</body>
+</html>
