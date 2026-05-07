@@ -110,6 +110,92 @@
 
     .nav-cta:hover { opacity: 0.85; }
 
+    /* ── HAMBURGER ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--primary);
+      border-radius: 2px;
+      transition: transform 0.22s, opacity 0.22s;
+    }
+
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ── MOBILE NAV DROPDOWN ── */
+    @media (max-width: 640px) {
+      nav {
+        padding: 0 20px;
+        flex-wrap: wrap;
+        height: auto;
+        min-height: 56px;
+      }
+
+      .nav-hamburger { display: flex; }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        width: 100%;
+        padding: 12px 0 16px;
+        border-top: 1px solid var(--border);
+      }
+
+      .nav-links.open { display: flex; }
+
+      .nav-link {
+        padding: 12px 4px;
+        font-size: 12px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-cta {
+        margin-top: 12px;
+        text-align: center;
+        padding: 12px;
+      }
+
+      /* ── HERO ── */
+      #hero { padding: 100px 20px 60px; }
+
+      /* ── STATS ── */
+      .stats-bar { gap: 32px; padding: 36px 20px; }
+
+      /* ── SECTIONS ── */
+      #how, #who { padding: 80px 20px; }
+
+      /* ── AI BANNER ── */
+      #ai-banner { padding: 80px 20px; }
+
+      /* ── FOOTER ── */
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 28px 20px;
+        gap: 8px;
+      }
+
+      /* ── NODE STRIP ── */
+      .node-strip { gap: 16px; padding: 20px 16px; }
+    }
+
     /* ── SECTIONS ── */
     section {
       position: relative;
@@ -554,7 +640,10 @@
   <!-- ── NAV ── -->
   <nav>
     <a href="#" class="nav-logo">The <span>Bull</span> Contracts</a>
-    <div class="nav-links">
+    <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="nav-links">
       <a href="#how"   class="nav-link">How it works</a>
       <a href="#who"   class="nav-link">For who</a>
       <a href="https://the-bull-legal.vercel.app/" class="nav-link">Log in</a>
@@ -699,6 +788,23 @@
     <div class="footer-text">Legal process intelligence — built for the modern firm.</div>
     <div class="footer-text">© 2026 The Bull Contracts. All rights reserved.</div>
   </footer>
+
+  <!-- ── MOBILE NAV TOGGLE ── -->
+  <script>
+    const hamburger = document.getElementById('hamburger')
+    const navLinks  = document.getElementById('nav-links')
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open')
+      navLinks.classList.toggle('open')
+    })
+    // close menu when a link is clicked
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open')
+        navLinks.classList.remove('open')
+      })
+    })
+  </script>
 
   <!-- ── CANVAS NODE ANIMATION ── -->
   <script>
