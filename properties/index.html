@@ -123,7 +123,7 @@
     .chrome-dot { width: 11px; height: 11px; border-radius: 50%; }
 
     /* The app shell body */
-    .mockup-body { height: 520px; background: #f7f7f5; position: relative; overflow: hidden; }
+    .mockup-body { height: 580px; background: #f7f7f5; position: relative; overflow: hidden; }
 
     #three-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block; }
 
@@ -186,19 +186,8 @@
       overflow: hidden;
     }
 
-    /* Property selector pill */
-    .prop-selector {
-      position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
-      background: rgba(247,247,245,0.92); border: 1px solid rgba(28,28,28,0.15);
-      border-radius: 14px; padding: 3px 12px;
-      font-family: 'Courier New', monospace; font-size: 9px; letter-spacing: 0.06em;
-      color: rgba(28,28,28,0.8); white-space: nowrap; z-index: 5;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .prop-selector::after { content: '▼'; font-size: 6px; color: rgba(28,28,28,0.35); }
-
-    /* ── SVG HOUSE ── */
-    .archi-house-svg { width: 340px; height: 260px; opacity: 0.55; }
+    /* ── SVG HOUSE (unused, kept for reference) ── */
+    .archi-house-svg { display: none; }
 
     /* ── RIGHT WIDGET PANEL ── */
     .archi-panel {
@@ -241,11 +230,97 @@
     .task-count { font-size: 13px; font-weight: 600; }
     .task-lbl { font-size: 7px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(28,28,28,0.45); }
 
-    /* IoT */
+    /* IoT (right panel list) */
     .iot-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
     .iot-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
     .iot-label { font-size: 10px; color: rgba(28,28,28,0.65); flex: 1; }
     .iot-count { font-size: 10px; color: rgba(28,28,28,0.35); }
+
+    /* ── VIEWER CONTROL PILLS ── */
+    .viewer-controls {
+      position: absolute; top: 10px; left: 0; right: 0;
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+      z-index: 6; pointer-events: none;
+    }
+    .viewer-pill {
+      background: rgba(247,247,245,0.94); border: 1px solid rgba(28,28,28,0.14);
+      border-radius: 14px; padding: 4px 11px;
+      font-family: 'Courier New', monospace; font-size: 8.5px; letter-spacing: 0.06em;
+      color: rgba(28,28,28,0.75); white-space: nowrap;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .cutaway-track {
+      width: 52px; height: 3px; background: rgba(28,28,28,0.14); border-radius: 2px; position: relative;
+    }
+    .cutaway-thumb {
+      position: absolute; right: -1px; top: -4px;
+      width: 9px; height: 9px; background: #1c1c1c; border-radius: 50%;
+    }
+
+    /* ── VIEWER SUB-BANNER ── */
+    .viewer-sub-banner {
+      position: absolute; top: 44px; left: 0; right: 0;
+      display: flex; justify-content: center; z-index: 6; pointer-events: none;
+    }
+    .viewer-sub-pill {
+      background: rgba(247,247,245,0.94); border: 1px solid rgba(28,28,28,0.11);
+      border-radius: 14px; padding: 4px 14px;
+      font-family: 'Courier New', monospace; font-size: 7.5px; letter-spacing: 0.1em;
+      color: rgba(28,28,28,0.45); text-transform: uppercase;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .sub-pulse { width: 5px; height: 5px; border-radius: 50%; background: rgba(28,28,28,0.35); }
+
+    /* ── BOT FAB ── */
+    .bot-fab {
+      position: absolute; bottom: 88px; left: 14px; z-index: 7;
+      width: 50px; height: 50px; border-radius: 50%;
+      background: rgba(247,247,245,0.97); border: 1px solid rgba(28,28,28,0.10);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.09);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── IOT STATUS BAR (bottom of viewer) ── */
+    .iot-status-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
+      background: rgba(247,247,245,0.96); border-top: 1px solid rgba(28,28,28,0.07);
+      display: flex; align-items: stretch; z-index: 6;
+    }
+    .iot-status-item {
+      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 5px; padding: 8px 4px; border-right: 1px solid rgba(28,28,28,0.05);
+      position: relative;
+    }
+    .iot-status-item:last-child { border-right: none; }
+    .iot-status-dot {
+      position: absolute; top: 9px; right: 9px;
+      width: 6px; height: 6px; border-radius: 50%;
+    }
+    .iot-status-lbl { font-family: 'Courier New', monospace; font-size: 6.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(28,28,28,0.4); }
+    .iot-status-sub { font-size: 7px; color: rgba(28,28,28,0.3); }
+
+    /* ── WEATHER WIDGET ── */
+    .weather-main { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .weather-temp { font-size: 22px; font-weight: 300; color: rgba(28,28,28,0.75); line-height: 1; }
+    .weather-detail { font-size: 8px; color: rgba(28,28,28,0.4); line-height: 1.7; }
+    .weather-forecast { display: flex; gap: 4px; padding-top: 7px; border-top: 1px solid rgba(28,28,28,0.06); }
+    .weather-day { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .weather-day-lbl { font-family: 'Courier New', monospace; font-size: 6.5px; letter-spacing: 0.06em; color: rgba(28,28,28,0.35); text-transform: uppercase; }
+    .weather-day-temp { font-size: 8px; color: rgba(28,28,28,0.5); }
+
+    /* ── CONTEXT ALERTS WIDGET ── */
+    .alert-row {
+      background: rgba(37,99,235,0.07); border: 1px solid rgba(37,99,235,0.14);
+      border-radius: 7px; padding: 6px 8px;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .alert-icon {
+      width: 15px; height: 15px; border-radius: 50%;
+      background: rgba(37,99,235,0.12); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; color: #2563eb; font-family: serif;
+    }
+    .alert-text { font-family: 'Courier New', monospace; font-size: 8px; letter-spacing: 0.04em; color: rgba(28,28,28,0.7); }
 
     /* ── HOW IT WORKS ── */
     #how { padding: 100px 48px; max-width: 1100px; margin: 80px auto 0; }
@@ -400,8 +475,99 @@
         <!-- 3D viewer area -->
         <div class="archi-viewer">
           <canvas id="three-canvas"></canvas>
-          <!-- Property selector pill (floats over the 3D scene) -->
-          <div class="prop-selector" style="pointer-events:none;">← AMERICAN HOUSE →</div>
+
+          <!-- Top control pills -->
+          <div class="viewer-controls">
+            <div class="viewer-pill">← AMERICAN HOUSE →</div>
+            <div class="viewer-pill">Jasmine Breeze <span style="opacity:0.4;font-size:7px;">▼</span></div>
+            <div class="viewer-pill viewer-cutaway">
+              CUTAWAY
+              <div class="cutaway-track"><div class="cutaway-thumb"></div></div>
+              <span>100%</span>
+            </div>
+          </div>
+
+          <!-- Sub-banner -->
+          <div class="viewer-sub-banner">
+            <div class="viewer-sub-pill">
+              <div class="sub-pulse"></div>
+              Example 3D model — upload your own in the property dashboard
+            </div>
+          </div>
+
+          <!-- Bot FAB -->
+          <div class="bot-fab">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(28,28,28,0.7)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="10" rx="2"/>
+              <path d="M12 11V7"/>
+              <circle cx="12" cy="5" r="2"/>
+              <circle cx="8" cy="16" r="1" fill="rgba(28,28,28,0.7)" stroke="none"/>
+              <circle cx="16" cy="16" r="1" fill="rgba(28,28,28,0.7)" stroke="none"/>
+              <path d="M8 20h8"/>
+            </svg>
+          </div>
+
+          <!-- Bottom IoT status bar -->
+          <div class="iot-status-bar">
+            <!-- Climate -->
+            <div class="iot-status-item">
+              <div class="iot-status-dot" style="background:#22bb66;"></div>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(28,28,28,0.45)" stroke-width="1.6" stroke-linecap="round">
+                <path d="M14 14.76V3.5a2.5 2.5 0 00-5 0v11.26a4.5 4.5 0 105 0z"/>
+              </svg>
+              <div class="iot-status-lbl">Climate</div>
+              <div class="iot-status-sub">3 devices</div>
+            </div>
+            <!-- Security -->
+            <div class="iot-status-item">
+              <div class="iot-status-dot" style="background:#22bb66;"></div>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(28,28,28,0.45)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2"/>
+                <path d="M7 11V7a5 5 0 0110 0v4"/>
+              </svg>
+              <div class="iot-status-lbl">Security</div>
+              <div class="iot-status-sub">3 devices</div>
+            </div>
+            <!-- Water -->
+            <div class="iot-status-item">
+              <div class="iot-status-dot" style="background:#cc9900;"></div>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(28,28,28,0.45)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2C6 8.5 4 12.5 4 15a8 8 0 0016 0c0-2.5-2-6.5-8-13z"/>
+                <path d="M12 2v6m0 6v2"/>
+              </svg>
+              <div class="iot-status-lbl">Water</div>
+              <div class="iot-status-sub">2 devices</div>
+            </div>
+            <!-- Power -->
+            <div class="iot-status-item">
+              <div class="iot-status-dot" style="background:#22bb66;"></div>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(28,28,28,0.45)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+              <div class="iot-status-lbl">Power</div>
+              <div class="iot-status-sub">5 devices</div>
+            </div>
+            <!-- Lighting -->
+            <div class="iot-status-item">
+              <div class="iot-status-dot" style="background:#22bb66;"></div>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(28,28,28,0.45)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="9" y1="18" x2="15" y2="18"/>
+                <line x1="10" y1="22" x2="14" y2="22"/>
+                <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0018 8 6 6 0 006 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 018.91 14"/>
+              </svg>
+              <div class="iot-status-lbl">Lighting</div>
+              <div class="iot-status-sub">12 devices</div>
+            </div>
+            <!-- Air Quality -->
+            <div class="iot-status-item">
+              <div class="iot-status-dot" style="background:#22bb66;"></div>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(28,28,28,0.45)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9.59 4.59A2 2 0 1111 8H2m10.59 11.41A2 2 0 1014 16H2m15.73-8.27A2.5 2.5 0 1119.5 12H2"/>
+              </svg>
+              <div class="iot-status-lbl">Air Quality</div>
+              <div class="iot-status-sub">4 devices</div>
+            </div>
+          </div>
         </div>
 
         <!-- Right widget panel (ARCHI style) -->
@@ -424,6 +590,49 @@
                 <div class="health-sub">Systems: 32 / 35</div>
                 <div style="font-size:9px;color:rgba(180,120,0,0.85);margin-top:3px;">3 need attention</div>
               </div>
+            </div>
+          </div>
+
+          <!-- Weather -->
+          <div class="widget">
+            <div class="widget-title" style="display:flex;justify-content:space-between;align-items:center;">
+              Weather
+              <span style="font-size:7.5px;color:rgba(28,28,28,0.3);font-weight:400;letter-spacing:0.04em;">Cobano</span>
+            </div>
+            <div style="font-size:7.5px;color:rgba(28,28,28,0.35);margin-bottom:6px;line-height:1.5;">Cobano 60111, Puntarenas, Costa Rica</div>
+            <div class="weather-main">
+              <div class="weather-temp">32°</div>
+              <span style="font-size:15px;">🌤️</span>
+              <div class="weather-detail">Partly cloudy<br/>12 km/h · 60% humidity</div>
+            </div>
+            <div class="weather-forecast">
+              <div class="weather-day">
+                <div class="weather-day-lbl">Tomorrow</div>
+                <span style="font-size:11px;">🌧️</span>
+                <div class="weather-day-temp">32°/25°</div>
+              </div>
+              <div class="weather-day">
+                <div class="weather-day-lbl">Thu</div>
+                <span style="font-size:11px;">🌧️</span>
+                <div class="weather-day-temp">32°/25°</div>
+              </div>
+              <div class="weather-day">
+                <div class="weather-day-lbl">Fri</div>
+                <span style="font-size:11px;">🌦️</span>
+                <div class="weather-day-temp">30°/25°</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Context Alerts -->
+          <div class="widget">
+            <div class="widget-title" style="display:flex;justify-content:space-between;align-items:center;">
+              Context Alerts
+              <span style="font-size:7.5px;color:rgba(28,28,28,0.35);font-weight:400;">1 active</span>
+            </div>
+            <div class="alert-row">
+              <div class="alert-icon">ℹ</div>
+              <div class="alert-text">Heat advisory — 32°C</div>
             </div>
           </div>
 
