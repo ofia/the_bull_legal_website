@@ -686,7 +686,11 @@
     loader.load('./american_house.glb', function(gltf) {
       const model = gltf.scene;
 
-      // Enable shadows on all meshes
+      // Add to scene FIRST so world transforms are applied before measuring
+      scene.add(model);
+      model.updateMatrixWorld(true);
+
+      // Enable shadows
       model.traverse(child => {
         if (child.isMesh) {
           child.castShadow = true;
@@ -694,30 +698,34 @@
         }
       });
 
-      // Center horizontally, sit on grid
-      const box = new THREE.Box3().setFromObject(model);
+      // Measure bounding box now that transforms are computed
+      const box    = new THREE.Box3().setFromObject(model);
       const center = box.getCenter(new THREE.Vector3());
       const size   = box.getSize(new THREE.Vector3());
-      model.position.x -= center.x;
-      model.position.z -= center.z;
-      model.position.y -= box.min.y;  // floor snapped to y=0
 
-      scene.add(model);
+      // Guard: bail if box is degenerate (NaN or zero-size)
+      if (!isFinite(center.x) || size.length() < 0.001) return;
 
-      // Fit camera to model size
-      const span = Math.max(size.x, size.z);
-      const dist = span * 1.1;
-      camera.position.set(dist, dist * 0.65, dist);
-      controls.target.set(0, size.y * 0.35, 0);
+      // Center horizontally, snap floor to y=0
+      model.position.set(-center.x, -box.min.y, -center.z);
+
+      // Fit camera
+      const span = Math.max(size.x, size.z, size.y);
+      const dist = span * 1.2;
+      camera.position.set(dist, dist * 0.6, dist);
+      controls.target.set(0, size.y * 0.3, 0);
       controls.update();
 
-      // Update shadow camera to fit model
-      const r = span * 0.8;
+      // Fit shadow camera
+      const r = span;
       sun.shadow.camera.left   = -r;
       sun.shadow.camera.right  =  r;
       sun.shadow.camera.top    =  r;
       sun.shadow.camera.bottom = -r;
       sun.shadow.camera.updateProjectionMatrix();
+
+    }, undefined, function(err) {
+      console.error('GLB failed to load:', err);
     });
 
     // ── Resize ──
