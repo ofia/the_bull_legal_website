@@ -824,8 +824,9 @@
 
   <script type="module">
     import * as THREE from 'three';
-    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { OrbitControls }   from 'three/addons/controls/OrbitControls.js';
+    import { GLTFLoader }      from 'three/addons/loaders/GLTFLoader.js';
+    import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
     const viewer = document.querySelector('.archi-viewer');
     const canvas = document.getElementById('three-canvas');
@@ -837,110 +838,113 @@
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
+    // ── Environment (needed for PBR materials on the GLB) ──
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    const envTexture = pmrem.fromScene(new RoomEnvironment()).texture;
+    pmrem.dispose();
+
     // ── Scene ──
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xf7f7f5);
-    scene.fog = new THREE.Fog(0xf7f7f5, 30, 60);
+    scene.environment = envTexture;   // PBR materials get ambient reflections
 
     // ── Camera ──
-    const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 200);
+    const camera = new THREE.PerspectiveCamera(38, 1, 0.01, 2000);
     camera.position.set(9, 6, 9);
 
     // ── Lights ──
-    scene.add(new THREE.AmbientLight(0xffffff, 1.4));
-    const sun = new THREE.DirectionalLight(0xfff8ee, 2.0);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+    const sun = new THREE.DirectionalLight(0xfff8ee, 1.5);
     sun.position.set(12, 20, 8);
     sun.castShadow = true;
     sun.shadow.mapSize.set(2048, 2048);
-    sun.shadow.camera.near = 0.5;
-    sun.shadow.camera.far = 80;
-    sun.shadow.camera.left = -15;
-    sun.shadow.camera.right = 15;
-    sun.shadow.camera.top = 15;
-    sun.shadow.camera.bottom = -15;
     scene.add(sun);
-    const fill = new THREE.DirectionalLight(0xdce8ff, 0.6);
-    fill.position.set(-8, 6, -8);
-    scene.add(fill);
+    scene.add(new THREE.DirectionalLight(0xdce8ff, 0.4).position.set(-8, 6, -8) && new THREE.DirectionalLight(0xdce8ff, 0.4));
 
     // ── Grid floor ──
     const grid = new THREE.GridHelper(40, 40, 0x1c1c1c, 0x1c1c1c);
-    grid.material.opacity = 0.06;
+    grid.material.opacity = 0.07;
     grid.material.transparent = true;
     scene.add(grid);
 
-    // ── Controls ──
+    // ── Controls — rotate only, no zoom ──
     const controls = new OrbitControls(camera, canvas);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.06;
-    controls.minPolarAngle = 0.15;
-    controls.maxPolarAngle = Math.PI / 2.1;
-    controls.enablePan = false;
-    controls.minDistance = 4;
-    controls.maxDistance = 30;
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.5;
-    // Stop auto-rotate on first user interaction, resume after idle
+    controls.enableDamping  = true;
+    controls.dampingFactor  = 0.06;
+    controls.enableZoom     = false;   // no scroll zoom
+    controls.enablePan      = false;
+    controls.minPolarAngle  = 0.15;
+    controls.maxPolarAngle  = Math.PI / 2.1;
+    controls.autoRotate     = true;
+    controls.autoRotateSpeed = 0.6;
     let idleTimer;
-    canvas.addEventListener('pointerdown', () => {
-      controls.autoRotate = false;
-      clearTimeout(idleTimer);
-    });
-    canvas.addEventListener('pointerup', () => {
-      idleTimer = setTimeout(() => { controls.autoRotate = true; }, 4000);
-    });
+    canvas.addEventListener('pointerdown', () => { controls.autoRotate = false; clearTimeout(idleTimer); });
+    canvas.addEventListener('pointerup',   () => { idleTimer = setTimeout(() => { controls.autoRotate = true; }, 5000); });
 
     // ── Load GLB ──
     const loader = new GLTFLoader();
     loader.load('./american_house.glb', function(gltf) {
       const model = gltf.scene;
 
-      // Add to scene FIRST so world transforms are applied before measuring
+      // Add first so world transforms compute correctly
       scene.add(model);
       model.updateMatrixWorld(true);
 
-      // Enable shadows
-      model.traverse(child => {
-        if (child.isMesh) {
-          child.castShadow = true;
-          child.receiveShadow = true;
-        }
-      });
+      // Measure raw size
+      const box0 = new THREE.Box3().setFromObject(model);
+      const size0 = box0.getSize(new THREE.Vector3());
 
-      // Measure bounding box now that transforms are computed
+      // Auto-scale: if model is in millimeters (any axis > 1000), scale to meters
+      if (Math.max(size0.x, size0.y, size0.z) > 1000) {
+        model.scale.setScalar(0.001);
+        model.updateMatrixWorld(true);
+      }
+
+      // Re-measure after scale
       const box    = new THREE.Box3().setFromObject(model);
       const center = box.getCenter(new THREE.Vector3());
       const size   = box.getSize(new THREE.Vector3());
 
-      // Guard: bail if box is degenerate (NaN or zero-size)
       if (!isFinite(center.x) || size.length() < 0.001) return;
 
-      // Center horizontally, snap floor to y=0
+      // Center on grid, floor at y=0
       model.position.set(-center.x, -box.min.y, -center.z);
 
-      // Fit camera
+      // Enable shadows
+      model.traverse(child => {
+        if (child.isMesh) { child.castShadow = true; child.receiveShadow = true; }
+      });
+
+      // Fit camera distance to model size
       const span = Math.max(size.x, size.z, size.y);
-      const dist = span * 1.2;
-      camera.position.set(dist, dist * 0.6, dist);
+      const dist = span * 1.8;
+      camera.position.set(dist, dist * 0.55, dist);
+      camera.far = dist * 10;
+      camera.updateProjectionMatrix();
       controls.target.set(0, size.y * 0.3, 0);
       controls.update();
 
+      // Scale the grid to match model
+      const gridSize = span * 3;
+      grid.scale.setScalar(gridSize / 40);
+      scene.fog = new THREE.Fog(0xf7f7f5, dist * 2, dist * 5);
+
       // Fit shadow camera
-      const r = span;
-      sun.shadow.camera.left   = -r;
-      sun.shadow.camera.right  =  r;
-      sun.shadow.camera.top    =  r;
-      sun.shadow.camera.bottom = -r;
+      const r = span * 1.2;
+      sun.shadow.camera.left = -r; sun.shadow.camera.right  = r;
+      sun.shadow.camera.top  =  r; sun.shadow.camera.bottom = -r;
+      sun.shadow.camera.far  = dist * 3;
       sun.shadow.camera.updateProjectionMatrix();
+      sun.position.set(r, r * 1.5, r * 0.7);
 
     }, undefined, function(err) {
-      console.error('GLB failed to load:', err);
+      console.error('GLB load error:', err);
     });
 
     // ── Resize ──
     function resize() {
-      const w = viewer.clientWidth  || canvas.parentElement.clientWidth  || 600;
-      const h = viewer.clientHeight || canvas.parentElement.clientHeight || 400;
+      const w = viewer.clientWidth  || 600;
+      const h = viewer.clientHeight || 400;
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
