@@ -630,6 +630,117 @@
       color: var(--muted);
     }
 
+    /* ── APP MOCKUP ── */
+    .cm-wrap { max-width: 1080px; margin: 56px auto 0; padding: 0 48px; }
+
+    .cm-frame {
+      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06), 0 32px 80px rgba(0,0,0,0.07);
+    }
+
+    .cm-chrome {
+      background: #f3f3f1; padding: 11px 16px;
+      display: flex; align-items: center; gap: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .cm-dot { width: 11px; height: 11px; border-radius: 50%; }
+
+    .cm-body { height: 520px; background: #f7f7f5; position: relative; overflow: hidden; font-family: 'Courier New', monospace; }
+
+    /* TopBar */
+    .cm-topbar {
+      position: absolute; top: 0; left: 0; right: 0; height: 56px;
+      background: linear-gradient(180deg, rgba(247,247,245,0.97) 0%, rgba(247,247,245,0) 100%);
+      border-bottom: 1px solid rgba(28,28,28,0.08);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; z-index: 10;
+    }
+    .cm-logo-block { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+    .cm-logo-text { font-size: 11px; letter-spacing: 0.28em; font-weight: 700; text-transform: uppercase; color: #1c1c1c; }
+    .cm-toggle-pill {
+      width: 28px; height: 14px; border-radius: 7px;
+      background: rgba(28,28,28,0.10); position: relative;
+    }
+    .cm-toggle-thumb {
+      position: absolute; top: 2px; left: 2px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: rgba(28,28,28,0.45);
+    }
+    .cm-tabs { display: flex; align-items: center; gap: 5px; }
+    .cm-tab {
+      padding: 4px 12px; border-radius: 6px; font-size: 9.5px; letter-spacing: 0.07em;
+      color: rgba(28,28,28,0.45); border: 1px solid rgba(28,28,28,0.09);
+      background: transparent;
+    }
+    .cm-tab.active {
+      color: #1c1c1c; background: rgba(28,28,28,0.06); border-color: rgba(28,28,28,0.18);
+    }
+    .cm-tab.gold {
+      color: #b38600; border-color: rgba(179,134,0,0.35);
+    }
+    .cm-avatar {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(28,28,28,0.07); border: 1px solid rgba(28,28,28,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 8px; font-weight: 700; color: #1c1c1c;
+    }
+
+    /* Main area */
+    .cm-main { position: absolute; top: 56px; left: 0; right: 0; bottom: 0; }
+
+    /* SVG cluster */
+    .cm-cluster { position: absolute; inset: 0; right: 240px; }
+    .cm-cluster svg { width: 100%; height: 100%; }
+
+    /* Right overlay panel */
+    .cm-right {
+      position: absolute; top: 16px; right: 20px; bottom: 20px; width: 210px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .cm-widget {
+      background: rgba(255,255,255,0.88); border: 1px solid rgba(28,28,28,0.09);
+      border-radius: 11px; padding: 12px 14px; backdrop-filter: blur(8px);
+    }
+    .cm-widget-title {
+      font-size: 7.5px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(28,28,28,0.4); margin-bottom: 9px;
+    }
+    .cm-big-num { font-size: 26px; font-weight: 700; color: #1c1c1c; line-height: 1; }
+    .cm-sub { font-size: 8px; color: rgba(28,28,28,0.4); margin-top: 2px; margin-bottom: 10px; }
+    .cm-stat-row {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;
+    }
+    .cm-stat-left { display: flex; align-items: center; gap: 5px; }
+    .cm-stat-dot { width: 5px; height: 5px; border-radius: 50%; }
+    .cm-stat-label { font-size: 8px; letter-spacing: 0.07em; color: rgba(28,28,28,0.4); }
+    .cm-stat-val { font-size: 9px; font-weight: 700; }
+
+    /* Bottom stats */
+    .cm-bottom {
+      position: absolute; bottom: 18px; left: 108px; right: 250px;
+      display: flex; gap: 8px;
+    }
+    .cm-chip {
+      flex: 1; background: rgba(255,255,255,0.88); border: 1px solid rgba(28,28,28,0.09);
+      border-radius: 9px; padding: 10px 12px; backdrop-filter: blur(8px);
+    }
+    .cm-chip-label { font-size: 7px; letter-spacing: 0.11em; text-transform: uppercase; color: rgba(28,28,28,0.38); margin-bottom: 4px; }
+    .cm-chip-val { font-size: 18px; font-weight: 700; line-height: 1; margin-bottom: 3px; }
+    .cm-chip-sub { font-size: 7px; color: rgba(28,28,28,0.35); }
+    .cm-recent { flex: 2; }
+    .cm-recent-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+    .cm-recent-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+    .cm-recent-text { font-size: 8px; color: #1c1c1c; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* Bot FAB */
+    .cm-bot-fab {
+      position: absolute; bottom: 18px; left: 20px;
+      width: 70px; height: 70px; border-radius: 50%;
+      background: rgba(255,255,255,0.92); border: 2px solid rgba(179,134,0,0.35);
+      box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+      display: flex; align-items: center; justify-content: center;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
       .steps-grid { grid-template-columns: repeat(2, 1fr); }
@@ -719,6 +830,215 @@
     <div class="node-item"><div class="node-dot" style="background:#9b6bd9"></div>term</div>
     <div class="node-item"><div class="node-dot" style="background:#3a9e6e"></div>document</div>
   </div>
+
+  <!-- ── APP MOCKUP ── -->
+  <div class="cm-wrap">
+    <div class="cm-frame">
+
+      <!-- macOS chrome -->
+      <div class="cm-chrome">
+        <div class="cm-dot" style="background:#FF5F5A"></div>
+        <div class="cm-dot" style="background:#FFBD2E"></div>
+        <div class="cm-dot" style="background:#00CA4E"></div>
+      </div>
+
+      <!-- App shell -->
+      <div class="cm-body">
+
+        <!-- TopBar -->
+        <div class="cm-topbar">
+          <div class="cm-logo-block">
+            <div class="cm-logo-text">The Bull</div>
+            <div class="cm-toggle-pill"><div class="cm-toggle-thumb"></div></div>
+          </div>
+          <div class="cm-tabs">
+            <div class="cm-tab active">Node Cluster</div>
+            <div class="cm-tab">Dashboard</div>
+            <div class="cm-tab gold">+ New Contract</div>
+          </div>
+          <div class="cm-avatar">OF</div>
+        </div>
+
+        <!-- Main area -->
+        <div class="cm-main">
+
+          <!-- Node Cluster SVG -->
+          <div class="cm-cluster">
+            <svg viewBox="0 0 660 380" preserveAspectRatio="xMidYMid meet" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+              <!-- Edges -->
+              <line x1="330" y1="190" x2="160" y2="115" stroke="#2563eb" stroke-width="1" stroke-opacity="0.18"/>
+              <line x1="330" y1="190" x2="155" y2="270" stroke="#2563eb" stroke-width="1" stroke-opacity="0.18"/>
+              <line x1="330" y1="190" x2="75"  y2="190" stroke="#b38600" stroke-width="1" stroke-opacity="0.18"/>
+              <line x1="330" y1="190" x2="490" y2="85"  stroke="#16a34a" stroke-width="1" stroke-opacity="0.22"/>
+              <line x1="330" y1="190" x2="515" y2="205" stroke="#dc2626" stroke-width="1" stroke-opacity="0.22"/>
+              <line x1="330" y1="190" x2="475" y2="315" stroke="#ea580c" stroke-width="1" stroke-opacity="0.18"/>
+              <line x1="330" y1="190" x2="330" y2="338" stroke="#9b6bd9" stroke-width="1" stroke-opacity="0.18"/>
+              <!-- Cross edges -->
+              <line x1="160" y1="115" x2="490" y2="85"  stroke="#16a34a" stroke-width="0.7" stroke-opacity="0.10"/>
+              <line x1="155" y1="270" x2="515" y2="205" stroke="#dc2626" stroke-width="0.7" stroke-opacity="0.10"/>
+
+              <!-- ── Contract node (center, large, active blue) ── -->
+              <circle cx="330" cy="190" r="22" fill="rgba(37,99,235,0.10)" stroke="#2563eb" stroke-width="1.8"/>
+              <!-- glow -->
+              <circle cx="330" cy="190" r="35" fill="rgba(37,99,235,0.04)"/>
+              <text x="330" y="172" text-anchor="middle" font-family="Courier New" font-size="6" fill="rgba(28,28,28,0.35)" letter-spacing="0.1em">CONTRACT</text>
+              <text x="330" y="188" text-anchor="middle" font-family="Courier New" font-size="7.5" fill="#1c1c1c" font-weight="700" letter-spacing="0.04em">HARTMANN</text>
+              <text x="330" y="200" text-anchor="middle" font-family="Courier New" font-size="7.5" fill="#1c1c1c" font-weight="700" letter-spacing="0.04em">LEASE</text>
+              <circle cx="330" cy="208" r="3" fill="#2563eb"/>
+
+              <!-- ── Party 1: BioTech LLC (active) ── -->
+              <circle cx="160" cy="115" r="15" fill="rgba(37,99,235,0.08)" stroke="#2563eb" stroke-width="1.4"/>
+              <circle cx="160" cy="115" r="24" fill="rgba(37,99,235,0.03)"/>
+              <text x="160" y="109" text-anchor="middle" font-family="Courier New" font-size="6" fill="rgba(28,28,28,0.35)" letter-spacing="0.08em">PARTY</text>
+              <text x="160" y="120" text-anchor="middle" font-family="Courier New" font-size="7" fill="#1c1c1c" font-weight="700">BioTech LLC</text>
+              <text x="160" y="137" text-anchor="middle" font-family="Courier New" font-size="6.5" fill="rgba(28,28,28,0.38)">Tenant</text>
+
+              <!-- ── Party 2: Realty Corp (active) ── -->
+              <circle cx="155" cy="270" r="15" fill="rgba(37,99,235,0.08)" stroke="#2563eb" stroke-width="1.4"/>
+              <circle cx="155" cy="270" r="24" fill="rgba(37,99,235,0.03)"/>
+              <text x="155" y="264" text-anchor="middle" font-family="Courier New" font-size="6" fill="rgba(28,28,28,0.35)" letter-spacing="0.08em">PARTY</text>
+              <text x="155" y="275" text-anchor="middle" font-family="Courier New" font-size="7" fill="#1c1c1c" font-weight="700">Realty Corp</text>
+              <text x="155" y="293" text-anchor="middle" font-family="Courier New" font-size="6.5" fill="rgba(28,28,28,0.38)">Landlord</text>
+
+              <!-- ── Agent: Lisa Torres (pending gold) ── -->
+              <circle cx="75" cy="190" r="12" fill="rgba(179,134,0,0.08)" stroke="#b38600" stroke-width="1.3"/>
+              <circle cx="75" cy="190" r="20" fill="rgba(179,134,0,0.03)"/>
+              <text x="75" y="185" text-anchor="middle" font-family="Courier New" font-size="6" fill="rgba(28,28,28,0.35)" letter-spacing="0.08em">PARTY</text>
+              <text x="75" y="195" text-anchor="middle" font-family="Courier New" font-size="6.5" fill="#b38600" font-weight="700">L. Torres</text>
+              <text x="75" y="210" text-anchor="middle" font-family="Courier New" font-size="6" fill="rgba(28,28,28,0.38)">Agent</text>
+
+              <!-- ── Payment 1: $12,500/mo (confirmed green) ── -->
+              <circle cx="490" cy="85" r="14" fill="rgba(22,163,74,0.09)" stroke="#16a34a" stroke-width="1.4"/>
+              <circle cx="490" cy="85" r="22" fill="rgba(22,163,74,0.03)"/>
+              <text x="490" y="79" text-anchor="middle" font-family="Courier New" font-size="5.5" fill="rgba(28,28,28,0.35)" letter-spacing="0.08em">PAYMENT</text>
+              <text x="490" y="90" text-anchor="middle" font-family="Courier New" font-size="7" fill="#16a34a" font-weight="700">$12,500</text>
+              <text x="490" y="106" text-anchor="middle" font-family="Courier New" font-size="6" fill="rgba(28,28,28,0.38)">Monthly rent</text>
+
+              <!-- ── Payment 2: $37,500 deposit (overdue red) ── -->
+              <circle cx="515" cy="205" r="13" fill="rgba(220,38,38,0.08)" stroke="#dc2626" stroke-width="1.4"/>
+              <circle cx="515" cy="205" r="21" fill="rgba(220,38,38,0.03)"/>
+              <text x="515" y="199" text-anchor="middle" font-family="Courier New" font-size="5.5" fill="rgba(28,28,28,0.35)" letter-spacing="0.08em">PAYMENT</text>
+              <text x="515" y="210" text-anchor="middle" font-family="Courier New" font-size="7" fill="#dc2626" font-weight="700">$37,500</text>
+              <text x="515" y="225" text-anchor="middle" font-family="Courier New" font-size="6" fill="#dc2626">OVERDUE</text>
+
+              <!-- ── Term: 36-month (orange) ── -->
+              <circle cx="475" cy="315" r="12" fill="rgba(234,88,12,0.08)" stroke="#ea580c" stroke-width="1.3"/>
+              <circle cx="475" cy="315" r="20" fill="rgba(234,88,12,0.03)"/>
+              <text x="475" y="309" text-anchor="middle" font-family="Courier New" font-size="5.5" fill="rgba(28,28,28,0.35)" letter-spacing="0.08em">TERM</text>
+              <text x="475" y="320" text-anchor="middle" font-family="Courier New" font-size="6.5" fill="#ea580c" font-weight="700">36 months</text>
+              <text x="475" y="334" text-anchor="middle" font-family="Courier New" font-size="6" fill="rgba(28,28,28,0.38)">Duration</text>
+
+              <!-- ── Document: Signed Lease (purple) ── -->
+              <circle cx="330" cy="338" r="12" fill="rgba(155,107,217,0.08)" stroke="#9b6bd9" stroke-width="1.3"/>
+              <circle cx="330" cy="338" r="20" fill="rgba(155,107,217,0.03)"/>
+              <text x="330" y="332" text-anchor="middle" font-family="Courier New" font-size="5.5" fill="rgba(28,28,28,0.35)" letter-spacing="0.08em">DOCUMENT</text>
+              <text x="330" y="343" text-anchor="middle" font-family="Courier New" font-size="6.5" fill="#9b6bd9" font-weight="700">Signed PDF</text>
+
+            </svg>
+          </div>
+
+          <!-- Right overlay widgets -->
+          <div class="cm-right">
+
+            <!-- Portfolio -->
+            <div class="cm-widget">
+              <div class="cm-widget-title">Portfolio</div>
+              <div class="cm-big-num">8</div>
+              <div class="cm-sub">total contracts</div>
+              <div class="cm-stat-row">
+                <div class="cm-stat-left"><div class="cm-stat-dot" style="background:#2563eb"></div><div class="cm-stat-label">ACTIVE</div></div>
+                <div class="cm-stat-val" style="color:#2563eb">3</div>
+              </div>
+              <div class="cm-stat-row">
+                <div class="cm-stat-left"><div class="cm-stat-dot" style="background:#b38600"></div><div class="cm-stat-label">PENDING</div></div>
+                <div class="cm-stat-val" style="color:#b38600">3</div>
+              </div>
+              <div class="cm-stat-row">
+                <div class="cm-stat-left"><div class="cm-stat-dot" style="background:#ea580c"></div><div class="cm-stat-label">DISPUTED</div></div>
+                <div class="cm-stat-val" style="color:#ea580c">1</div>
+              </div>
+              <div class="cm-stat-row">
+                <div class="cm-stat-left"><div class="cm-stat-dot" style="background:#16a34a"></div><div class="cm-stat-label">COMPLETED</div></div>
+                <div class="cm-stat-val" style="color:#16a34a">1</div>
+              </div>
+            </div>
+
+            <!-- Alerts -->
+            <div class="cm-widget">
+              <div class="cm-widget-title">Alerts</div>
+              <div style="display:flex;align-items:baseline;gap:6px;">
+                <div class="cm-big-num" style="color:#dc2626">2</div>
+                <div style="font-size:8px;color:rgba(28,28,28,0.4);">issues</div>
+              </div>
+              <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;">
+                <div class="cm-stat-row">
+                  <span style="font-size:8px;color:rgba(28,28,28,0.45);">Overdue obligations</span>
+                  <span style="font-size:8px;font-weight:700;color:#dc2626;">1</span>
+                </div>
+                <div class="cm-stat-row">
+                  <span style="font-size:8px;color:rgba(28,28,28,0.45);">Disputed contracts</span>
+                  <span style="font-size:8px;font-weight:700;color:#ea580c;">1</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Payment Pipeline -->
+            <div class="cm-widget">
+              <div class="cm-widget-title">Payment Pipeline</div>
+              <div class="cm-big-num" style="font-size:22px;">$124k</div>
+              <div class="cm-sub">total tracked value</div>
+              <div style="font-size:8px;color:rgba(28,28,28,0.4);">across 5 analyzed contracts</div>
+            </div>
+
+          </div>
+
+          <!-- Bottom stats -->
+          <div class="cm-bottom">
+            <div class="cm-chip">
+              <div class="cm-chip-label">Active Contracts</div>
+              <div class="cm-chip-val" style="color:#2563eb">3</div>
+              <div class="cm-chip-sub">currently running</div>
+            </div>
+            <div class="cm-chip">
+              <div class="cm-chip-label">Needs Attention</div>
+              <div class="cm-chip-val" style="color:#dc2626">3</div>
+              <div class="cm-chip-sub">flagged items</div>
+            </div>
+            <div class="cm-chip">
+              <div class="cm-chip-label">Due This Week</div>
+              <div class="cm-chip-val" style="color:rgba(28,28,28,0.35)">2</div>
+              <div class="cm-chip-sub">obligations</div>
+            </div>
+            <div class="cm-chip">
+              <div class="cm-chip-label">Parties Tracked</div>
+              <div class="cm-chip-val">12</div>
+              <div class="cm-chip-sub">across 6 contracts</div>
+            </div>
+            <div class="cm-chip cm-recent">
+              <div class="cm-chip-label">Recent Contracts</div>
+              <div class="cm-recent-row"><div class="cm-recent-dot" style="background:#2563eb"></div><div class="cm-recent-text">Hartmann Lease Agreement</div></div>
+              <div class="cm-recent-row"><div class="cm-recent-dot" style="background:#b38600"></div><div class="cm-recent-text">BioTech Vendor Services</div></div>
+              <div class="cm-recent-row"><div class="cm-recent-dot" style="background:#16a34a"></div><div class="cm-recent-text">Office NDA — Torres &amp; Co.</div></div>
+            </div>
+          </div>
+
+          <!-- Bot FAB -->
+          <div class="cm-bot-fab">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#b38600" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="10" rx="2"/>
+              <path d="M12 11V7"/>
+              <circle cx="12" cy="5" r="2"/>
+              <circle cx="8" cy="16" r="1" fill="#b38600" stroke="none"/>
+              <circle cx="16" cy="16" r="1" fill="#b38600" stroke="none"/>
+              <path d="M8 20h8"/>
+            </svg>
+          </div>
+
+        </div><!-- /cm-main -->
+      </div><!-- /cm-body -->
+    </div><!-- /cm-frame -->
+  </div><!-- /cm-wrap -->
 
   <!-- ── HOW IT WORKS ── -->
   <section id="how">
