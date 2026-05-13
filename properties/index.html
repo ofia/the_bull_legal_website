@@ -299,6 +299,30 @@
     .iot-status-lbl { font-family: 'Courier New', monospace; font-size: 6.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(28,28,28,0.4); }
     .iot-status-sub { font-size: 7px; color: rgba(28,28,28,0.3); }
 
+    /* ── 3D LOADER OVERLAY ── */
+    #scene-loader {
+      position: absolute; inset: 0; z-index: 8;
+      background: #f7f7f5;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+      transition: opacity 0.6s ease;
+    }
+    #scene-loader.done { opacity: 0; pointer-events: none; }
+    .loader-label {
+      font-family: 'Courier New', monospace; font-size: 9px; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(28,28,28,0.4);
+    }
+    .loader-track {
+      width: 140px; height: 2px; background: rgba(28,28,28,0.1); border-radius: 2px; overflow: hidden;
+    }
+    .loader-bar {
+      height: 100%; width: 0%; background: rgba(28,28,28,0.55); border-radius: 2px;
+      transition: width 0.25s ease;
+    }
+    .loader-pct {
+      font-family: 'Courier New', monospace; font-size: 8px; letter-spacing: 0.1em;
+      color: rgba(28,28,28,0.25);
+    }
+
     /* ── WEATHER WIDGET ── */
     .weather-main { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
     .weather-temp { font-size: 22px; font-weight: 300; color: rgba(28,28,28,0.75); line-height: 1; }
@@ -475,6 +499,13 @@
         <!-- 3D viewer area -->
         <div class="archi-viewer">
           <canvas id="three-canvas"></canvas>
+
+          <!-- Loading overlay -->
+          <div id="scene-loader">
+            <div class="loader-label">Loading 3D model</div>
+            <div class="loader-track"><div class="loader-bar" id="loader-bar"></div></div>
+            <div class="loader-pct" id="loader-pct">0%</div>
+          </div>
 
           <!-- Top control pills -->
           <div class="viewer-controls">
@@ -883,6 +914,10 @@
 
     // ── Load GLB ──
     const loader = new GLTFLoader();
+    const loaderEl  = document.getElementById('scene-loader');
+    const loaderBar = document.getElementById('loader-bar');
+    const loaderPct = document.getElementById('loader-pct');
+
     loader.load('./american_house_new.glb', function(gltf) {
       const model = gltf.scene;
 
@@ -937,7 +972,18 @@
       sun.shadow.camera.updateProjectionMatrix();
       sun.position.set(r, r * 1.5, r * 0.7);
 
-    }, undefined, function(err) {
+      // Hide the loader
+      loaderEl.classList.add('done');
+      setTimeout(() => loaderEl.remove(), 700);
+
+    }, function(xhr) {
+      // Progress
+      if (xhr.total) {
+        const pct = Math.round(xhr.loaded / xhr.total * 100);
+        loaderBar.style.width = pct + '%';
+        loaderPct.textContent = pct + '%';
+      }
+    }, function(err) {
       console.error('GLB load error:', err);
     });
 
