@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Bull Properties — Real Estate Portfolio Intelligence</title>
+  <link rel="icon" type="image/png" href="../favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #ffffff;
+      --bg2:       #f7f7f5;
+      --border:    rgba(13,13,13,0.09);
+      --primary:   #0d0d0d;
+      --muted:     rgba(13,13,13,0.42);
+      --accent:    #b38600;
+      --accent-bg: rgba(179,134,0,0.08);
+      --sans:      'Space Grotesk', sans-serif;
+      --mono:      'Space Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--primary); font-family: var(--sans); overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(255,255,255,0.90);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 64px;
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+    .nav-logo img { width: 30px; height: 30px; object-fit: contain; }
+    .nav-logo-text { font-size: 15px; font-weight: 700; color: var(--primary); letter-spacing: -0.02em; }
+    .nav-logo-sub  { font-size: 13px; font-weight: 500; color: var(--muted); }
+
+    .nav-center { display: flex; align-items: center; gap: 2px; }
+
+    .nav-link {
+      font-size: 14px; font-weight: 500; color: var(--primary);
+      text-decoration: none; padding: 8px 12px; border-radius: 7px;
+      transition: background 0.12s;
+    }
+    .nav-link:hover { background: var(--bg2); }
+
+    .nav-right { display: flex; align-items: center; gap: 8px; }
+
+    .btn-outline {
+      font-size: 14px; font-weight: 500; color: var(--primary); text-decoration: none;
+      padding: 7px 16px; border-radius: 8px; border: 1px solid var(--border);
+      transition: border-color 0.12s, background 0.12s;
+    }
+    .btn-outline:hover { border-color: rgba(13,13,13,0.22); background: var(--bg2); }
+
+    .btn-filled {
+      font-size: 14px; font-weight: 600; color: #fff; background: var(--primary);
+      text-decoration: none; padding: 7px 18px; border-radius: 8px; transition: opacity 0.12s;
+    }
+    .btn-filled:hover { opacity: 0.80; }
+
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; }
+    .nav-hamburger span { display: block; width: 22px; height: 1.5px; background: var(--primary); border-radius: 2px; transition: transform 0.2s, opacity 0.2s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none; flex-direction: column;
+      position: fixed; top: 64px; left: 0; right: 0;
+      background: #fff; border-bottom: 1px solid var(--border);
+      padding: 16px 20px 24px; gap: 4px; z-index: 199;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav-link { font-size: 15px; font-weight: 500; color: var(--primary); text-decoration: none; padding: 12px 8px; border-bottom: 1px solid var(--border); }
+    .mobile-nav-link:last-of-type { border-bottom: none; }
+    .mobile-nav-cta { margin-top: 12px; display: block; text-align: center; font-size: 15px; font-weight: 600; color: #fff; background: var(--primary); text-decoration: none; padding: 12px; border-radius: 8px; }
+
+    /* ── HERO ── */
+    #hero { padding: 96px 48px 72px; text-align: center; }
+
+    .hero-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 500; color: var(--primary);
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 100px; padding: 5px 14px 5px 6px; margin-bottom: 36px;
+    }
+    .pill-badge { background: var(--primary); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 100px; }
+    .pill-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: blink 2s infinite; }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+
+    h1 { font-size: clamp(44px, 7vw, 88px); font-weight: 700; letter-spacing: -0.035em; line-height: 1.01; color: var(--primary); max-width: 820px; margin: 0 auto 24px; }
+
+    .hero-sub { font-size: clamp(15px, 2vw, 19px); color: var(--muted); line-height: 1.6; max-width: 540px; margin: 0 auto 44px; }
+
+    .hero-actions { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+    .hero-btn-black { font-size: 15px; font-weight: 600; color: #fff; background: var(--primary); text-decoration: none; padding: 13px 28px; border-radius: 9px; transition: opacity 0.12s; }
+    .hero-btn-black:hover { opacity: 0.8; }
+    .hero-btn-ghost { font-size: 15px; font-weight: 500; color: var(--primary); border: 1px solid var(--border); text-decoration: none; padding: 13px 28px; border-radius: 9px; transition: border-color 0.12s, background 0.12s; }
+    .hero-btn-ghost:hover { border-color: rgba(13,13,13,0.2); background: var(--bg2); }
+
+    /* ── APP MOCKUP ── */
+    .mockup-wrap { max-width: 1080px; margin: 72px auto 0; padding: 0 48px; }
+
+    .mockup-frame {
+      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06), 0 32px 80px rgba(0,0,0,0.07);
+    }
+
+    .mockup-chrome {
+      background: #f3f3f1; padding: 11px 16px;
+      display: flex; align-items: center; gap: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .chrome-dot { width: 11px; height: 11px; border-radius: 50%; }
+
+    /* The app shell body */
+    .mockup-body { height: 400px; background: #f7f7f5; position: relative; overflow: hidden; }
+
+    /* ── ARCHI TOP BAR ── */
+    .archi-topbar {
+      position: absolute; top: 0; left: 0; right: 0; height: 54px;
+      background: linear-gradient(180deg, rgba(247,247,245,0.97) 0%, rgba(247,247,245,0) 100%);
+      border-bottom: 1px solid rgba(28,28,28,0.08);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 22px; z-index: 10;
+    }
+
+    .archi-logo-block { display: flex; flex-direction: column; gap: 4px; }
+
+    .archi-logo-text {
+      font-family: 'Courier New', monospace; font-size: 11px;
+      letter-spacing: 0.28em; text-transform: uppercase; color: #1c1c1c;
+    }
+
+    .archi-toggle {
+      display: flex; align-items: center;
+      background: rgba(28,28,28,0.08); border: 1px solid rgba(28,28,28,0.22);
+      border-radius: 20px; padding: 2px 3px; width: 88px; height: 20px;
+      position: relative; overflow: hidden;
+    }
+
+    .archi-toggle-pill {
+      position: absolute; top: 2px; left: 2px;
+      width: 40px; height: 14px; border-radius: 12px;
+      background: rgba(28,28,28,0.14); border: 1px solid rgba(28,28,28,0.35);
+    }
+
+    .archi-toggle span {
+      position: relative; z-index: 1; width: 44px; text-align: center;
+      font-family: 'Courier New', monospace; font-size: 8px; letter-spacing: 0.1em;
+    }
+
+    .archi-toggle .t-archi { font-weight: 700; color: #1c1c1c; }
+    .archi-toggle .t-tron  { font-weight: 400; color: rgba(0,229,255,0.3); }
+
+    .archi-topbar-right { display: flex; align-items: center; gap: 16px; }
+
+    .archi-clock {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 1px;
+    }
+    .archi-clock-time { font-family: 'Courier New', monospace; font-size: 11px; color: rgba(28,28,28,0.75); letter-spacing: 0.04em; }
+    .archi-clock-date { font-family: 'Courier New', monospace; font-size: 7px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(28,28,28,0.35); }
+
+    .archi-avatar {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: rgba(28,28,28,0.08); border: 1px solid rgba(28,28,28,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Courier New', monospace; font-size: 8px; font-weight: 700; color: #1c1c1c;
+    }
+
+    /* ── 3D VIEWER AREA ── */
+    .archi-viewer {
+      position: absolute; top: 54px; left: 0; right: 280px; bottom: 0;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Property selector pill */
+    .prop-selector {
+      position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+      background: rgba(247,247,245,0.92); border: 1px solid rgba(28,28,28,0.15);
+      border-radius: 14px; padding: 3px 12px;
+      font-family: 'Courier New', monospace; font-size: 9px; letter-spacing: 0.06em;
+      color: rgba(28,28,28,0.8); white-space: nowrap; z-index: 5;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .prop-selector::after { content: '▼'; font-size: 6px; color: rgba(28,28,28,0.35); }
+
+    /* ── SVG HOUSE ── */
+    .archi-house-svg { width: 340px; height: 260px; opacity: 0.55; }
+
+    /* ── RIGHT WIDGET PANEL ── */
+    .archi-panel {
+      position: absolute; top: 54px; right: 0; bottom: 0; width: 280px;
+      background: rgba(247,247,245,0.88);
+      border-left: 1px solid rgba(28,28,28,0.08);
+      display: flex; flex-direction: column; gap: 7px;
+      padding: 10px 9px; overflow: hidden;
+    }
+
+    .widget {
+      background: rgba(28,28,28,0.03); border: 1px solid rgba(28,28,28,0.09);
+      border-radius: 9px; padding: 9px 11px; flex-shrink: 0;
+    }
+
+    .widget-title {
+      font-family: 'Courier New', monospace; font-size: 8px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(28,28,28,0.45); font-weight: 600; margin-bottom: 9px;
+    }
+
+    /* Property health */
+    .health-row { display: flex; align-items: center; gap: 12px; }
+    .health-score { font-family: 'Courier New', monospace; font-size: 11px; font-weight: 700; color: #1c1c1c; }
+    .health-label { font-size: 10px; font-weight: 600; color: #2a7a4a; margin-bottom: 2px; }
+    .health-sub { font-size: 9px; color: rgba(28,28,28,0.45); }
+
+    /* Financial snapshot */
+    .finance-amount { font-size: 18px; font-weight: 300; color: rgba(28,28,28,0.78); letter-spacing: -0.01em; }
+    .finance-up { font-size: 9px; color: #2a7a4a; margin-left: 6px; }
+
+    /* Tasks counts */
+    .tasks-row { display: flex; gap: 5px; }
+    .task-pill {
+      flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+      padding: 6px 4px; background: rgba(28,28,28,0.03);
+      border: 1px solid rgba(28,28,28,0.08); border-radius: 7px;
+    }
+    .task-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .task-count { font-size: 13px; font-weight: 600; }
+    .task-lbl { font-size: 7px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(28,28,28,0.45); }
+
+    /* IoT */
+    .iot-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+    .iot-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .iot-label { font-size: 10px; color: rgba(28,28,28,0.65); flex: 1; }
+    .iot-count { font-size: 10px; color: rgba(28,28,28,0.35); }
+
+    /* ── HOW IT WORKS ── */
+    #how { padding: 100px 48px; max-width: 1100px; margin: 80px auto 0; }
+
+    .eyebrow { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+    .section-h2 { font-size: clamp(32px, 4.5vw, 52px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.06; color: var(--primary); margin-bottom: 14px; max-width: 560px; }
+    .section-p { font-size: 16px; color: var(--muted); line-height: 1.65; max-width: 500px; margin-bottom: 56px; }
+
+    .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+    .step-card { background: #fff; padding: 40px 32px; transition: background 0.15s; }
+    .step-card:hover { background: var(--bg2); }
+    .step-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 20px; }
+    .step-title { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; color: var(--primary); margin-bottom: 10px; }
+    .step-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    /* ── FEATURES ── */
+    #features { background: var(--bg2); padding: 100px 48px; }
+
+    .features-inner { max-width: 1100px; margin: 0 auto; }
+
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    .feat-card { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 32px 28px; transition: border-color 0.16s, box-shadow 0.16s; }
+    .feat-card:hover { border-color: rgba(179,134,0,0.28); box-shadow: 0 4px 24px rgba(0,0,0,0.05); }
+
+    .feat-icon { width: 38px; height: 38px; border-radius: 9px; background: var(--accent-bg); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+    .feat-icon svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .feat-title { font-size: 16px; font-weight: 700; letter-spacing: -0.015em; color: var(--primary); margin-bottom: 8px; }
+    .feat-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+    /* ── QUOTE ── */
+    #quote { padding: 100px 48px; background-image: radial-gradient(circle, rgba(0,0,0,0.055) 1px, transparent 1px); background-size: 22px 22px; text-align: center; }
+    .quote-inner { max-width: 860px; margin: 0 auto; }
+    .quote-text { font-size: clamp(26px, 4vw, 52px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; }
+    .q1 { color: rgba(13,13,13,0.88); }
+    .q2 { color: rgba(13,13,13,0.32); }
+    .q3 { color: rgba(13,13,13,0.16); }
+    .quote-attr { margin-top: 48px; font-size: 14px; color: var(--muted); }
+    .quote-attr strong { display: block; font-size: 15px; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid var(--border); padding: 36px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .footer-logo img { width: 22px; height: 22px; object-fit: contain; }
+    .footer-logo-text { font-size: 14px; font-weight: 700; color: var(--primary); letter-spacing: -0.01em; }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-link { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.12s; }
+    .footer-link:hover { color: var(--primary); }
+    .footer-copy { font-size: 13px; color: var(--muted); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .steps-grid { grid-template-columns: repeat(2, 1fr); }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 700px) {
+      nav { padding: 0 20px; }
+      .nav-center, .nav-right { display: none; }
+      .nav-hamburger { display: flex; }
+      #hero { padding: 64px 20px 56px; }
+      .mockup-wrap { padding: 0 20px; }
+      .archi-panel { display: none; }
+      .archi-viewer { right: 0; }
+      #how { padding: 72px 20px; margin-top: 40px; }
+      #features { padding: 72px 20px; }
+      #quote { padding: 80px 20px; }
+      footer { padding: 28px 20px; flex-direction: column; align-items: flex-start; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .footer-links { flex-wrap: wrap; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="../favicon.png" alt="The Bull" />
+      <span class="nav-logo-text">the bull</span>
+      <span class="nav-logo-sub">/ Properties</span>
+    </a>
+    <div class="nav-center">
+      <a href="#how"      class="nav-link">How it works</a>
+      <a href="#features" class="nav-link">Features</a>
+    </div>
+    <div class="nav-right">
+      <a href="#" class="btn-outline">Log in</a>
+      <a href="#" class="btn-filled">Get early access</a>
+    </div>
+    <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="#how"      class="mobile-nav-link">How it works</a>
+    <a href="#features" class="mobile-nav-link">Features</a>
+    <a href="#"         class="mobile-nav-cta">Get early access</a>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section id="hero">
+    <div class="hero-pill">
+      <div class="pill-dot"></div>
+      Real estate portfolio intelligence
+    </div>
+    <h1>Every property.<br/>Every tenant.<br/>Complete control.</h1>
+    <p class="hero-sub">
+      The Bull Properties gives every building in your portfolio a live digital twin —
+      with AI that monitors health, tracks tenants, and flags problems before they become expensive.
+    </p>
+    <div class="hero-actions">
+      <a href="#" class="hero-btn-black">Get early access →</a>
+      <a href="#how" class="hero-btn-ghost">See how it works</a>
+    </div>
+  </section>
+
+  <!-- ── APP MOCKUP — ARCHI MODE SHELL ── -->
+  <div class="mockup-wrap">
+    <div class="mockup-frame">
+
+      <!-- Browser chrome -->
+      <div class="mockup-chrome">
+        <div class="chrome-dot" style="background:#FF5F5A"></div>
+        <div class="chrome-dot" style="background:#FFBD2E"></div>
+        <div class="chrome-dot" style="background:#00CA4E"></div>
+      </div>
+
+      <!-- App shell body -->
+      <div class="mockup-body">
+
+        <!-- ARCHI top bar -->
+        <div class="archi-topbar">
+          <div class="archi-logo-block">
+            <div class="archi-logo-text">The Bull Properties</div>
+            <div class="archi-toggle">
+              <div class="archi-toggle-pill"></div>
+              <span class="t-archi">ARCHI</span>
+              <span class="t-tron">TRON</span>
+            </div>
+          </div>
+          <div class="archi-topbar-right">
+            <div class="archi-clock">
+              <div class="archi-clock-time">14:32:07</div>
+              <div class="archi-clock-date">Tue, May 13</div>
+            </div>
+            <div class="archi-avatar">OF</div>
+          </div>
+        </div>
+
+        <!-- 3D viewer area -->
+        <div class="archi-viewer">
+          <!-- Property selector pill -->
+          <div class="prop-selector">212 Park Avenue, New York</div>
+
+          <!-- Architectural house SVG (ARCHI/blueprint style) -->
+          <svg class="archi-house-svg" viewBox="0 0 340 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Ground shadow -->
+            <ellipse cx="170" cy="230" rx="120" ry="8" fill="rgba(28,28,28,0.04)"/>
+
+            <!-- Main building body -->
+            <rect x="60" y="110" width="220" height="120" fill="rgba(28,28,28,0.04)" stroke="rgba(28,28,28,0.25)" stroke-width="1.2"/>
+
+            <!-- Roof -->
+            <polygon points="40,110 170,40 300,110" fill="rgba(28,28,28,0.06)" stroke="rgba(28,28,28,0.3)" stroke-width="1.2" stroke-linejoin="round"/>
+
+            <!-- Roof ridge line -->
+            <line x1="170" y1="40" x2="170" y2="110" stroke="rgba(28,28,28,0.12)" stroke-width="0.8" stroke-dasharray="4 3"/>
+
+            <!-- Chimney -->
+            <rect x="230" y="55" width="18" height="40" fill="rgba(28,28,28,0.05)" stroke="rgba(28,28,28,0.22)" stroke-width="1"/>
+
+            <!-- Front door -->
+            <rect x="148" y="170" width="44" height="60" rx="2" fill="rgba(28,28,28,0.06)" stroke="rgba(28,28,28,0.28)" stroke-width="1"/>
+            <line x1="170" y1="170" x2="170" y2="230" stroke="rgba(28,28,28,0.15)" stroke-width="0.8"/>
+            <circle cx="163" cy="200" r="2" fill="rgba(28,28,28,0.35)"/>
+
+            <!-- Left window ground floor -->
+            <rect x="80" y="155" width="46" height="36" rx="1" fill="rgba(28,28,28,0.04)" stroke="rgba(28,28,28,0.22)" stroke-width="1"/>
+            <line x1="103" y1="155" x2="103" y2="191" stroke="rgba(28,28,28,0.12)" stroke-width="0.7"/>
+            <line x1="80" y1="173" x2="126" y2="173" stroke="rgba(28,28,28,0.12)" stroke-width="0.7"/>
+
+            <!-- Right window ground floor -->
+            <rect x="214" y="155" width="46" height="36" rx="1" fill="rgba(28,28,28,0.04)" stroke="rgba(28,28,28,0.22)" stroke-width="1"/>
+            <line x1="237" y1="155" x2="237" y2="191" stroke="rgba(28,28,28,0.12)" stroke-width="0.7"/>
+            <line x1="214" y1="173" x2="260" y2="173" stroke="rgba(28,28,28,0.12)" stroke-width="0.7"/>
+
+            <!-- Left window upper -->
+            <rect x="88" y="120" width="36" height="26" rx="1" fill="rgba(28,28,28,0.03)" stroke="rgba(28,28,28,0.18)" stroke-width="0.9"/>
+            <line x1="106" y1="120" x2="106" y2="146" stroke="rgba(28,28,28,0.1)" stroke-width="0.6"/>
+
+            <!-- Right window upper -->
+            <rect x="216" y="120" width="36" height="26" rx="1" fill="rgba(28,28,28,0.03)" stroke="rgba(28,28,28,0.18)" stroke-width="0.9"/>
+            <line x1="234" y1="120" x2="234" y2="146" stroke="rgba(28,28,28,0.1)" stroke-width="0.6"/>
+
+            <!-- Dormer / attic window -->
+            <polygon points="150,68 170,52 190,68" fill="rgba(28,28,28,0.05)" stroke="rgba(28,28,28,0.2)" stroke-width="0.9"/>
+            <rect x="158" y="68" width="24" height="16" fill="rgba(28,28,28,0.03)" stroke="rgba(28,28,28,0.18)" stroke-width="0.8"/>
+
+            <!-- Front steps -->
+            <rect x="140" y="228" width="60" height="4" fill="rgba(28,28,28,0.08)" stroke="rgba(28,28,28,0.15)" stroke-width="0.8"/>
+            <rect x="144" y="224" width="52" height="4" fill="rgba(28,28,28,0.06)" stroke="rgba(28,28,28,0.12)" stroke-width="0.8"/>
+
+            <!-- Dimension line top -->
+            <line x1="60" y1="28" x2="300" y2="28" stroke="rgba(28,28,28,0.12)" stroke-width="0.7" stroke-dasharray="3 3"/>
+            <line x1="60" y1="24" x2="60" y2="32" stroke="rgba(28,28,28,0.2)" stroke-width="0.8"/>
+            <line x1="300" y1="24" x2="300" y2="32" stroke="rgba(28,28,28,0.2)" stroke-width="0.8"/>
+            <text x="170" y="24" font-family="Courier New" font-size="7" fill="rgba(28,28,28,0.3)" text-anchor="middle" letter-spacing="0.08em">42.0 FT</text>
+
+            <!-- Dimension line side -->
+            <line x1="318" y1="110" x2="318" y2="230" stroke="rgba(28,28,28,0.12)" stroke-width="0.7" stroke-dasharray="3 3"/>
+            <line x1="314" y1="110" x2="322" y2="110" stroke="rgba(28,28,28,0.2)" stroke-width="0.8"/>
+            <line x1="314" y1="230" x2="322" y2="230" stroke="rgba(28,28,28,0.2)" stroke-width="0.8"/>
+            <text x="326" y="174" font-family="Courier New" font-size="7" fill="rgba(28,28,28,0.3)" text-anchor="start" letter-spacing="0.08em">28 FT</text>
+
+            <!-- IoT sensor dots -->
+            <circle cx="106" cy="137" r="3.5" fill="rgba(22,163,74,0.7)" stroke="rgba(22,163,74,0.3)" stroke-width="3"/>
+            <circle cx="234" cy="137" r="3.5" fill="rgba(22,163,74,0.7)" stroke="rgba(22,163,74,0.3)" stroke-width="3"/>
+            <circle cx="239" cy="65" r="3.5" fill="rgba(255,180,0,0.8)" stroke="rgba(255,180,0,0.3)" stroke-width="3"/>
+          </svg>
+        </div>
+
+        <!-- Right widget panel (ARCHI style) -->
+        <div class="archi-panel">
+
+          <!-- Property Health -->
+          <div class="widget">
+            <div class="widget-title">Property Health</div>
+            <div class="health-row">
+              <svg width="48" height="48" viewBox="0 0 48 48">
+                <circle cx="24" cy="24" r="19" fill="none" stroke="rgba(28,28,28,0.08)" stroke-width="4"/>
+                <circle cx="24" cy="24" r="19" fill="none" stroke="#1c1c1c" stroke-width="4"
+                  stroke-dasharray="119" stroke-dashoffset="15"
+                  stroke-linecap="round" transform="rotate(-90 24 24)" opacity="0.85"/>
+                <text x="24" y="28" font-family="Courier New" font-size="11" font-weight="700"
+                  fill="#1c1c1c" text-anchor="middle">87</text>
+              </svg>
+              <div>
+                <div class="health-label">Excellent</div>
+                <div class="health-sub">Systems: 32 / 35</div>
+                <div style="font-size:9px;color:rgba(180,120,0,0.85);margin-top:3px;">3 need attention</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Financial Snapshot -->
+          <div class="widget">
+            <div class="widget-title">Financial Snapshot</div>
+            <div style="font-size:9px;color:rgba(28,28,28,0.4);margin-bottom:3px;">This Month</div>
+            <div>
+              <span class="finance-amount">$24,800</span>
+              <span class="finance-up">↗ 12%</span>
+            </div>
+            <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(28,28,28,0.07);">
+              <div style="font-size:9px;color:rgba(28,28,28,0.4);">Last Month</div>
+              <div style="font-size:13px;font-weight:300;color:rgba(28,28,28,0.5);margin-top:2px;">$22,100</div>
+            </div>
+          </div>
+
+          <!-- Active Tasks -->
+          <div class="widget">
+            <div class="widget-title">Active Tasks</div>
+            <div class="tasks-row">
+              <div class="task-pill">
+                <div class="task-dot" style="background:#1a6fcc"></div>
+                <div class="task-count" style="color:#1a6fcc">4</div>
+                <div class="task-lbl">Open</div>
+              </div>
+              <div class="task-pill">
+                <div class="task-dot" style="background:#1a8a5a"></div>
+                <div class="task-count" style="color:#1a8a5a">2</div>
+                <div class="task-lbl">Progress</div>
+              </div>
+              <div class="task-pill">
+                <div class="task-dot" style="background:#cc2200"></div>
+                <div class="task-count" style="color:#cc2200">1</div>
+                <div class="task-lbl">Blocked</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- IoT Devices -->
+          <div class="widget">
+            <div class="widget-title">IoT Devices</div>
+            <div class="iot-row"><div class="iot-dot" style="background:#22bb66"></div><div class="iot-label">Normal</div><div class="iot-count">18</div></div>
+            <div class="iot-row"><div class="iot-dot" style="background:#cc9900"></div><div class="iot-label">Attention</div><div class="iot-count">3</div></div>
+            <div class="iot-row" style="margin-bottom:0"><div class="iot-dot" style="background:#cc2222"></div><div class="iot-label">Alert</div><div class="iot-count">0</div></div>
+          </div>
+
+        </div>
+      </div><!-- /mockup-body -->
+    </div><!-- /mockup-frame -->
+  </div><!-- /mockup-wrap -->
+
+  <!-- ── HOW IT WORKS ── -->
+  <section id="how">
+    <div class="eyebrow">Process</div>
+    <h2 class="section-h2">Portfolio in.<br/>Intelligence out.</h2>
+    <p class="section-p">Add your properties. The AI maps every building, tenant, and lease — then monitors everything so you don't have to.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01 — Connect</div>
+        <div class="step-title">Add your portfolio</div>
+        <div class="step-desc">Add properties, upload floor plans, and connect IoT sensors. Every building gets its own live digital twin.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02 — Model</div>
+        <div class="step-title">AI builds the 3D twin</div>
+        <div class="step-desc">Each property becomes a navigable 3D model — every floor, unit, and system mapped and linked to live data.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03 — Track</div>
+        <div class="step-title">Everything monitored</div>
+        <div class="step-desc">Tenants, leases, rent payments, maintenance requests, and IoT sensor data — all visible in one dashboard, updated in real time.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04 — Automate</div>
+        <div class="step-title">Problems caught early</div>
+        <div class="step-desc">Rent due? Reminder sent. Sensor anomaly? Alert fired. Lease expiring? Renewal workflow triggered. All without lifting a finger.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FEATURES ── -->
+  <section id="features">
+    <div class="features-inner">
+      <div class="eyebrow">Capabilities</div>
+      <h2 class="section-h2">Everything a portfolio<br/>manager needs.</h2>
+      <p class="section-p">Built for operators who manage dozens of properties and can't afford blind spots.</p>
+      <div class="features-grid">
+        <div class="feat-card">
+          <div class="feat-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
+          </div>
+          <div class="feat-title">3D Digital Twins</div>
+          <div class="feat-desc">Every property is a live 3D model. Switch between ARCHI (blueprint) and TRON (wireframe) views. Navigate by floor or unit.</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <div class="feat-title">Tenant Management</div>
+          <div class="feat-desc">Full tenant profiles, lease tracking, payment history, and automated rent reminders. Every relationship in one place.</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          </div>
+          <div class="feat-title">Financial Dashboard</div>
+          <div class="feat-desc">Revenue, expenses, and cash flow per property and across the full portfolio. Live figures, not month-end spreadsheets.</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div class="feat-title">Maintenance Tracking</div>
+          <div class="feat-desc">Log and assign work orders, track vendor jobs to completion, and keep a full maintenance history per unit and building.</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <div class="feat-title">IoT Sensor Alerts</div>
+          <div class="feat-desc">Connect sensors for temperature, humidity, water, and security. Anomalies trigger instant alerts before damage occurs.</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </div>
+          <div class="feat-title">AI Property Assistant</div>
+          <div class="feat-desc">Ask anything about your portfolio. "Which properties have overdue rent?" or "What's the maintenance backlog on 40 Wall?" — answered instantly.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── QUOTE ── -->
+  <section id="quote">
+    <div class="quote-inner">
+      <div class="quote-text">
+        <span class="q1">"I used to spend Mondays</span><br/>
+        <span class="q2">checking in on every property.</span><br/>
+        <span class="q3">Now the platform does it for me."</span>
+      </div>
+      <div class="quote-attr">
+        <strong>Michael Torres</strong>
+        Portfolio Director · Meridian Real Estate Group
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <a href="/" class="footer-logo">
+      <img src="../favicon.png" alt="The Bull" />
+      <span class="footer-logo-text">the bull properties</span>
+    </a>
+    <div class="footer-links">
+      <a href="#how"      class="footer-link">How it works</a>
+      <a href="#features" class="footer-link">Features</a>
+      <a href="/contracts" class="footer-link">The Bull Contracts</a>
+      <a href="/"         class="footer-link">← The Bull</a>
+    </div>
+    <div class="footer-copy">© 2026 The Bull. All rights reserved.</div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+    hamburger.addEventListener('click', function () {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+    mobileNav.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
