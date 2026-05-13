@@ -883,7 +883,7 @@
 
     // ── Load GLB ──
     const loader = new GLTFLoader();
-    loader.load('./american_house.glb', function(gltf) {
+    loader.load('https://breax-files-dev-1.s3.eu-north-1.amazonaws.com/models/american_house_new.glb', function(gltf) {
       const model = gltf.scene;
 
       // Add first so world transforms compute correctly
