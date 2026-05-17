@@ -741,10 +741,213 @@
       display: flex; align-items: center; justify-content: center;
     }
 
+    /* ── PRIVACY ── */
+    #privacy {
+      padding: 100px 48px;
+      background: var(--bg);
+    }
+
+    .privacy-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .privacy-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-top: 48px;
+    }
+
+    .privacy-card {
+      background: #fff;
+      padding: 36px 28px;
+      transition: background 0.15s;
+    }
+
+    .privacy-card:hover { background: var(--bg2); }
+
+    .privacy-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .privacy-icon svg {
+      width: 17px;
+      height: 17px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .privacy-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .privacy-card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .privacy-note {
+      margin-top: 28px;
+      padding: 16px 22px;
+      background: var(--accent-bg);
+      border: 1px solid rgba(179,134,0,0.2);
+      border-radius: 10px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .privacy-note strong { color: var(--accent); font-weight: 600; }
+
+    /* ── DECENTRALIZED ── */
+    #decentral {
+      padding: 100px 48px;
+      background-image: radial-gradient(circle, rgba(0,0,0,0.055) 1px, transparent 1px);
+      background-size: 22px 22px;
+      background-color: var(--bg);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .decentral-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .decentral-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 5px 14px;
+      margin-bottom: 28px;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(8px);
+    }
+
+    .decentral-h2 {
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      color: var(--primary);
+      margin-bottom: 18px;
+    }
+
+    .decentral-sub {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 580px;
+      margin: 0 auto 56px;
+    }
+
+    .decentral-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      text-align: left;
+    }
+
+    .decentral-card {
+      background: rgba(255,255,255,0.88);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 32px 28px;
+      backdrop-filter: blur(8px);
+      transition: border-color 0.16s, box-shadow 0.16s;
+    }
+
+    .decentral-card:hover {
+      border-color: rgba(179,134,0,0.28);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+    }
+
+    .decentral-card-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
+      background: var(--accent-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .decentral-card-icon svg {
+      width: 17px;
+      height: 17px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .decentral-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .decentral-card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .decentral-roadmap {
+      margin-top: 36px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 14px;
+      background: rgba(255,255,255,0.8);
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
       .steps-grid { grid-template-columns: repeat(2, 1fr); }
       .cards-grid { grid-template-columns: repeat(2, 1fr); }
+      .privacy-grid { grid-template-columns: repeat(2, 1fr); }
+      .decentral-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 640px) {
@@ -756,12 +959,16 @@
       .node-strip { padding: 16px 20px; gap: 16px; }
       #how { padding: 72px 20px; }
       #who { padding: 72px 20px; }
+      #privacy { padding: 72px 20px; }
       #ai { padding: 72px 20px; }
       #quote { padding: 80px 20px; }
       footer { padding: 28px 20px; flex-direction: column; align-items: flex-start; }
 
       .steps-grid { grid-template-columns: 1fr; }
       .cards-grid { grid-template-columns: 1fr; }
+      .privacy-grid { grid-template-columns: 1fr; }
+      .decentral-grid { grid-template-columns: 1fr; }
+      #decentral { padding: 72px 20px; }
       .footer-links { flex-wrap: wrap; gap: 16px; }
     }
   </style>
@@ -1107,6 +1314,87 @@
           <div class="card-desc">If your team spends hours chasing approvals, sending reminders, and updating status fields — this removes all of that.</div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ── PRIVACY ── -->
+  <section id="privacy">
+    <div class="privacy-inner">
+      <div class="eyebrow">Privacy</div>
+      <h2 class="section-h2">Your clients' data<br/>never goes public.</h2>
+      <p class="section-p">Legal data is the most sensitive data there is. We built The Bull Contracts with a layered privacy architecture — so your contracts and your clients' information stay exactly where they belong.</p>
+
+      <div class="privacy-grid">
+        <div class="privacy-card">
+          <div class="privacy-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          </div>
+          <div class="privacy-card-title">Zero Data Retention</div>
+          <div class="privacy-card-desc">We use Anthropic's Zero Data Retention API tier. Your prompts and contract content are never logged or stored by any AI provider — they disappear the moment a response is returned.</div>
+        </div>
+        <div class="privacy-card">
+          <div class="privacy-icon">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+          </div>
+          <div class="privacy-card-title">Retrieval Isolation</div>
+          <div class="privacy-card-desc">We never send full contracts to the AI. Only the excerpts relevant to each query are retrieved — the rest of your document stays in our encrypted database, never exposed.</div>
+        </div>
+        <div class="privacy-card">
+          <div class="privacy-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="privacy-card-title">Firm-Scoped Workspaces</div>
+          <div class="privacy-card-desc">Every query is hard-filtered by your firm's ID at the database level. No data from another firm can ever appear in your workspace — by architecture, not policy.</div>
+        </div>
+        <div class="privacy-card">
+          <div class="privacy-icon">
+            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="privacy-card-title">Full Audit Trail</div>
+          <div class="privacy-card-desc">Every AI query, document upload, and automated action is logged with a timestamp and user identity. Full compliance evidence available on demand.</div>
+        </div>
+      </div>
+
+      <div class="privacy-note">
+        <strong>Building toward SOC 2 Type II certification.</strong> All current controls are operational and enforceable by contract today. Enterprise clients receive a Data Processing Agreement (DPA) on request.
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DECENTRALIZED ── -->
+  <section id="decentral">
+    <div class="decentral-inner">
+      <div class="decentral-badge">Web3 · Decentralized Party Network</div>
+      <h2 class="decentral-h2">Every party gets<br/>their own window in.</h2>
+      <p class="decentral-sub">
+        Each contract gets a private peer network built on Web3 infrastructure. The lawyer spins it up in seconds, shares a link, and every party joins with their own cryptographic identity — seeing only what's theirs, communicating through a signed thread.
+      </p>
+
+      <div class="decentral-grid">
+        <div class="decentral-card">
+          <div class="decentral-card-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><path d="M6.5 8a3 3 0 00-3 3v1h17v-1a3 3 0 00-3-3"/><path d="M12 8v4"/><circle cx="5" cy="19" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M5 17v-2a2 2 0 012-2h10a2 2 0 012 2v2"/></svg>
+          </div>
+          <div class="decentral-card-title">One Network Per Contract</div>
+          <div class="decentral-card-desc">The lawyer creates a dedicated peer network for each agreement. Contract data is published instantly — no server, no database, no intermediary. The network lives on the peers connected to it.</div>
+        </div>
+        <div class="decentral-card">
+          <div class="decentral-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+          </div>
+          <div class="decentral-card-title">Invite by Link</div>
+          <div class="decentral-card-desc">A unique access link and shared credentials let each party in. They authenticate with a cryptographic keypair derived from their password — the same concept as a Web3 wallet, with no account created on any server. They see only their obligations.</div>
+        </div>
+        <div class="decentral-card">
+          <div class="decentral-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </div>
+          <div class="decentral-card-title">Signed Contract Thread</div>
+          <div class="decentral-card-desc">All parties communicate through a live peer feed — confirmations, document uploads, and updates. Every message is cryptographically signed, timestamped, and replicated across the network.</div>
+        </div>
+      </div>
+
+      <div class="decentral-roadmap">On-chain transaction sealing & smart contract obligations — coming soon</div>
     </div>
   </section>
 
