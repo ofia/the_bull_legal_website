@@ -975,9 +975,52 @@
       #decentral { padding: 72px 20px; }
       .footer-links { flex-wrap: wrap; gap: 16px; }
     }
+
+    /* ── INTRO ── */
+    #intro {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.55s ease;
+    }
+
+    #intro-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      color: #0d0d0d;
+      transition: opacity 0.32s ease;
+    }
+
+    .intro-phase-1 { font-size: clamp(36px, 6vw, 72px); }
+    .intro-phase-2 { font-size: clamp(18px, 3vw, 38px); }
+
+    .intro-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 0.85em;
+      background: #b38600;
+      margin-left: 3px;
+      vertical-align: middle;
+      animation: cursor-blink 0.65s ease infinite;
+    }
+
+    @keyframes cursor-blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- ── INTRO OVERLAY ── -->
+  <div id="intro">
+    <div id="intro-text" class="intro-phase-1"></div>
+  </div>
 
   <!-- ── NAV ── -->
   <nav>
@@ -1427,6 +1470,68 @@
     </div>
     <div class="footer-copy">© 2026 The Bull. All rights reserved.</div>
   </footer>
+
+  <!-- ── INTRO ANIMATION ── -->
+  <script>
+    (function () {
+      document.body.style.overflow = 'hidden';
+
+      const overlay = document.getElementById('intro');
+      const textEl  = document.getElementById('intro-text');
+
+      // Type a string character by character, cursor included
+      function type(str, speed, onDone) {
+        let i = 0;
+        textEl.innerHTML = '<span class="intro-cursor"></span>';
+        const cursor = textEl.querySelector('.intro-cursor');
+
+        const tick = setInterval(function () {
+          i++;
+          textEl.innerHTML = str.slice(0, i) + '<span class="intro-cursor"></span>';
+          if (i >= str.length) {
+            clearInterval(tick);
+            setTimeout(function () {
+              textEl.innerHTML = str; // drop cursor
+              if (onDone) onDone();
+            }, 320);
+          }
+        }, speed);
+      }
+
+      // Phase 1: "Welcome"
+      type('Welcome', 90, function () {
+
+        // Pause, then fade "Welcome" out
+        setTimeout(function () {
+          textEl.style.opacity = '0';
+
+          setTimeout(function () {
+            // Switch to phase 2 sizing
+            textEl.className = 'intro-phase-2';
+            textEl.style.opacity = '1';
+
+            // Phase 2: "The Bull / Contracts"
+            type('The Bull / Contracts', 65, function () {
+
+              // Style the two parts now that typing is done
+              setTimeout(function () {
+                textEl.innerHTML =
+                  '<span style="font-weight:700;color:#0d0d0d">The Bull</span>' +
+                  '<span style="font-weight:500;color:rgba(13,13,13,0.42)"> / Contracts</span>';
+
+                // Pause then fade out overlay
+                setTimeout(function () {
+                  overlay.style.opacity = '0';
+                  document.body.style.overflow = '';
+                  setTimeout(function () { overlay.remove(); }, 580);
+                }, 900);
+              }, 180);
+            });
+          }, 380);
+        }, 560);
+      });
+    })();
+  </script>
 
   <!-- ── MOBILE NAV SCRIPT ── -->
   <script>
