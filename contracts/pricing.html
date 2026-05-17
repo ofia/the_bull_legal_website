@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing — The Bull Contracts</title>
+  <link rel="icon" type="image/png" href="../favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #ffffff;
+      --bg2:       #f7f7f5;
+      --border:    rgba(13,13,13,0.09);
+      --primary:   #0d0d0d;
+      --muted:     rgba(13,13,13,0.42);
+      --accent:    #b38600;
+      --accent-bg: rgba(179,134,0,0.08);
+      --sans:      'Space Grotesk', sans-serif;
+      --mono:      'Space Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--primary); font-family: var(--sans); overflow-x: hidden; }
+
+    #bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    nav, main, footer { position: relative; z-index: 1; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 64px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { width: 30px; height: 30px; object-fit: contain; }
+    .nav-logo-text { font-size: 15px; font-weight: 700; color: var(--primary); letter-spacing: -0.02em; }
+    .nav-logo-sub { font-size: 13px; font-weight: 500; color: var(--muted); }
+    .nav-center { display: flex; align-items: center; gap: 2px; }
+    .nav-link { font-size: 14px; font-weight: 500; color: var(--primary); text-decoration: none; padding: 8px 12px; border-radius: 7px; transition: background 0.12s; }
+    .nav-link:hover { background: var(--bg2); }
+    .nav-link.active { color: var(--accent); }
+    .nav-right { display: flex; align-items: center; gap: 8px; }
+    .btn-outline { font-size: 14px; font-weight: 500; color: var(--primary); text-decoration: none; padding: 7px 16px; border-radius: 8px; border: 1px solid var(--border); transition: border-color 0.12s, background 0.12s; }
+    .btn-outline:hover { border-color: rgba(13,13,13,0.22); background: var(--bg2); }
+    .btn-filled { font-size: 14px; font-weight: 600; color: #fff; background: var(--primary); text-decoration: none; padding: 7px 18px; border-radius: 8px; transition: opacity 0.12s; }
+    .btn-filled:hover { opacity: 0.80; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; }
+    .nav-hamburger span { display: block; width: 22px; height: 1.5px; background: var(--primary); border-radius: 2px; transition: transform 0.2s, opacity 0.2s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .mobile-nav { display: none; flex-direction: column; position: fixed; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid var(--border); padding: 16px 20px 24px; gap: 4px; z-index: 199; box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav-link { font-size: 15px; font-weight: 500; color: var(--primary); text-decoration: none; padding: 12px 8px; border-bottom: 1px solid var(--border); }
+    .mobile-nav-link:last-of-type { border-bottom: none; }
+    .mobile-nav-cta { margin-top: 12px; display: block; text-align: center; font-size: 15px; font-weight: 600; color: #fff; background: var(--primary); text-decoration: none; padding: 12px; border-radius: 8px; }
+
+    /* ── HERO ── */
+    .pricing-hero {
+      padding: 100px 48px 72px;
+      text-align: center;
+    }
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 20px;
+    }
+    .pricing-hero h1 {
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 700; letter-spacing: -0.035em;
+      line-height: 1.04; color: var(--primary);
+      margin-bottom: 16px;
+    }
+    .pricing-hero p {
+      font-size: 17px; color: var(--muted);
+      line-height: 1.65; max-width: 440px;
+      margin: 0 auto;
+    }
+
+    /* ── PLANS ── */
+    .plans-wrap {
+      max-width: 1060px; margin: 0 auto;
+      padding: 0 48px 100px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .plan-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 36px 32px;
+      position: relative;
+      transition: border-color 0.18s, box-shadow 0.18s;
+    }
+
+    .plan-card:hover {
+      border-color: rgba(13,13,13,0.16);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+    }
+
+    .plan-card.featured {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+
+    .plan-card.featured:hover {
+      box-shadow: 0 0 0 1px var(--accent), 0 8px 40px rgba(179,134,0,0.12);
+    }
+
+    .plan-badge {
+      position: absolute;
+      top: -12px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--mono);
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      padding: 4px 14px; border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    .plan-name {
+      font-family: var(--mono);
+      font-size: 11px; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .plan-price {
+      display: flex; align-items: baseline; gap: 4px;
+      margin-bottom: 6px;
+    }
+
+    .plan-price-amount {
+      font-size: 48px; font-weight: 700;
+      letter-spacing: -0.04em; color: var(--primary);
+      line-height: 1;
+    }
+
+    .plan-price-period {
+      font-size: 14px; color: var(--muted);
+      font-weight: 500;
+    }
+
+    .plan-tagline {
+      font-size: 13px; color: var(--muted);
+      line-height: 1.5; margin-bottom: 28px;
+      min-height: 40px;
+    }
+
+    .plan-cta {
+      display: block; width: 100%;
+      padding: 12px; border-radius: 10px;
+      font-size: 14px; font-weight: 600;
+      text-align: center; text-decoration: none;
+      cursor: pointer; border: none;
+      transition: opacity 0.14s, background 0.14s;
+      margin-bottom: 28px;
+    }
+
+    .plan-cta-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--primary);
+    }
+    .plan-cta-outline:hover { background: var(--bg2); border-color: rgba(13,13,13,0.18); }
+
+    .plan-cta-gold {
+      background: var(--accent);
+      color: #fff;
+    }
+    .plan-cta-gold:hover { opacity: 0.88; }
+
+    .plan-cta-black {
+      background: var(--primary);
+      color: #fff;
+    }
+    .plan-cta-black:hover { opacity: 0.80; }
+
+    .plan-divider {
+      height: 1px; background: var(--border);
+      margin-bottom: 24px;
+    }
+
+    .plan-features { display: flex; flex-direction: column; gap: 10px; }
+
+    .plan-feature {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13px; color: var(--primary); line-height: 1.45;
+    }
+
+    .plan-feature-check {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+
+    .check-green { background: rgba(22,163,74,0.12); }
+    .check-gold  { background: rgba(179,134,0,0.12); }
+
+    .plan-feature-check svg {
+      width: 9px; height: 9px;
+    }
+
+    .plan-feature-muted { color: var(--muted); }
+
+    /* ── FAQ ── */
+    .faq-wrap {
+      max-width: 680px; margin: 0 auto;
+      padding: 0 48px 100px;
+    }
+    .faq-title {
+      font-size: 28px; font-weight: 700;
+      letter-spacing: -0.025em; color: var(--primary);
+      margin-bottom: 32px; text-align: center;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+    }
+    .faq-q {
+      font-size: 15px; font-weight: 600;
+      color: var(--primary); margin-bottom: 8px;
+    }
+    .faq-a { font-size: 14px; color: var(--muted); line-height: 1.65; }
+    .faq-a a { color: var(--accent); text-decoration: none; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 36px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .footer-logo img { width: 22px; height: 22px; object-fit: contain; }
+    .footer-logo-text { font-size: 14px; font-weight: 700; color: var(--primary); letter-spacing: -0.01em; }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-link { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.12s; }
+    .footer-link:hover { color: var(--primary); }
+    .footer-copy { font-size: 13px; color: var(--muted); }
+
+    @media (max-width: 860px) {
+      .plans-wrap { grid-template-columns: 1fr; max-width: 480px; }
+    }
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      .nav-center, .nav-right { display: none; }
+      .nav-hamburger { display: flex; }
+      .pricing-hero { padding: 72px 20px 48px; }
+      .plans-wrap { padding: 0 20px 72px; }
+      .faq-wrap { padding: 0 20px 72px; }
+      footer { padding: 28px 20px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <img src="../favicon.png" alt="The Bull" />
+      <span class="nav-logo-text">the bull</span>
+      <span class="nav-logo-sub">/ Contracts</span>
+    </a>
+    <div class="nav-center">
+      <a href="index.html#how" class="nav-link">How it works</a>
+      <a href="index.html#who" class="nav-link">Who it's for</a>
+      <a href="index.html#ai"  class="nav-link">AI features</a>
+      <a href="pricing.html"   class="nav-link active">Pricing</a>
+    </div>
+    <div class="nav-right">
+      <a href="https://the-bull-legal.vercel.app/" class="btn-outline">Log in</a>
+      <a href="#plans" class="btn-filled">See plans</a>
+    </div>
+    <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="index.html#how" class="mobile-nav-link">How it works</a>
+    <a href="index.html#who" class="mobile-nav-link">Who it's for</a>
+    <a href="index.html#ai"  class="mobile-nav-link">AI features</a>
+    <a href="pricing.html"   class="mobile-nav-link">Pricing</a>
+    <a href="#plans" class="mobile-nav-cta">See plans</a>
+  </div>
+
+  <main>
+
+    <!-- ── HERO ── -->
+    <div class="pricing-hero">
+      <div class="eyebrow">Pricing</div>
+      <h1>Simple, honest pricing.</h1>
+      <p>Start free. Scale when you need to. No hidden fees, no lock-in.</p>
+    </div>
+
+    <!-- ── PLANS ── -->
+    <div class="plans-wrap" id="plans">
+
+      <!-- Free -->
+      <div class="plan-card">
+        <div class="plan-name">Free</div>
+        <div class="plan-price">
+          <span class="plan-price-amount">$0</span>
+          <span class="plan-price-period">/ month</span>
+        </div>
+        <div class="plan-tagline">Get started in minutes. No credit card required.</div>
+        <a href="https://the-bull-legal.vercel.app/" class="plan-cta plan-cta-outline">Start free →</a>
+        <div class="plan-divider"></div>
+        <div class="plan-features">
+          <div class="plan-feature">
+            <span class="plan-feature-check check-green">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Up to 10 contracts
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-check check-green">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            AI contract analysis
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-check check-green">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Node cluster visualization
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-check check-green">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Bull AI chatbot
+          </div>
+          <div class="plan-feature plan-feature-muted">
+            <span class="plan-feature-check check-green">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            1 user seat
+          </div>
+        </div>
+      </div>
+
+      <!-- Pro — featured -->
+      <div class="plan-card featured">
+        <div class="plan-badge">Most popular</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">
+          <span class="plan-price-amount">$29</span>
+          <span class="plan-price-period">/ month</span>
+        </div>
+        <div class="plan-tagline">For growing legal teams tracking real workloads.</div>
+        <a href="payment.html" class="plan-cta plan-cta-gold">Get started →</a>
+        <div class="plan-divider"></div>
+        <div class="plan-features">
+          <div class="plan-feature">
+            <span class="plan-feature-check check-gold">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#b38600" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Up to 100 contracts
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-check check-gold">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#b38600" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Everything in Free
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-check check-gold">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#b38600" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Automated email reminders
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-check check-gold">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#b38600" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Email confirmation scanning
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-check check-gold">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#b38600" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Supporting documents vault
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-check check-gold">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#b38600" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Party network (decentralized)
+          </div>
+          <div class="plan-feature plan-feature-muted">
+            <span class="plan-feature-check check-gold">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#b38600" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            3 user seats
+          </div>
+        </div>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="plan-card">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price">
+          <span class="plan-price-amount" style="font-size:36px;letter-spacing:-0.03em;">Custom</span>
+        </div>
+        <div class="plan-tagline">For law firms managing contracts at scale, with compliance requirements.</div>
+        <a href="mailto:hello@the-bull.ai" class="plan-cta plan-cta-black">Contact sales →</a>
+        <div class="plan-divider"></div>
+        <div class="plan-features">
+          <div class="plan-feature">
+            <span class="plan-feature-check check-green">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Unlimited contracts
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-check check-green">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Everything in Pro
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-check check-green">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            SSO / SAML authentication
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-check check-green">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Audit logs & compliance reports
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-check check-green">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Data Processing Agreement (DPA)
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-check check-green">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Dedicated support & SLA
+          </div>
+          <div class="plan-feature plan-feature-muted">
+            <span class="plan-feature-check check-green">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Unlimited seats
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /plans-wrap -->
+
+    <!-- ── FAQ ── -->
+    <div class="faq-wrap">
+      <div class="faq-title">Common questions</div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can I switch plans later?</div>
+        <div class="faq-a">Yes. You can upgrade or downgrade at any time. Changes take effect on your next billing cycle.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What counts as a contract?</div>
+        <div class="faq-a">Any document you upload and analyze through the platform. Draft versions and archived contracts count toward your limit.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is my data secure?</div>
+        <div class="faq-a">Yes. We use Anthropic's Zero Data Retention API tier — your contract content is never logged by any AI provider. All data is scoped to your firm and encrypted at rest. <a href="index.html#privacy">Learn more →</a></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do you offer a DPA for compliance?</div>
+        <div class="faq-a">Data Processing Agreements are available on Enterprise plans. <a href="mailto:hello@the-bull.ai">Contact us</a> to request one.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How do I cancel?</div>
+        <div class="faq-a">You can cancel anytime from your account settings. You'll retain access until the end of your billing period, with no further charges.</div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <a href="index.html" class="footer-logo">
+      <img src="../favicon.png" alt="The Bull" />
+      <span class="footer-logo-text">the bull contracts</span>
+    </a>
+    <div class="footer-links">
+      <a href="index.html#how" class="footer-link">How it works</a>
+      <a href="index.html#who" class="footer-link">Who it's for</a>
+      <a href="https://the-bull-legal.vercel.app/" class="footer-link">Launch app</a>
+      <a href="mailto:hello@the-bull.ai" class="footer-link">hello@the-bull.ai</a>
+      <a href="/" class="footer-link">← The Bull</a>
+    </div>
+    <div class="footer-copy">© 2026 The Bull. All rights reserved.</div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+    hamburger.addEventListener('click', function () {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+    mobileNav.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      });
+    });
+  </script>
+
+  <script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    const NODE_COUNT = 32, LINK_DIST = 160, SPEED = 0.22;
+    let W, H, nodes;
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    function mkNode() { return { x: Math.random()*W, y: Math.random()*H, vx: (Math.random()-0.5)*SPEED, vy: (Math.random()-0.5)*SPEED, r: 1+Math.random()*1.2 }; }
+    function init() { resize(); nodes = Array.from({length:NODE_COUNT}, mkNode); }
+    function step() {
+      ctx.clearRect(0,0,W,H);
+      for (const n of nodes) {
+        n.x+=n.vx; n.y+=n.vy;
+        if (n.x<-40) n.x=W+40; if (n.x>W+40) n.x=-40;
+        if (n.y<-40) n.y=H+40; if (n.y>H+40) n.y=-40;
+      }
+      for (let i=0;i<nodes.length;i++) for (let j=i+1;j<nodes.length;j++) {
+        const a=nodes[i],b=nodes[j],dx=a.x-b.x,dy=a.y-b.y,dist=Math.sqrt(dx*dx+dy*dy);
+        if (dist<LINK_DIST) { const alpha=(1-dist/LINK_DIST)*0.10; ctx.beginPath(); ctx.strokeStyle=`rgba(13,13,13,${alpha})`; ctx.lineWidth=0.8; ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
+      }
+      for (const n of nodes) { ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2); ctx.fillStyle='rgba(28,28,28,0.30)'; ctx.fill(); }
+      requestAnimationFrame(step);
+    }
+    window.addEventListener('resize', resize);
+    init(); step();
+  </script>
+
+</body>
+</html>
