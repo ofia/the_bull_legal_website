@@ -1019,7 +1019,9 @@
 
   <!-- ── INTRO OVERLAY ── -->
   <div id="intro">
-    <div id="intro-text" class="intro-phase-1"></div>
+    <div id="intro-text" class="intro-phase-1">
+      <span id="intro-typed"></span><span class="intro-cursor"></span>
+    </div>
   </div>
 
   <!-- ── NAV ── -->
@@ -1476,56 +1478,66 @@
     (function () {
       document.body.style.overflow = 'hidden';
 
-      const overlay = document.getElementById('intro');
-      const textEl  = document.getElementById('intro-text');
+      const overlay  = document.getElementById('intro');
+      const textEl   = document.getElementById('intro-text');
+      const typedEl  = document.getElementById('intro-typed');
+      const cursorEl = textEl.querySelector('.intro-cursor');
 
-      // Type a string character by character, cursor included
-      function type(str, speed, onDone) {
+      // Type using textContent only — no innerHTML thrash per character.
+      // Speed has natural variation: faster in the middle, slight jitter throughout.
+      function type(str, baseSpeed, onDone) {
+        typedEl.textContent = '';
         let i = 0;
-        textEl.innerHTML = '<span class="intro-cursor"></span>';
-        const cursor = textEl.querySelector('.intro-cursor');
 
-        const tick = setInterval(function () {
-          i++;
-          textEl.innerHTML = str.slice(0, i) + '<span class="intro-cursor"></span>';
+        function tick() {
+          typedEl.textContent = str.slice(0, ++i);
+
           if (i >= str.length) {
-            clearInterval(tick);
-            setTimeout(function () {
-              textEl.innerHTML = str; // drop cursor
-              if (onDone) onDone();
-            }, 320);
+            setTimeout(onDone, 340);
+            return;
           }
-        }, speed);
+
+          // Ease in-out: slower at start/end, faster in the middle
+          const progress = i / str.length;
+          const eased    = 1 - Math.sin(progress * Math.PI) * 0.45;
+          // Natural jitter ±25%
+          const jitter   = 1 + (Math.random() - 0.5) * 0.5;
+          // Slight pause after space or slash
+          const pause    = (str[i] === ' ' || str[i] === '/') ? baseSpeed * 0.6 : 0;
+
+          setTimeout(tick, baseSpeed * eased * jitter + pause);
+        }
+
+        setTimeout(tick, baseSpeed);
       }
 
       // Phase 1: "Welcome"
-      type('Welcome', 90, function () {
+      type('Welcome', 95, function () {
 
-        // Pause, then fade "Welcome" out
         setTimeout(function () {
+          // Fade Welcome out
           textEl.style.opacity = '0';
 
           setTimeout(function () {
-            // Switch to phase 2 sizing
-            textEl.className = 'intro-phase-2';
+            textEl.className    = 'intro-phase-2';
+            typedEl.textContent = '';
             textEl.style.opacity = '1';
 
             // Phase 2: "The Bull / Contracts"
-            type('The Bull / Contracts', 65, function () {
+            type('The Bull / Contracts', 68, function () {
 
-              // Style the two parts now that typing is done
+              // Swap typed span to styled version, hide cursor
+              cursorEl.style.display = 'none';
+              typedEl.innerHTML =
+                '<span style="font-weight:700;color:#0d0d0d">The Bull</span>' +
+                '<span style="font-weight:500;color:rgba(13,13,13,0.42)"> / Contracts</span>';
+
+              // Pause then fade overlay out
               setTimeout(function () {
-                textEl.innerHTML =
-                  '<span style="font-weight:700;color:#0d0d0d">The Bull</span>' +
-                  '<span style="font-weight:500;color:rgba(13,13,13,0.42)"> / Contracts</span>';
-
-                // Pause then fade out overlay
-                setTimeout(function () {
-                  overlay.style.opacity = '0';
-                  document.body.style.overflow = '';
-                  setTimeout(function () { overlay.remove(); }, 580);
-                }, 900);
-              }, 180);
+                overlay.style.opacity = '0';
+                document.body.style.overflow = '';
+                setTimeout(function () { overlay.remove(); }, 580);
+              }, 900);
             });
           }, 380);
         }, 560);
