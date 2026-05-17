@@ -34,17 +34,21 @@
 
     /* ── CANVAS ── */
     #bg-canvas {
-      position: fixed;
+      position: absolute;
       inset: 0;
       z-index: 0;
       pointer-events: none;
     }
+
+    #quote { position: relative; overflow: hidden; }
 
     /* Everything sits above the canvas */
     nav, section, footer, .node-strip {
       position: relative;
       z-index: 1;
     }
+
+    #quote .quote-inner { position: relative; z-index: 1; }
 
     /* ── NAV ── */
     nav {
@@ -975,9 +979,6 @@
 </head>
 <body>
 
-  <!-- Animated node network canvas (white bg) -->
-  <canvas id="bg-canvas"></canvas>
-
   <!-- ── NAV ── -->
   <nav>
     <a href="/" class="nav-logo">
@@ -1398,6 +1399,7 @@
 
   <!-- ── QUOTE ── -->
   <section id="quote">
+    <canvas id="bg-canvas"></canvas>
     <div class="quote-inner">
       <div class="quote-text">
         <span class="q1">"Turned 3 hours of contract review</span><br/>
@@ -1457,8 +1459,9 @@
     let W, H, nodes;
 
     function resize() {
-      W = canvas.width  = window.innerWidth;
-      H = canvas.height = window.innerHeight;
+      const section = canvas.parentElement;
+      W = canvas.width  = section.offsetWidth;
+      H = canvas.height = section.offsetHeight;
     }
 
     function mkNode() {
