@@ -474,18 +474,47 @@
       return valid;
     }
 
-    form.addEventListener('submit', function (e) {
+    var API_BASE = 'https://thebulllegal-production.up.railway.app';
+
+    // Detect plan from URL param (?plan=annual)
+    var isAnnual = new URLSearchParams(window.location.search).get('plan') === 'annual';
+
+    form.addEventListener('submit', async function (e) {
       e.preventDefault();
       if (!validate()) return;
 
-      // Simulate processing
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Processing…';
+      submitBtn.innerHTML = '<span>Redirecting to checkout…</span>';
 
-      setTimeout(function () {
-        document.getElementById('form-state').style.display = 'none';
-        document.getElementById('success-state').classList.add('visible');
-      }, 1600);
+      try {
+        var res = await fetch(API_BASE + '/api/payments/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            plan: isAnnual ? 'annual' : 'monthly',
+            success_url: 'https://the-bull-legal.vercel.app',
+            cancel_url:  window.location.href,
+          }),
+        });
+
+        if (res.ok) {
+          var data = await res.json();
+          window.location.href = data.url;   // redirect to Stripe Checkout
+        } else {
+          var err = await res.json().catch(() => ({}));
+          // Stripe not yet configured — show contact message
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Subscribe · ' + (isAnnual ? '$299 / year' : '$29 / month');
+          var note = document.querySelector('.form-fine-print');
+          note.innerHTML = '⚠ ' + (err.detail || 'Payments not yet active. <a href="https://the-bull.ai/#contact" style="color:var(--accent)">Contact us</a> to get early access.');
+        }
+      } catch (_) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Subscribe · ' + (isAnnual ? '$299 / year' : '$29 / month');
+        var note2 = document.querySelector('.form-fine-print');
+        note2.innerHTML = '⚠ Could not connect. <a href="https://the-bull.ai/#contact" style="color:var(--accent)">Contact us</a> to subscribe.';
+      }
     });
   </script>
 
