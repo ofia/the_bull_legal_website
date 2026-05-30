@@ -758,7 +758,7 @@
 
     .privacy-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
@@ -822,6 +822,36 @@
     }
 
     .privacy-note strong { color: var(--accent); font-weight: 600; }
+
+    .privacy-coming-soon {
+      margin-top: 16px;
+      padding: 18px 22px;
+      background: var(--bg2);
+      border: 1px dashed rgba(13,13,13,0.14);
+      border-radius: 10px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .privacy-coming-soon-icon {
+      width: 34px; height: 34px; flex-shrink: 0;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0.55;
+    }
+    .privacy-coming-soon-icon svg { width: 15px; height: 15px; stroke: var(--primary); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .privacy-coming-soon-body { flex: 1; }
+    .privacy-coming-soon-header { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+    .privacy-coming-soon-title { font-size: 14px; font-weight: 600; color: var(--muted); }
+    .coming-soon-pill {
+      font-family: var(--mono); font-size: 9px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); background: rgba(13,13,13,0.07);
+      padding: 2px 9px; border-radius: 100px;
+    }
+    .privacy-coming-soon-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
     /* ── DECENTRALIZED ── */
     #decentral {
@@ -1347,13 +1377,6 @@
       <div class="privacy-grid">
         <div class="privacy-card">
           <div class="privacy-icon">
-            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-          </div>
-          <div class="privacy-card-title">Zero Data Retention</div>
-          <div class="privacy-card-desc">We use Anthropic's Zero Data Retention API tier. Your prompts and contract content are never logged or stored by any AI provider — they disappear the moment a response is returned.</div>
-        </div>
-        <div class="privacy-card">
-          <div class="privacy-icon">
             <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
           </div>
           <div class="privacy-card-title">Retrieval Isolation</div>
@@ -1375,8 +1398,21 @@
         </div>
       </div>
 
+      <div class="privacy-coming-soon">
+        <div class="privacy-coming-soon-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        </div>
+        <div class="privacy-coming-soon-body">
+          <div class="privacy-coming-soon-header">
+            <span class="privacy-coming-soon-title">Zero Data Retention</span>
+            <span class="coming-soon-pill">Coming soon</span>
+          </div>
+          <div class="privacy-coming-soon-desc">AI-provider level zero data retention — your prompts and contract content will never be logged or stored by any AI provider, disappearing the moment a response is returned.</div>
+        </div>
+      </div>
+
       <div class="privacy-note">
-        <strong>Building toward SOC 2 Type II certification.</strong> All current controls are operational and enforceable by contract today. Enterprise clients receive a Data Processing Agreement (DPA) on request.
+        <strong>Next step: SOC 2 Type II certification.</strong> All current controls are operational and enforceable by contract today. Enterprise clients receive a Data Processing Agreement (DPA) on request.
       </div>
     </div>
   </section>
