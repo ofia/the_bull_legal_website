@@ -86,6 +86,37 @@
       margin: 0 auto;
     }
 
+    /* ── BILLING TOGGLE ── */
+    .billing-toggle-wrap {
+      display: flex; justify-content: center; align-items: center;
+      gap: 12px; margin-bottom: 48px;
+    }
+    .billing-label {
+      font-size: 14px; font-weight: 500; color: var(--muted);
+      cursor: pointer; transition: color 0.14s;
+    }
+    .billing-label.active { color: var(--primary); }
+    .toggle-track {
+      width: 48px; height: 26px; border-radius: 100px;
+      background: var(--primary); cursor: pointer;
+      position: relative; transition: background 0.18s;
+      flex-shrink: 0;
+    }
+    .toggle-thumb {
+      position: absolute; top: 3px; left: 3px;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: #fff; transition: transform 0.18s;
+    }
+    .toggle-track.annual .toggle-thumb { transform: translateX(22px); }
+    .save-badge {
+      font-family: var(--mono); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); background: var(--accent-bg);
+      padding: 3px 10px; border-radius: 100px;
+      opacity: 0; transition: opacity 0.18s;
+    }
+    .save-badge.visible { opacity: 1; }
+
     /* ── PLANS ── */
     .plans-wrap {
       max-width: 1060px; margin: 0 auto;
@@ -311,6 +342,16 @@
       <p>Start free. Scale when you need to. No hidden fees, no lock-in.</p>
     </div>
 
+    <!-- ── BILLING TOGGLE ── -->
+    <div class="billing-toggle-wrap">
+      <span class="billing-label active" id="label-monthly">Monthly</span>
+      <div class="toggle-track" id="billing-toggle" role="switch" aria-checked="false" tabindex="0">
+        <div class="toggle-thumb"></div>
+      </div>
+      <span class="billing-label" id="label-annual">Annual</span>
+      <span class="save-badge" id="save-badge">Save $49</span>
+    </div>
+
     <!-- ── PLANS ── -->
     <div class="plans-wrap" id="plans">
 
@@ -362,12 +403,16 @@
       <div class="plan-card featured">
         <div class="plan-badge">Most popular</div>
         <div class="plan-name">Pro</div>
-        <div class="plan-price">
+        <div class="plan-price" id="pro-price-monthly">
           <span class="plan-price-amount">$29</span>
           <span class="plan-price-period">/ month</span>
         </div>
+        <div class="plan-price" id="pro-price-annual" style="display:none;">
+          <span class="plan-price-amount">$299</span>
+          <span class="plan-price-period">/ year</span>
+        </div>
         <div class="plan-tagline">For growing legal teams tracking real workloads.</div>
-        <a href="payment.html" class="plan-cta plan-cta-gold">Get started →</a>
+        <a href="payment.html" class="plan-cta plan-cta-gold" id="pro-cta">Get started →</a>
         <div class="plan-divider"></div>
         <div class="plan-features">
           <div class="plan-feature">
@@ -515,6 +560,36 @@
     </div>
     <div class="footer-copy">© 2026 The Bull. All rights reserved.</div>
   </footer>
+
+  <script>
+    /* ── BILLING TOGGLE ── */
+    const track       = document.getElementById('billing-toggle');
+    const labelMo     = document.getElementById('label-monthly');
+    const labelYr     = document.getElementById('label-annual');
+    const saveBadge   = document.getElementById('save-badge');
+    const priceMo     = document.getElementById('pro-price-monthly');
+    const priceYr     = document.getElementById('pro-price-annual');
+    const proCta      = document.getElementById('pro-cta');
+
+    let isAnnual = false;
+
+    function setAnnual(val) {
+      isAnnual = val;
+      track.classList.toggle('annual', isAnnual);
+      track.setAttribute('aria-checked', String(isAnnual));
+      labelMo.classList.toggle('active', !isAnnual);
+      labelYr.classList.toggle('active',  isAnnual);
+      saveBadge.classList.toggle('visible', isAnnual);
+      priceMo.style.display = isAnnual ? 'none'  : 'flex';
+      priceYr.style.display = isAnnual ? 'flex'  : 'none';
+      proCta.href = isAnnual ? 'payment.html?plan=annual' : 'payment.html';
+    }
+
+    track.addEventListener('click', () => setAnnual(!isAnnual));
+    track.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); setAnnual(!isAnnual); } });
+    labelMo.addEventListener('click', () => setAnnual(false));
+    labelYr.addEventListener('click', () => setAnnual(true));
+  </script>
 
   <script>
     const hamburger = document.getElementById('hamburger');
