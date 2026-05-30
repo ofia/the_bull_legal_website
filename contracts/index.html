@@ -634,6 +634,25 @@
       color: var(--muted);
     }
 
+    /* ── CONTACT MODAL ── */
+    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(13,13,13,0.45); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center; }
+    .modal-backdrop.open { display: flex; }
+    .modal { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 36px 32px 32px; width: 100%; max-width: 420px; margin: 16px; position: relative; }
+    .modal-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+    .modal-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+    .modal-close { position: absolute; top: 14px; right: 16px; background: none; border: none; font-size: 22px; line-height: 1; color: var(--muted); cursor: pointer; padding: 4px 6px; }
+    .modal-close:hover { color: var(--primary); }
+    .modal label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; font-family: var(--mono); }
+    .modal input, .modal textarea { width: 100%; background: var(--bg2); border: 1px solid var(--border); border-radius: 7px; padding: 10px 12px; font-size: 14px; font-family: var(--sans); color: var(--primary); outline: none; transition: border-color 0.15s; margin-bottom: 16px; }
+    .modal input:focus, .modal textarea:focus { border-color: var(--accent); }
+    .modal textarea { height: 100px; resize: vertical; }
+    .modal-send { width: 100%; background: var(--primary); color: #fff; border: none; border-radius: 7px; padding: 11px; font-size: 14px; font-weight: 600; font-family: var(--sans); cursor: pointer; transition: opacity 0.15s; }
+    .modal-send:hover { opacity: 0.82; }
+    .modal-send:disabled { opacity: 0.45; cursor: not-allowed; }
+    .modal-feedback { font-size: 13px; margin-top: 12px; text-align: center; }
+    .modal-feedback.success { color: #16a34a; }
+    .modal-feedback.error   { color: #dc2626; }
+
     /* ── APP MOCKUP ── */
     .cm-wrap { max-width: 1080px; margin: 56px auto 0; padding: 0 48px; }
 
@@ -1504,6 +1523,7 @@
       <a href="#how" class="footer-link">How it works</a>
       <a href="#who" class="footer-link">Who it's for</a>
       <a href="https://the-bull-legal.vercel.app/" class="footer-link">Launch app</a>
+      <button id="contact-btn" class="footer-link" style="background:none;border:none;cursor:pointer;padding:0;font-family:inherit;font-size:13px;">Contact</button>
       <a href="/" class="footer-link">← The Bull</a>
     </div>
     <div class="footer-copy">© 2026 The Bull. All rights reserved.</div>
@@ -1678,6 +1698,55 @@
     window.addEventListener('resize', resize);
     init();
     step();
+  </script>
+
+  <!-- ── CONTACT MODAL ── -->
+  <div class="modal-backdrop" id="contact-modal">
+    <div class="modal">
+      <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+      <div class="modal-title">Get in touch</div>
+      <div class="modal-sub">We'll get back to you at hello@the-bull.ai</div>
+      <form id="contact-form" novalidate>
+        <label for="cf-name">Name</label>
+        <input id="cf-name" name="name" type="text" placeholder="Your name" required />
+        <label for="cf-email">Email</label>
+        <input id="cf-email" name="email" type="email" placeholder="you@example.com" required />
+        <label for="cf-message">Message</label>
+        <textarea id="cf-message" name="message" placeholder="Tell us what you're working on…" required></textarea>
+        <button type="submit" class="modal-send" id="modal-send">Send Message</button>
+        <div class="modal-feedback" id="modal-feedback"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    var modal    = document.getElementById('contact-modal');
+    var form     = document.getElementById('contact-form');
+    var sendBtn  = document.getElementById('modal-send');
+    var feedback = document.getElementById('modal-feedback');
+
+    document.getElementById('contact-btn').addEventListener('click', function () { modal.classList.add('open'); });
+    document.getElementById('modal-close').addEventListener('click', function () { modal.classList.remove('open'); });
+    modal.addEventListener('click', function (e) { if (e.target === modal) modal.classList.remove('open'); });
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      sendBtn.disabled = true; sendBtn.textContent = 'Sending…'; feedback.textContent = ''; feedback.className = 'modal-feedback';
+      try {
+        var res = await fetch('https://formspree.io/f/xdajykjg', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ name: document.getElementById('cf-name').value, email: document.getElementById('cf-email').value, message: document.getElementById('cf-message').value })
+        });
+        if (res.ok) { feedback.textContent = 'Message sent — we\'ll be in touch soon.'; feedback.classList.add('success'); form.reset(); }
+        else { throw new Error(); }
+      } catch (_) {
+        feedback.textContent = 'Something went wrong. Email us directly at hello@the-bull.ai';
+        feedback.classList.add('error');
+      } finally {
+        sendBtn.disabled = false; sendBtn.textContent = 'Send Message';
+      }
+    });
   </script>
 
 </body>
