@@ -1346,6 +1346,11 @@
       modal.classList.add('open');
     });
 
+    // Auto-open modal when linked to with #contact hash
+    if (window.location.hash === '#contact') {
+      modal.classList.add('open');
+    }
+
     document.getElementById('modal-close').addEventListener('click', function () {
       modal.classList.remove('open');
     });
