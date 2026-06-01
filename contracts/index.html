@@ -7,28 +7,39 @@
   <link rel="icon" type="image/png" href="../favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Display:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #ffffff;
-      --bg2:       #f7f7f5;
-      --border:    rgba(13,13,13,0.09);
-      --primary:   #0d0d0d;
-      --muted:     rgba(13,13,13,0.42);
-      --accent:    #b38600;
-      --accent-bg: rgba(179,134,0,0.08);
-      --sans:      'Space Grotesk', sans-serif;
-      --mono:      'Space Mono', monospace;
+      --bg:             #ffffff;
+      --bg2:            #f5f5f3;
+      --border:         #d8d8d3;
+      --primary:        #1a1a1a;
+      --muted:          #8a8a85;
+      --accent:         #b38600;
+      --accent-bg:      rgba(179,134,0,0.08);
+      --sans:           'Inter', sans-serif;
+      --display:        'Inter Display', sans-serif;
+      --mono:           'JetBrains Mono', monospace;
+      --color-heading:  #1b1b1b;
+      --color-body:     #3f3f3a;
+      --color-secondary:#616159;
+      --color-tertiary: #8a8a85;
+      --color-subtle:   #b0b0aa;
+      --color-caption:  #c8c8c2;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
-      color: var(--primary);
+      color: var(--color-body);
       font-family: var(--sans);
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.375;
+      letter-spacing: -0.01em;
       overflow-x: hidden;
     }
 
@@ -102,6 +113,7 @@
     .nav-link {
       font-size: 14px;
       font-weight: 500;
+      letter-spacing: -0.16px;
       color: var(--primary);
       text-decoration: none;
       padding: 8px 12px;
@@ -120,27 +132,35 @@
     .btn-outline {
       font-size: 14px;
       font-weight: 500;
+      letter-spacing: -0.07px;
       color: var(--primary);
       text-decoration: none;
-      padding: 7px 16px;
-      border-radius: 8px;
+      padding: 0px 12px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 10px;
       border: 1px solid var(--border);
       transition: border-color 0.12s, background 0.12s;
     }
 
     .btn-outline:hover {
-      border-color: rgba(13,13,13,0.22);
+      border-color: #c0c0ba;
       background: var(--bg2);
     }
 
     .btn-filled {
       font-size: 14px;
-      font-weight: 600;
-      color: #fff;
-      background: var(--primary);
+      font-weight: 500;
+      letter-spacing: -0.07px;
+      color: #f5f5f3;
+      background: #1a1a1a;
       text-decoration: none;
-      padding: 7px 18px;
-      border-radius: 8px;
+      padding: 0px 12px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 10px;
       transition: opacity 0.12s;
     }
 
@@ -247,19 +267,23 @@
     @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.35;} }
 
     h1 {
-      font-size: clamp(44px, 7vw, 88px);
-      font-weight: 700;
-      letter-spacing: -0.035em;
-      line-height: 1.01;
-      color: var(--primary);
+      font-family: var(--display);
+      font-size: clamp(44px, 6vw, 64px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.0;
+      color: var(--color-heading);
       max-width: 780px;
       margin: 0 auto 24px;
     }
 
     .hero-sub {
-      font-size: clamp(15px, 2vw, 19px);
-      color: var(--muted);
-      line-height: 1.65;
+      font-family: var(--sans);
+      font-size: clamp(16px, 1.8vw, 20px);
+      font-weight: 500;
+      color: var(--color-secondary);
+      line-height: 1.3;
+      letter-spacing: -0.2px;
       max-width: 520px;
       margin: 0 auto 44px;
     }
@@ -274,12 +298,13 @@
 
     .hero-btn-black {
       font-size: 15px;
-      font-weight: 600;
-      color: #fff;
-      background: var(--primary);
+      font-weight: 500;
+      letter-spacing: -0.07px;
+      color: #f5f5f3;
+      background: #1a1a1a;
       text-decoration: none;
       padding: 13px 28px;
-      border-radius: 9px;
+      border-radius: 10px;
       transition: opacity 0.12s;
     }
 
@@ -288,12 +313,13 @@
     .hero-btn-ghost {
       font-size: 15px;
       font-weight: 500;
+      letter-spacing: -0.07px;
       color: var(--primary);
       background: rgba(255,255,255,0.75);
       border: 1px solid var(--border);
       text-decoration: none;
       padding: 13px 28px;
-      border-radius: 9px;
+      border-radius: 10px;
       backdrop-filter: blur(8px);
       transition: border-color 0.12s, background 0.12s;
     }
@@ -343,29 +369,32 @@
     }
 
     .eyebrow {
-      font-family: var(--mono);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
+      font-family: var(--display);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.72px;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--color-caption);
       margin-bottom: 16px;
     }
 
     .section-h2 {
+      font-family: var(--display);
       font-size: clamp(32px, 4.5vw, 52px);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.06;
-      color: var(--primary);
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      line-height: 1.07;
+      color: var(--color-heading);
       margin-bottom: 14px;
       max-width: 560px;
     }
 
     .section-p {
       font-size: 16px;
-      color: var(--muted);
-      line-height: 1.65;
+      font-weight: 500;
+      color: var(--color-secondary);
+      line-height: 1.375;
+      letter-spacing: -0.16px;
       max-width: 500px;
       margin-bottom: 56px;
     }
@@ -397,10 +426,11 @@
     }
 
     .step-title {
+      font-family: var(--display);
       font-size: 18px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--primary);
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      color: var(--color-heading);
       margin-bottom: 10px;
     }
 
@@ -462,10 +492,11 @@
     }
 
     .card-title {
+      font-family: var(--display);
       font-size: 16px;
-      font-weight: 700;
+      font-weight: 600;
       letter-spacing: -0.015em;
-      color: var(--primary);
+      color: var(--color-heading);
       margin-bottom: 8px;
     }
 
@@ -512,18 +543,21 @@
     }
 
     .ai-title {
+      font-family: var(--display);
       font-size: clamp(28px, 4vw, 52px);
-      font-weight: 700;
-      letter-spacing: -0.03em;
+      font-weight: 600;
+      letter-spacing: -0.02em;
       line-height: 1.08;
-      color: var(--primary);
+      color: var(--color-heading);
       margin-bottom: 18px;
     }
 
     .ai-sub {
       font-size: 16px;
-      color: var(--muted);
-      line-height: 1.65;
+      font-weight: 500;
+      color: var(--color-secondary);
+      line-height: 1.375;
+      letter-spacing: -0.16px;
       margin-bottom: 44px;
     }
 
@@ -560,9 +594,10 @@
     }
 
     .quote-text {
-      font-size: clamp(26px, 4vw, 52px);
-      font-weight: 700;
-      letter-spacing: -0.03em;
+      font-family: var(--display);
+      font-size: clamp(22px, 4vw, 44px);
+      font-weight: 600;
+      letter-spacing: -0.025em;
       line-height: 1.15;
     }
 
@@ -638,11 +673,11 @@
     .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(13,13,13,0.45); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center; }
     .modal-backdrop.open { display: flex; }
     .modal { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 36px 32px 32px; width: 100%; max-width: 420px; margin: 16px; position: relative; }
-    .modal-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+    .modal-title { font-family: var(--display); font-size: 18px; font-weight: 600; letter-spacing: -0.015em; color: var(--color-heading); margin-bottom: 4px; }
     .modal-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
     .modal-close { position: absolute; top: 14px; right: 16px; background: none; border: none; font-size: 22px; line-height: 1; color: var(--muted); cursor: pointer; padding: 4px 6px; }
     .modal-close:hover { color: var(--primary); }
-    .modal label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; font-family: var(--mono); }
+    .modal label { display: block; font-size: 12px; font-weight: 600; color: var(--color-caption); text-transform: uppercase; letter-spacing: 0.72px; margin-bottom: 6px; font-family: var(--display); }
     .modal input, .modal textarea { width: 100%; background: var(--bg2); border: 1px solid var(--border); border-radius: 7px; padding: 10px 12px; font-size: 14px; font-family: var(--sans); color: var(--primary); outline: none; transition: border-color 0.15s; margin-bottom: 16px; }
     .modal input:focus, .modal textarea:focus { border-color: var(--accent); }
     .modal textarea { height: 100px; resize: vertical; }
@@ -668,7 +703,7 @@
     }
     .cm-dot { width: 11px; height: 11px; border-radius: 50%; }
 
-    .cm-body { height: 520px; background: #f7f7f5; position: relative; overflow: hidden; font-family: 'Space Mono', monospace; }
+    .cm-body { height: 520px; background: #f5f5f3; position: relative; overflow: hidden; font-family: var(--mono); }
 
     /* TopBar */
     .cm-topbar {
@@ -816,10 +851,11 @@
     }
 
     .privacy-card-title {
+      font-family: var(--display);
       font-size: 16px;
-      font-weight: 700;
+      font-weight: 600;
       letter-spacing: -0.015em;
-      color: var(--primary);
+      color: var(--color-heading);
       margin-bottom: 8px;
     }
 
@@ -907,18 +943,21 @@
     }
 
     .decentral-h2 {
+      font-family: var(--display);
       font-size: clamp(28px, 4vw, 48px);
-      font-weight: 700;
-      letter-spacing: -0.03em;
+      font-weight: 600;
+      letter-spacing: -0.02em;
       line-height: 1.08;
-      color: var(--primary);
+      color: var(--color-heading);
       margin-bottom: 18px;
     }
 
     .decentral-sub {
       font-size: 16px;
-      color: var(--muted);
-      line-height: 1.65;
+      font-weight: 500;
+      color: var(--color-secondary);
+      line-height: 1.375;
+      letter-spacing: -0.16px;
       max-width: 580px;
       margin: 0 auto 56px;
     }
@@ -966,10 +1005,11 @@
     }
 
     .decentral-card-title {
+      font-family: var(--display);
       font-size: 16px;
-      font-weight: 700;
+      font-weight: 600;
       letter-spacing: -0.015em;
-      color: var(--primary);
+      color: var(--color-heading);
       margin-bottom: 8px;
     }
 
@@ -1038,10 +1078,10 @@
     }
 
     #intro-text {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      letter-spacing: -0.035em;
-      color: #0d0d0d;
+      font-family: 'Inter Display', sans-serif;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #1a1a1a;
       transition: opacity 0.32s ease;
     }
 
@@ -1184,14 +1224,14 @@
 
               <!-- ── Contract node (center) — labeled ── -->
               <circle cx="330" cy="190" r="14" fill="rgba(37,99,235,0.10)" stroke="#2563eb" stroke-width="1.6"/>
-              <text x="330" y="170" text-anchor="middle" font-family="'Space Mono', monospace" font-size="5.5" fill="rgba(28,28,28,0.32)" letter-spacing="0.12em">CONTRACT</text>
-              <text x="330" y="212" text-anchor="middle" font-family="'Space Mono', monospace" font-size="7" fill="#1c1c1c" font-weight="700" letter-spacing="0.03em">HARTMANN LEASE</text>
+              <text x="330" y="170" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="5.5" fill="rgba(28,28,28,0.32)" letter-spacing="0.12em">CONTRACT</text>
+              <text x="330" y="212" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7" fill="#1c1c1c" font-weight="700" letter-spacing="0.03em">HARTMANN LEASE</text>
 
               <!-- ── Party 1: BioTech LLC — labeled ── -->
               <circle cx="160" cy="115" r="9" fill="rgba(37,99,235,0.08)" stroke="#2563eb" stroke-width="1.3"/>
-              <text x="160" y="99" text-anchor="middle" font-family="'Space Mono', monospace" font-size="5.5" fill="rgba(28,28,28,0.32)" letter-spacing="0.1em">PARTY</text>
-              <text x="160" y="136" text-anchor="middle" font-family="'Space Mono', monospace" font-size="7" fill="#1c1c1c" font-weight="700">BioTech LLC</text>
-              <text x="160" y="146" text-anchor="middle" font-family="'Space Mono', monospace" font-size="6" fill="rgba(28,28,28,0.38)">Tenant</text>
+              <text x="160" y="99" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="5.5" fill="rgba(28,28,28,0.32)" letter-spacing="0.1em">PARTY</text>
+              <text x="160" y="136" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7" fill="#1c1c1c" font-weight="700">BioTech LLC</text>
+              <text x="160" y="146" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="6" fill="rgba(28,28,28,0.38)">Tenant</text>
 
               <!-- ── Party 2: Realty Corp ── -->
               <circle cx="155" cy="270" r="9" fill="rgba(37,99,235,0.08)" stroke="#2563eb" stroke-width="1.3"/>
@@ -1586,8 +1626,8 @@
               // Swap typed span to styled version, hide cursor
               cursorEl.style.display = 'none';
               typedEl.innerHTML =
-                '<span style="font-weight:700;color:#0d0d0d">The Bull</span>' +
-                '<span style="font-weight:500;color:rgba(13,13,13,0.42)"> / Contracts</span>';
+                '<span style="font-weight:600;color:#1a1a1a">The Bull</span>' +
+                '<span style="font-weight:500;color:#8a8a85"> / Contracts</span>';
 
               // Pause then fade overlay out
               setTimeout(function () {
