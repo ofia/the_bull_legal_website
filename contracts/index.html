@@ -703,101 +703,103 @@
     }
     .cm-dot { width: 11px; height: 11px; border-radius: 50%; }
 
-    .cm-body { height: 520px; background: #f5f5f3; position: relative; overflow: hidden; font-family: var(--mono); }
+    .cm-body { height: 560px; background: #f7f7f5; display: flex; flex-direction: column; font-family: var(--sans); overflow: hidden; }
 
     /* TopBar */
     .cm-topbar {
-      position: absolute; top: 0; left: 0; right: 0; height: 56px;
-      background: linear-gradient(180deg, rgba(247,247,245,0.97) 0%, rgba(247,247,245,0) 100%);
+      flex-shrink: 0; height: 48px;
+      background: #fff;
       border-bottom: 1px solid rgba(28,28,28,0.08);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 24px; z-index: 10;
+      padding: 0 20px;
     }
-    .cm-logo-block { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
-    .cm-logo-text { font-size: 11px; letter-spacing: 0.28em; font-weight: 700; text-transform: uppercase; color: #1c1c1c; }
-    .cm-toggle-pill {
-      width: 28px; height: 14px; border-radius: 7px;
-      background: rgba(28,28,28,0.10); position: relative;
-    }
-    .cm-toggle-thumb {
-      position: absolute; top: 2px; left: 2px;
-      width: 10px; height: 10px; border-radius: 50%;
-      background: rgba(28,28,28,0.45);
-    }
-    .cm-tabs { display: flex; align-items: center; gap: 5px; }
+    .cm-logo-block { display: flex; align-items: center; }
+    .cm-logo-text { font-size: 11px; letter-spacing: 0.22em; font-weight: 700; text-transform: uppercase; color: #1c1c1c; }
+    .cm-tabs { display: flex; align-items: center; gap: 4px; }
     .cm-tab {
-      padding: 4px 12px; border-radius: 6px; font-size: 9.5px; letter-spacing: 0.07em;
+      padding: 4px 11px; border-radius: 6px; font-size: 9px; letter-spacing: 0.06em;
       color: rgba(28,28,28,0.45); border: 1px solid rgba(28,28,28,0.09);
       background: transparent;
     }
-    .cm-tab.active {
-      color: #1c1c1c; background: rgba(28,28,28,0.06); border-color: rgba(28,28,28,0.18);
-    }
-    .cm-tab.gold {
-      color: #b38600; border-color: rgba(179,134,0,0.35);
-    }
+    .cm-tab.active { color: #1c1c1c; background: rgba(28,28,28,0.06); border-color: rgba(28,28,28,0.18); }
+    .cm-tab.gold { color: #b38600; border-color: rgba(179,134,0,0.35); }
     .cm-avatar {
-      width: 26px; height: 26px; border-radius: 50%;
+      width: 24px; height: 24px; border-radius: 50%;
       background: rgba(28,28,28,0.07); border: 1px solid rgba(28,28,28,0.15);
       display: flex; align-items: center; justify-content: center;
-      font-size: 8px; font-weight: 700; color: #1c1c1c;
+      font-size: 7.5px; font-weight: 700; color: #1c1c1c;
     }
 
-    /* Main area */
-    .cm-main { position: absolute; top: 56px; left: 0; right: 0; bottom: 0; }
+    /* Main area: sidebar + content */
+    .cm-main { flex: 1; display: flex; overflow: hidden; }
 
-    /* SVG cluster */
-    .cm-cluster { position: absolute; inset: 0; right: 240px; }
-    .cm-cluster svg { width: 100%; height: 100%; }
+    /* Left sidebar */
+    .cm-sidebar {
+      width: 152px; background: #fff; border-right: 1px solid rgba(28,28,28,0.08);
+      flex-shrink: 0; display: flex; flex-direction: column; padding: 8px 0; overflow: hidden;
+    }
+    .cm-sb-sec { font-size: 7px; letter-spacing: 0.14em; color: rgba(28,28,28,0.32); padding: 8px 13px 3px; }
+    .cm-sb-item { padding: 6px 13px; font-size: 8.5px; color: rgba(28,28,28,0.5); display: flex; align-items: center; gap: 7px; }
+    .cm-sb-item.active { background: rgba(179,134,0,0.06); color: #1c1c1c; font-weight: 600; border-left: 2px solid #b38600; }
+    .cm-sb-contract { padding: 4px 13px 4px 18px; font-size: 7.5px; color: rgba(28,28,28,0.48); display: flex; align-items: center; gap: 6px; }
+    .cm-sb-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
 
-    /* Right overlay panel */
-    .cm-right {
-      position: absolute; top: 16px; right: 20px; bottom: 20px; width: 210px;
-      display: flex; flex-direction: column; gap: 8px;
-    }
-    .cm-widget {
-      background: rgba(255,255,255,0.88); border: 1px solid rgba(28,28,28,0.09);
-      border-radius: 11px; padding: 12px 14px; backdrop-filter: blur(8px);
-    }
-    .cm-widget-title {
-      font-size: 7.5px; letter-spacing: 0.14em; text-transform: uppercase;
-      color: rgba(28,28,28,0.4); margin-bottom: 9px;
-    }
-    .cm-big-num { font-size: 26px; font-weight: 700; color: #1c1c1c; line-height: 1; }
-    .cm-sub { font-size: 8px; color: rgba(28,28,28,0.4); margin-top: 2px; margin-bottom: 10px; }
-    .cm-stat-row {
-      display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;
-    }
-    .cm-stat-left { display: flex; align-items: center; gap: 5px; }
-    .cm-stat-dot { width: 5px; height: 5px; border-radius: 50%; }
-    .cm-stat-label { font-size: 8px; letter-spacing: 0.07em; color: rgba(28,28,28,0.4); }
-    .cm-stat-val { font-size: 9px; font-weight: 700; }
+    /* Dashboard scroll area */
+    .cm-dash { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 13px 16px; }
 
-    /* Bottom stats */
-    .cm-bottom {
-      position: absolute; bottom: 18px; left: 108px; right: 250px;
-      display: flex; gap: 8px;
-    }
-    .cm-chip {
-      flex: 1; background: rgba(255,255,255,0.88); border: 1px solid rgba(28,28,28,0.09);
-      border-radius: 9px; padding: 10px 12px; backdrop-filter: blur(8px);
-    }
-    .cm-chip-label { font-size: 7px; letter-spacing: 0.11em; text-transform: uppercase; color: rgba(28,28,28,0.38); margin-bottom: 4px; }
-    .cm-chip-val { font-size: 18px; font-weight: 700; line-height: 1; margin-bottom: 3px; }
-    .cm-chip-sub { font-size: 7px; color: rgba(28,28,28,0.35); }
-    .cm-recent { flex: 2; }
-    .cm-recent-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
-    .cm-recent-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
-    .cm-recent-text { font-size: 8px; color: #1c1c1c; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    /* Dashboard header */
+    .cm-dash-hdr { display: flex; align-items: center; gap: 9px; margin-bottom: 11px; }
+    .cm-dash-back { font-size: 8.5px; color: rgba(28,28,28,0.38); flex-shrink: 0; }
+    .cm-dash-title { font-size: 12px; font-weight: 700; color: #1c1c1c; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cm-dash-badge { font-size: 7px; padding: 2px 7px; border-radius: 10px; display: flex; align-items: center; gap: 3px; flex-shrink: 0; }
+    .cm-dash-badge.blue { background: rgba(37,99,235,0.08); color: #2563eb; border: 1px solid rgba(37,99,235,0.18); }
+    .cm-dash-badge.muted { background: rgba(28,28,28,0.05); color: rgba(28,28,28,0.4); border: 1px solid rgba(28,28,28,0.1); }
 
-    /* Bot FAB */
-    .cm-bot-fab {
-      position: absolute; bottom: 18px; left: 20px;
-      width: 70px; height: 70px; border-radius: 50%;
-      background: rgba(255,255,255,0.92); border: 2px solid rgba(179,134,0,0.35);
-      box-shadow: 0 2px 14px rgba(0,0,0,0.08);
-      display: flex; align-items: center; justify-content: center;
-    }
+    /* Section dividers */
+    .cm-sec { display: flex; align-items: center; gap: 8px; margin: 10px 0 6px; }
+    .cm-sec-lbl { font-size: 7px; font-weight: 600; letter-spacing: 0.18em; color: rgba(28,28,28,0.38); white-space: nowrap; }
+    .cm-sec-hr { flex: 1; height: 1px; background: rgba(28,28,28,0.08); }
+
+    /* Widget grids */
+    .cm-grid { display: grid; gap: 6px; margin-bottom: 6px; }
+    .cm-g3 { grid-template-columns: 2fr 1fr 1fr; }
+    .cm-gfin { grid-template-columns: 1fr 2fr 1fr; }
+    .cm-g2 { grid-template-columns: 1fr 1fr; }
+
+    /* Widget cards */
+    .cm-card { background: #fff; border: 1px solid rgba(28,28,28,0.09); border-radius: 9px; padding: 10px 12px; }
+    .cm-ct { font-size: 7px; font-weight: 600; letter-spacing: 0.12em; color: #1c1c1c; margin-bottom: 8px; }
+    .cm-cbody { font-size: 8px; color: rgba(28,28,28,0.6); line-height: 1.6; }
+    .cm-bignum { font-size: 20px; font-weight: 700; color: #1c1c1c; line-height: 1; }
+    .cm-small { font-size: 7px; color: rgba(28,28,28,0.38); margin-top: 2px; }
+    .cm-pr { font-size: 6.5px; letter-spacing: 0.1em; color: rgba(28,28,28,0.38); margin-top: 7px; text-transform: uppercase; }
+    .cm-pn { font-size: 8px; font-weight: 600; color: #1c1c1c; }
+    .cm-kdr { display: flex; justify-content: space-between; padding: 2px 0; }
+    .cm-kdl { font-size: 7px; color: rgba(28,28,28,0.38); letter-spacing: 0.08em; }
+    .cm-kdrv { font-size: 7px; color: #1c1c1c; }
+
+    /* Payment rows */
+    .cm-prow { display: flex; align-items: center; gap: 5px; padding: 4px 0; border-bottom: 1px solid rgba(28,28,28,0.06); }
+    .cm-prow:last-child { border-bottom: none; }
+    .cm-pdot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+    .cm-plbl { flex: 1; font-size: 7.5px; font-weight: 600; color: #1c1c1c; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cm-pamt { font-size: 7.5px; font-weight: 700; color: #1c1c1c; flex-shrink: 0; }
+    .cm-pdate { font-size: 7px; color: rgba(28,28,28,0.38); flex-shrink: 0; width: 40px; text-align: right; }
+
+    /* Donut legend */
+    .cm-legrow { display: flex; align-items: center; gap: 5px; margin-top: 4px; }
+    .cm-leglbl { font-size: 6.5px; letter-spacing: 0.08em; color: rgba(28,28,28,0.4); flex: 1; }
+    .cm-legval { font-size: 7px; font-weight: 700; color: #1c1c1c; }
+
+    /* Deadline rows */
+    .cm-dlrow { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; }
+    .cm-dlrow:last-child { margin-bottom: 0; }
+    .cm-ddays { font-size: 7.5px; font-weight: 700; border-radius: 5px; padding: 2px 5px; min-width: 24px; text-align: center; flex-shrink: 0; }
+    .cm-dred  { background: rgba(220,38,38,0.1);  color: #dc2626; }
+    .cm-dgold { background: rgba(179,134,0,0.1);  color: #b38600; }
+    .cm-dblue { background: rgba(37,99,235,0.1);  color: #2563eb; }
+    .cm-dtitle { font-size: 7.5px; font-weight: 600; color: #1c1c1c; }
+    .cm-dparty { font-size: 6.5px; color: rgba(28,28,28,0.38); }
 
     /* ── PRIVACY ── */
     #privacy {
@@ -1193,164 +1195,122 @@
         <div class="cm-topbar">
           <div class="cm-logo-block">
             <div class="cm-logo-text">The Bull</div>
-            <div class="cm-toggle-pill"><div class="cm-toggle-thumb"></div></div>
           </div>
           <div class="cm-tabs">
-            <div class="cm-tab active">Node Cluster</div>
-            <div class="cm-tab">Dashboard</div>
+            <div class="cm-tab">Node Cluster</div>
+            <div class="cm-tab active">Dashboard</div>
             <div class="cm-tab gold">+ New Contract</div>
           </div>
           <div class="cm-avatar">OF</div>
         </div>
 
-        <!-- Main area -->
+        <!-- Main area: sidebar + dashboard -->
         <div class="cm-main">
 
-          <!-- Node Cluster SVG -->
-          <div class="cm-cluster">
-            <svg viewBox="0 0 660 380" preserveAspectRatio="xMidYMid meet" fill="none" xmlns="http://www.w3.org/2000/svg">
-
-              <!-- Edges -->
-              <line x1="330" y1="190" x2="160" y2="115" stroke="#2563eb" stroke-width="1" stroke-opacity="0.18"/>
-              <line x1="330" y1="190" x2="155" y2="270" stroke="#2563eb" stroke-width="1" stroke-opacity="0.18"/>
-              <line x1="330" y1="190" x2="75"  y2="190" stroke="#b38600" stroke-width="1" stroke-opacity="0.18"/>
-              <line x1="330" y1="190" x2="490" y2="85"  stroke="#16a34a" stroke-width="1" stroke-opacity="0.22"/>
-              <line x1="330" y1="190" x2="515" y2="205" stroke="#dc2626" stroke-width="1" stroke-opacity="0.22"/>
-              <line x1="330" y1="190" x2="475" y2="315" stroke="#ea580c" stroke-width="1" stroke-opacity="0.18"/>
-              <line x1="330" y1="190" x2="330" y2="338" stroke="#9b6bd9" stroke-width="1" stroke-opacity="0.18"/>
-              <!-- Cross edges -->
-              <line x1="160" y1="115" x2="490" y2="85"  stroke="#16a34a" stroke-width="0.7" stroke-opacity="0.10"/>
-              <line x1="155" y1="270" x2="515" y2="205" stroke="#dc2626" stroke-width="0.7" stroke-opacity="0.10"/>
-
-              <!-- ── Contract node (center) — labeled ── -->
-              <circle cx="330" cy="190" r="14" fill="rgba(37,99,235,0.10)" stroke="#2563eb" stroke-width="1.6"/>
-              <text x="330" y="170" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="5.5" fill="rgba(28,28,28,0.32)" letter-spacing="0.12em">CONTRACT</text>
-              <text x="330" y="212" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7" fill="#1c1c1c" font-weight="700" letter-spacing="0.03em">HARTMANN LEASE</text>
-
-              <!-- ── Party 1: BioTech LLC — labeled ── -->
-              <circle cx="160" cy="115" r="9" fill="rgba(37,99,235,0.08)" stroke="#2563eb" stroke-width="1.3"/>
-              <text x="160" y="99" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="5.5" fill="rgba(28,28,28,0.32)" letter-spacing="0.1em">PARTY</text>
-              <text x="160" y="136" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7" fill="#1c1c1c" font-weight="700">BioTech LLC</text>
-              <text x="160" y="146" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="6" fill="rgba(28,28,28,0.38)">Tenant</text>
-
-              <!-- ── Party 2: Realty Corp ── -->
-              <circle cx="155" cy="270" r="9" fill="rgba(37,99,235,0.08)" stroke="#2563eb" stroke-width="1.3"/>
-
-              <!-- ── Agent: L. Torres (gold) ── -->
-              <circle cx="75" cy="190" r="8" fill="rgba(179,134,0,0.08)" stroke="#b38600" stroke-width="1.2"/>
-
-              <!-- ── Payment 1: confirmed green ── -->
-              <circle cx="490" cy="85" r="8" fill="rgba(22,163,74,0.09)" stroke="#16a34a" stroke-width="1.3"/>
-
-              <!-- ── Payment 2: overdue red ── -->
-              <circle cx="515" cy="205" r="8" fill="rgba(220,38,38,0.08)" stroke="#dc2626" stroke-width="1.3"/>
-
-              <!-- ── Term: orange ── -->
-              <circle cx="475" cy="315" r="7" fill="rgba(234,88,12,0.08)" stroke="#ea580c" stroke-width="1.2"/>
-
-              <!-- ── Document: purple ── -->
-              <circle cx="330" cy="338" r="7" fill="rgba(155,107,217,0.08)" stroke="#9b6bd9" stroke-width="1.2"/>
-
-            </svg>
+          <!-- Left sidebar -->
+          <div class="cm-sidebar">
+            <div class="cm-sb-sec">NAVIGATION</div>
+            <div class="cm-sb-item">◻ Overview</div>
+            <div class="cm-sb-item active">◻ Contracts</div>
+            <div class="cm-sb-item">◻ Bull AI</div>
+            <div class="cm-sb-sec">CONTRACTS</div>
+            <div class="cm-sb-contract"><div class="cm-sb-dot" style="background:#2563eb"></div>Hartmann Lease</div>
+            <div class="cm-sb-contract"><div class="cm-sb-dot" style="background:#b38600"></div>BioTech Vendor</div>
+            <div class="cm-sb-contract"><div class="cm-sb-dot" style="background:#16a34a"></div>Torres NDA</div>
+            <div class="cm-sb-contract"><div class="cm-sb-dot" style="background:#dc2626"></div>Realty Corp Lease</div>
           </div>
 
-          <!-- Right overlay widgets -->
-          <div class="cm-right">
+          <!-- Dashboard scroll -->
+          <div class="cm-dash">
 
-            <!-- Portfolio -->
-            <div class="cm-widget">
-              <div class="cm-widget-title">Portfolio</div>
-              <div class="cm-big-num">8</div>
-              <div class="cm-sub">total contracts</div>
-              <div class="cm-stat-row">
-                <div class="cm-stat-left"><div class="cm-stat-dot" style="background:#2563eb"></div><div class="cm-stat-label">ACTIVE</div></div>
-                <div class="cm-stat-val" style="color:#2563eb">3</div>
+            <!-- Header -->
+            <div class="cm-dash-hdr">
+              <span class="cm-dash-back">← Dashboard</span>
+              <span class="cm-dash-title">Hartmann Commercial Lease</span>
+              <span class="cm-dash-badge blue">● active</span>
+              <span class="cm-dash-badge muted">commercial lease</span>
+            </div>
+
+            <!-- ORIENTATION -->
+            <div class="cm-sec"><span class="cm-sec-lbl">ORIENTATION</span><div class="cm-sec-hr"></div></div>
+            <div class="cm-grid cm-g3">
+              <div class="cm-card">
+                <div class="cm-ct">CONTRACT SUMMARY</div>
+                <div class="cm-cbody">12-month commercial office lease between Hartmann Real Estate LLC (Landlord) and BioTech Innovations LLC (Tenant). Monthly rent of $9,200. Tenant responsible for all utilities and maintenance beyond standard wear.</div>
               </div>
-              <div class="cm-stat-row">
-                <div class="cm-stat-left"><div class="cm-stat-dot" style="background:#b38600"></div><div class="cm-stat-label">PENDING</div></div>
-                <div class="cm-stat-val" style="color:#b38600">3</div>
+              <div class="cm-card">
+                <div class="cm-ct">PARTIES</div>
+                <div class="cm-bignum">2</div>
+                <div class="cm-small">to this agreement</div>
+                <div class="cm-pr">LANDLORD</div><div class="cm-pn">Hartmann Real Estate</div>
+                <div class="cm-pr">TENANT</div><div class="cm-pn">BioTech Innovations</div>
               </div>
-              <div class="cm-stat-row">
-                <div class="cm-stat-left"><div class="cm-stat-dot" style="background:#ea580c"></div><div class="cm-stat-label">DISPUTED</div></div>
-                <div class="cm-stat-val" style="color:#ea580c">1</div>
-              </div>
-              <div class="cm-stat-row">
-                <div class="cm-stat-left"><div class="cm-stat-dot" style="background:#16a34a"></div><div class="cm-stat-label">COMPLETED</div></div>
-                <div class="cm-stat-val" style="color:#16a34a">1</div>
+              <div class="cm-card">
+                <div class="cm-ct">KEY DATES</div>
+                <div class="cm-kdr"><span class="cm-kdl">START</span><span class="cm-kdrv">Jan 1, 2026</span></div>
+                <div class="cm-kdr"><span class="cm-kdl">END</span><span class="cm-kdrv">Dec 31, 2026</span></div>
+                <div class="cm-kdr"><span class="cm-kdl">DURATION</span><span class="cm-kdrv">12 months</span></div>
               </div>
             </div>
 
-            <!-- Alerts -->
-            <div class="cm-widget">
-              <div class="cm-widget-title">Alerts</div>
-              <div style="display:flex;align-items:baseline;gap:6px;">
-                <div class="cm-big-num" style="color:#dc2626">2</div>
-                <div style="font-size:8px;color:rgba(28,28,28,0.4);">issues</div>
+            <!-- FINANCIAL -->
+            <div class="cm-sec"><span class="cm-sec-lbl">FINANCIAL</span><div class="cm-sec-hr"></div></div>
+            <div class="cm-grid cm-gfin">
+              <div class="cm-card">
+                <div class="cm-ct">TOTAL VALUE</div>
+                <div class="cm-bignum">$110k</div>
+                <div class="cm-small">total contract value</div>
               </div>
-              <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;">
-                <div class="cm-stat-row">
-                  <span style="font-size:8px;color:rgba(28,28,28,0.45);">Overdue obligations</span>
-                  <span style="font-size:8px;font-weight:700;color:#dc2626;">1</span>
-                </div>
-                <div class="cm-stat-row">
-                  <span style="font-size:8px;color:rgba(28,28,28,0.45);">Disputed contracts</span>
-                  <span style="font-size:8px;font-weight:700;color:#ea580c;">1</span>
+              <div class="cm-card">
+                <div class="cm-ct">PAYMENT SCHEDULE</div>
+                <div class="cm-prow"><div class="cm-pdot" style="background:#16a34a"></div><div class="cm-plbl">Security Deposit</div><div class="cm-pamt">$18,400</div><div class="cm-pdate">confirmed</div></div>
+                <div class="cm-prow"><div class="cm-pdot" style="background:#dc2626"></div><div class="cm-plbl">Monthly Rent — Feb</div><div class="cm-pamt">$9,200</div><div class="cm-pdate">overdue</div></div>
+                <div class="cm-prow"><div class="cm-pdot" style="background:#b38600"></div><div class="cm-plbl">Monthly Rent — Mar</div><div class="cm-pamt">$9,200</div><div class="cm-pdate">Mar 1</div></div>
+                <div class="cm-prow"><div class="cm-pdot" style="background:#b38600"></div><div class="cm-plbl">CAM Charges Q1</div><div class="cm-pamt">$4,800</div><div class="cm-pdate">Mar 31</div></div>
+              </div>
+              <div class="cm-card" style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+                <div class="cm-ct" style="align-self:flex-start;">OUTSTANDING</div>
+                <svg width="52" height="52" viewBox="0 0 60 60">
+                  <circle cx="30" cy="30" r="22" fill="none" stroke="rgba(28,28,28,0.08)" stroke-width="5"/>
+                  <circle cx="30" cy="30" r="22" fill="none" stroke="#16a34a" stroke-width="5" stroke-dasharray="41.5 138.2" stroke-dashoffset="0" transform="rotate(-90 30 30)"/>
+                  <circle cx="30" cy="30" r="22" fill="none" stroke="#b38600" stroke-width="5" stroke-dasharray="55.3 138.2" stroke-dashoffset="-41.5" transform="rotate(-90 30 30)"/>
+                  <circle cx="30" cy="30" r="22" fill="none" stroke="#dc2626" stroke-width="5" stroke-dasharray="41.4 138.2" stroke-dashoffset="-96.8" transform="rotate(-90 30 30)"/>
+                </svg>
+                <div style="width:100%;">
+                  <div class="cm-legrow"><div class="cm-pdot" style="background:#16a34a"></div><span class="cm-leglbl">CONFIRMED</span><span class="cm-legval">$18k</span></div>
+                  <div class="cm-legrow"><div class="cm-pdot" style="background:#b38600"></div><span class="cm-leglbl">PENDING</span><span class="cm-legval">$55k</span></div>
+                  <div class="cm-legrow"><div class="cm-pdot" style="background:#dc2626"></div><span class="cm-leglbl">OVERDUE</span><span class="cm-legval">$9k</span></div>
                 </div>
               </div>
             </div>
 
-            <!-- Payment Pipeline -->
-            <div class="cm-widget">
-              <div class="cm-widget-title">Payment Pipeline</div>
-              <div class="cm-big-num" style="font-size:22px;">$124k</div>
-              <div class="cm-sub">total tracked value</div>
-              <div style="font-size:8px;color:rgba(28,28,28,0.4);">across 5 analyzed contracts</div>
+            <!-- OBLIGATIONS -->
+            <div class="cm-sec"><span class="cm-sec-lbl">OBLIGATIONS</span><div class="cm-sec-hr"></div></div>
+            <div class="cm-grid cm-g2">
+              <div class="cm-card">
+                <div class="cm-ct">CONTRACT HEALTH</div>
+                <div style="display:flex;align-items:center;gap:13px;">
+                  <svg width="50" height="50" viewBox="0 0 60 60">
+                    <circle cx="30" cy="30" r="22" fill="none" stroke="rgba(28,28,28,0.08)" stroke-width="4"/>
+                    <circle cx="30" cy="30" r="22" fill="none" stroke="#16a34a" stroke-width="4" stroke-dasharray="69.1 138.2" stroke-linecap="round" transform="rotate(-90 30 30)"/>
+                    <text x="30" y="35" text-anchor="middle" font-size="11" font-weight="700" font-family="'Inter', sans-serif" fill="#1c1c1c">50%</text>
+                  </svg>
+                  <div style="display:flex;gap:10px;">
+                    <div><div style="font-size:16px;font-weight:700;color:#b38600;line-height:1;">3</div><div class="cm-kdl">PENDING</div></div>
+                    <div><div style="font-size:16px;font-weight:700;color:#16a34a;line-height:1;">3</div><div class="cm-kdl">CONFIRMED</div></div>
+                    <div><div style="font-size:16px;font-weight:700;color:#dc2626;line-height:1;">1</div><div class="cm-kdl">OVERDUE</div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="cm-card">
+                <div class="cm-ct">UPCOMING DEADLINES</div>
+                <div class="cm-dlrow"><div class="cm-ddays cm-dred">2d</div><div><div class="cm-dtitle">Monthly Rent — Feb</div><div class="cm-dparty">BioTech Innovations</div></div></div>
+                <div class="cm-dlrow"><div class="cm-ddays cm-dgold">5d</div><div><div class="cm-dtitle">CAM Reconciliation</div><div class="cm-dparty">Hartmann Real Estate</div></div></div>
+                <div class="cm-dlrow"><div class="cm-ddays cm-dblue">12d</div><div><div class="cm-dtitle">Renewal Option Notice</div><div class="cm-dparty">BioTech Innovations</div></div></div>
+              </div>
             </div>
 
-          </div>
-
-          <!-- Bottom stats -->
-          <div class="cm-bottom">
-            <div class="cm-chip">
-              <div class="cm-chip-label">Active Contracts</div>
-              <div class="cm-chip-val" style="color:#2563eb">3</div>
-              <div class="cm-chip-sub">currently running</div>
-            </div>
-            <div class="cm-chip">
-              <div class="cm-chip-label">Needs Attention</div>
-              <div class="cm-chip-val" style="color:#dc2626">3</div>
-              <div class="cm-chip-sub">flagged items</div>
-            </div>
-            <div class="cm-chip">
-              <div class="cm-chip-label">Due This Week</div>
-              <div class="cm-chip-val" style="color:rgba(28,28,28,0.35)">2</div>
-              <div class="cm-chip-sub">obligations</div>
-            </div>
-            <div class="cm-chip">
-              <div class="cm-chip-label">Parties Tracked</div>
-              <div class="cm-chip-val">12</div>
-              <div class="cm-chip-sub">across 6 contracts</div>
-            </div>
-            <div class="cm-chip cm-recent">
-              <div class="cm-chip-label">Recent Contracts</div>
-              <div class="cm-recent-row"><div class="cm-recent-dot" style="background:#2563eb"></div><div class="cm-recent-text">Hartmann Lease Agreement</div></div>
-              <div class="cm-recent-row"><div class="cm-recent-dot" style="background:#b38600"></div><div class="cm-recent-text">BioTech Vendor Services</div></div>
-              <div class="cm-recent-row"><div class="cm-recent-dot" style="background:#16a34a"></div><div class="cm-recent-text">Office NDA — Torres &amp; Co.</div></div>
-            </div>
-          </div>
-
-          <!-- Bot FAB -->
-          <div class="cm-bot-fab">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#b38600" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="11" width="18" height="10" rx="2"/>
-              <path d="M12 11V7"/>
-              <circle cx="12" cy="5" r="2"/>
-              <circle cx="8" cy="16" r="1" fill="#b38600" stroke="none"/>
-              <circle cx="16" cy="16" r="1" fill="#b38600" stroke="none"/>
-              <path d="M8 20h8"/>
-            </svg>
-          </div>
-
+          </div><!-- /cm-dash -->
         </div><!-- /cm-main -->
       </div><!-- /cm-body -->
     </div><!-- /cm-frame -->
