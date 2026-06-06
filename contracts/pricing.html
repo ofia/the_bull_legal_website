@@ -128,10 +128,10 @@
 
     /* ── PLANS ── */
     .plans-wrap {
-      max-width: 1060px; margin: 0 auto;
+      max-width: 1400px; margin: 0 auto;
       padding: 0 48px 100px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
       align-items: start;
     }
@@ -315,7 +315,10 @@
     .footer-link:hover { color: var(--primary); }
     .footer-copy { font-size: 13px; color: var(--muted); }
 
-    @media (max-width: 860px) {
+    @media (max-width: 1100px) {
+      .plans-wrap { grid-template-columns: repeat(2, 1fr); max-width: 760px; }
+    }
+    @media (max-width: 680px) {
       .plans-wrap { grid-template-columns: 1fr; max-width: 480px; }
     }
     @media (max-width: 640px) {
@@ -490,6 +493,54 @@
         </div>
       </div>
 
+      <!-- Scale -->
+      <div class="plan-card">
+        <div class="plan-name">Scale</div>
+        <div class="plan-price" id="scale-price-monthly">
+          <span class="plan-price-amount">$89</span>
+          <span class="plan-price-period">/ month</span>
+        </div>
+        <div class="plan-price" id="scale-price-annual" style="display:none;">
+          <span class="plan-price-amount">$899</span>
+          <span class="plan-price-period">/ year</span>
+        </div>
+        <div class="plan-tagline">For larger teams running high-volume contract workloads.</div>
+        <a href="payment.html?plan=scale" class="plan-cta plan-cta-outline" id="scale-cta">Get started →</a>
+        <div class="plan-divider"></div>
+        <div class="plan-features">
+          <div class="plan-feature">
+            <span class="plan-feature-check check-green">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Up to 500 contracts
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-check check-green">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Everything in Pro
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-check check-green">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Priority AI processing
+          </div>
+          <div class="plan-feature">
+            <span class="plan-feature-check check-green">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Advanced analytics dashboard
+          </div>
+          <div class="plan-feature plan-feature-muted">
+            <span class="plan-feature-check check-green">
+              <svg viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5l2 2 4-4" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            5 user seats
+          </div>
+        </div>
+      </div>
+
       <!-- Enterprise -->
       <div class="plan-card">
         <div class="plan-name">Enterprise</div>
@@ -601,6 +652,9 @@
     const priceMo     = document.getElementById('pro-price-monthly');
     const priceYr     = document.getElementById('pro-price-annual');
     const proCta      = document.getElementById('pro-cta');
+    const scalePriceMo = document.getElementById('scale-price-monthly');
+    const scalePriceYr = document.getElementById('scale-price-annual');
+    const scaleCta     = document.getElementById('scale-cta');
 
     let isAnnual = false;
 
@@ -614,6 +668,9 @@
       priceMo.style.display = isAnnual ? 'none'  : 'flex';
       priceYr.style.display = isAnnual ? 'flex'  : 'none';
       proCta.href = isAnnual ? 'payment.html?plan=annual' : 'payment.html';
+      scalePriceMo.style.display = isAnnual ? 'none' : 'flex';
+      scalePriceYr.style.display = isAnnual ? 'flex' : 'none';
+      scaleCta.href = isAnnual ? 'payment.html?plan=scale-annual' : 'payment.html?plan=scale';
     }
 
     track.addEventListener('click', () => setAnnual(!isAnnual));
