@@ -335,77 +335,17 @@
         </div>
       </div>
 
-      <!-- RIGHT — Payment form -->
-      <div class="form-panel">
-
-        <!-- Form state -->
-        <div id="form-state">
-          <div class="form-title">Payment details</div>
-
-          <form id="checkout-form" novalidate>
-
-            <div class="field">
-              <label class="field-label" for="email">Email address</label>
-              <input class="field-input" type="email" id="email" name="email" placeholder="you@yourfirm.com" autocomplete="email" />
-            </div>
-
-            <div class="field">
-              <label class="field-label" for="name">Name on card</label>
-              <input class="field-input" type="text" id="name" name="name" placeholder="Jane Smith" autocomplete="cc-name" />
-            </div>
-
-            <div class="field">
-              <label class="field-label" for="card">Card number</label>
-              <div class="card-input-wrap">
-                <input class="field-input" type="text" id="card" name="card"
-                  placeholder="1234 5678 9012 3456"
-                  maxlength="19" autocomplete="cc-number" inputmode="numeric" />
-                <span class="card-brand-icon" id="card-brand">CARD</span>
-              </div>
-            </div>
-
-            <div class="field-row">
-              <div class="field">
-                <label class="field-label" for="expiry">Expiry</label>
-                <input class="field-input" type="text" id="expiry" name="expiry"
-                  placeholder="MM / YY" maxlength="7"
-                  autocomplete="cc-exp" inputmode="numeric" />
-              </div>
-              <div class="field">
-                <label class="field-label" for="cvc">CVC</label>
-                <input class="field-input" type="text" id="cvc" name="cvc"
-                  placeholder="123" maxlength="4"
-                  autocomplete="cc-csc" inputmode="numeric" />
-              </div>
-            </div>
-
-            <label class="terms-check">
-              <input type="checkbox" id="terms-agree" required />
-              <span>I agree to The Bull's <a href="/privacy" target="_blank">Privacy Policy</a> and authorize a recurring subscription charge. You can cancel anytime.</span>
-            </label>
-
-            <button type="submit" class="submit-btn" id="submit-btn">
-              <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-              Subscribe · $29 / month
-            </button>
-
-            <div class="form-fine-print">
-              <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-              Your payment is encrypted and secure. You can cancel anytime.
-            </div>
-          </form>
+      <!-- RIGHT — Redirect to app -->
+      <div class="form-panel" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;">
+        <div style="width:48px;height:48px;border-radius:50%;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         </div>
-
-        <!-- Success state (shown after submit) -->
-        <div class="success-state" id="success-state">
-          <div class="success-icon">
-            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <div class="success-title">You're on Pro.</div>
-          <div class="success-sub">Your subscription is active. Head to the app to start tracking your contracts.</div>
-          <a href="https://the-bull-legal.vercel.app/" class="success-btn">Open The Bull Contracts →</a>
+        <div style="font-family:var(--display);font-size:18px;font-weight:600;color:var(--color-heading);letter-spacing:-0.02em;">
+          Taking you to checkout…
         </div>
-
+        <div style="font-size:13px;color:var(--muted);line-height:1.6;max-width:240px;">
+          Sign in to your account and we'll open the secure payment page.
+        </div>
       </div><!-- /form-panel -->
     </div><!-- /checkout-wrap -->
   </main>
@@ -418,109 +358,10 @@
   </footer>
 
   <script>
-    // ── Plan config ──
-    var PLANS = {
-      'monthly':      { name: 'Pro Plan',   price: '$29',  period: 'per month, billed monthly',  label: '$29 / month',  successTitle: "You're on Pro.",   features: ['Up to 100 contracts','AI contract analysis','Automated email reminders','Email confirmation scanning','Supporting documents vault','Party network (decentralized)','3 user seats'] },
-      'annual':       { name: 'Pro Plan',   price: '$299', period: 'per year, billed annually',  label: '$299 / year',  successTitle: "You're on Pro.",   features: ['Up to 100 contracts','AI contract analysis','Automated email reminders','Email confirmation scanning','Supporting documents vault','Party network (decentralized)','3 user seats'] },
-      'scale':        { name: 'Scale Plan', price: '$89',  period: 'per month, billed monthly',  label: '$89 / month',  successTitle: "You're on Scale.", features: ['Up to 500 contracts','Everything in Pro','Priority AI processing','Advanced analytics dashboard','5 user seats'] },
-      'scale-annual': { name: 'Scale Plan', price: '$899', period: 'per year, billed annually',  label: '$899 / year',  successTitle: "You're on Scale.", features: ['Up to 500 contracts','Everything in Pro','Priority AI processing','Advanced analytics dashboard','5 user seats'] },
-    };
-
-    var planKey = new URLSearchParams(window.location.search).get('plan') || 'monthly';
-    var plan = PLANS[planKey] || PLANS['monthly'];
-
-    // Apply plan to summary
-    document.querySelector('.summary-plan-name').textContent = plan.name;
-    document.querySelector('.summary-price').textContent     = plan.price;
-    document.querySelector('.summary-period').textContent    = plan.period;
-    document.querySelector('.summary-features').innerHTML    = plan.features.map(function(f) {
-      return '<div class="summary-feature"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>' + f + '</div>';
-    }).join('');
-    document.getElementById('submit-btn').innerHTML =
-      '<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Subscribe · ' + plan.label;
-    document.querySelector('.success-title').textContent = plan.successTitle;
-    document.title = 'Subscribe to ' + plan.name + ' — The Bull Contracts';
-
-    // ── Card number formatting ──
-    const cardInput = document.getElementById('card');
-    const cardBrand = document.getElementById('card-brand');
-
-    cardInput.addEventListener('input', function () {
-      let v = this.value.replace(/\D/g, '').slice(0, 16);
-      this.value = v.replace(/(.{4})/g, '$1 ').trim();
-      const first = v[0];
-      if (first === '4') cardBrand.textContent = 'VISA';
-      else if (first === '5') cardBrand.textContent = 'MC';
-      else if (first === '3') cardBrand.textContent = 'AMEX';
-      else cardBrand.textContent = 'CARD';
-    });
-
-    // ── Expiry formatting ──
-    const expiryInput = document.getElementById('expiry');
-    expiryInput.addEventListener('input', function () {
-      let v = this.value.replace(/\D/g, '').slice(0, 4);
-      if (v.length >= 3) v = v.slice(0, 2) + ' / ' + v.slice(2);
-      this.value = v;
-    });
-
-    // ── CVC: digits only ──
-    document.getElementById('cvc').addEventListener('input', function () {
-      this.value = this.value.replace(/\D/g, '').slice(0, 4);
-    });
-
-    // ── Form validation + submit ──
-    const form = document.getElementById('checkout-form');
-    const submitBtn = document.getElementById('submit-btn');
-
-    function validate() {
-      let valid = true;
-      const email = document.getElementById('email');
-      const name  = document.getElementById('name');
-      const card  = document.getElementById('card');
-      const expiry = document.getElementById('expiry');
-      const cvc   = document.getElementById('cvc');
-      [email, name, card, expiry, cvc].forEach(el => el.classList.remove('error'));
-      if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { email.classList.add('error'); valid = false; }
-      if (!name.value.trim()) { name.classList.add('error'); valid = false; }
-      if (card.value.replace(/\s/g, '').length < 15) { card.classList.add('error'); valid = false; }
-      if (!/^\d{2} \/ \d{2}$/.test(expiry.value)) { expiry.classList.add('error'); valid = false; }
-      if (cvc.value.length < 3) { cvc.classList.add('error'); valid = false; }
-      if (!document.getElementById('terms-agree').checked) { valid = false; }
-      return valid;
-    }
-
-    var API_BASE = 'https://thebulllegal-production.up.railway.app';
-
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      if (!validate()) return;
-
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span>Redirecting to checkout…</span>';
-
-      try {
-        var res = await fetch(API_BASE + '/api/payments/create-checkout-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify({ plan: planKey, success_url: 'https://the-bull-legal.vercel.app', cancel_url: window.location.href }),
-        });
-
-        if (res.ok) {
-          var data = await res.json();
-          window.location.href = data.url;
-        } else {
-          var err = await res.json().catch(() => ({}));
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = '<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Subscribe · ' + plan.label;
-          document.querySelector('.form-fine-print').innerHTML = '⚠ ' + (err.detail || 'Payments not yet active. <a href="https://the-bull.ai/#contact" style="color:var(--accent)">Contact us</a> to get early access.');
-        }
-      } catch (_) {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Subscribe · ' + plan.label;
-        document.querySelector('.form-fine-print').innerHTML = '⚠ Could not connect. <a href="https://the-bull.ai/#contact" style="color:var(--accent)">Contact us</a> to subscribe.';
-      }
-    });
+    // Redirect to the app with the plan parameter.
+    // The app handles login → then auto-opens Stripe Checkout.
+    var plan = new URLSearchParams(window.location.search).get('plan') || 'monthly';
+    window.location.replace('https://the-bull-legal.vercel.app?plan=' + plan);
   </script>
 
 </body>
