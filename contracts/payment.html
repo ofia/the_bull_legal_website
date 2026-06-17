@@ -271,6 +271,11 @@
       footer { padding: 16px 20px; }
     }
   </style>
+  <script>
+    // Redirect before any page content renders — eliminates the page flash
+    var plan = new URLSearchParams(window.location.search).get('plan') || 'monthly';
+    window.location.replace('https://the-bull-legal.vercel.app?plan=' + plan);
+  </script>
 </head>
 <body>
 
@@ -357,12 +362,6 @@
     <span class="footer-link">© 2026 Aldebaran Labs LLC</span>
   </footer>
 
-  <script>
-    // Redirect to the app with the plan parameter.
-    // The app handles login → then auto-opens Stripe Checkout.
-    var plan = new URLSearchParams(window.location.search).get('plan') || 'monthly';
-    window.location.replace('https://the-bull-legal.vercel.app?plan=' + plan);
-  </script>
 
 </body>
 </html>
