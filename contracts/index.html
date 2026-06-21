@@ -703,7 +703,7 @@
     }
     .cm-dot { width: 11px; height: 11px; border-radius: 50%; }
 
-    .cm-body { height: 560px; background: #f7f7f5; display: flex; flex-direction: column; font-family: var(--sans); overflow: hidden; }
+    .cm-body { height: 560px; background: #f5f5f3; display: flex; flex-direction: column; font-family: var(--sans); overflow: hidden; }
 
     /* TopBar */
     .cm-topbar {
@@ -711,95 +711,117 @@
       background: #fff;
       border-bottom: 1px solid rgba(28,28,28,0.08);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 20px;
+      padding: 0 16px 0 20px;
     }
-    .cm-logo-block { display: flex; align-items: center; }
+    .cm-logo-block { display: flex; align-items: center; flex-shrink: 0; }
     .cm-logo-text { font-size: 11px; letter-spacing: 0.22em; font-weight: 700; text-transform: uppercase; color: #1c1c1c; }
-    .cm-tabs { display: flex; align-items: center; gap: 4px; }
-    .cm-tab {
-      padding: 4px 11px; border-radius: 6px; font-size: 9px; letter-spacing: 0.06em;
-      color: rgba(28,28,28,0.45); border: 1px solid rgba(28,28,28,0.09);
-      background: transparent;
-    }
-    .cm-tab.active { color: #1c1c1c; background: rgba(28,28,28,0.06); border-color: rgba(28,28,28,0.18); }
-    .cm-tab.gold { color: #b38600; border-color: rgba(179,134,0,0.35); }
     .cm-avatar {
       width: 24px; height: 24px; border-radius: 50%;
       background: rgba(28,28,28,0.07); border: 1px solid rgba(28,28,28,0.15);
       display: flex; align-items: center; justify-content: center;
-      font-size: 7.5px; font-weight: 700; color: #1c1c1c;
+      font-size: 7.5px; font-weight: 700; color: #1c1c1c; flex-shrink: 0;
     }
 
-    /* Main area: sidebar + content */
+    /* Main area: sidebar + content + right toolbar */
     .cm-main { flex: 1; display: flex; overflow: hidden; }
 
     /* Left sidebar */
     .cm-sidebar {
-      width: 152px; background: #fff; border-right: 1px solid rgba(28,28,28,0.08);
+      width: 148px; background: #fff; border-right: 1px solid rgba(28,28,28,0.08);
       flex-shrink: 0; display: flex; flex-direction: column; padding: 8px 0; overflow: hidden;
     }
-    .cm-sb-sec { font-size: 7px; letter-spacing: 0.14em; color: rgba(28,28,28,0.32); padding: 8px 13px 3px; }
+    .cm-sb-sec { font-family: var(--mono); font-size: 7px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(28,28,28,0.32); padding: 8px 13px 3px; }
     .cm-sb-item { padding: 6px 13px; font-size: 8.5px; color: rgba(28,28,28,0.5); display: flex; align-items: center; gap: 7px; }
     .cm-sb-item.active { background: rgba(179,134,0,0.06); color: #1c1c1c; font-weight: 600; border-left: 2px solid #b38600; }
-    .cm-sb-contract { padding: 4px 13px 4px 18px; font-size: 7.5px; color: rgba(28,28,28,0.48); display: flex; align-items: center; gap: 6px; }
+    .cm-sb-contract { padding: 4px 13px 4px 18px; font-size: 7.5px; color: rgba(28,28,28,0.48); display: flex; align-items: center; gap: 6px; overflow: hidden; }
+    .cm-sb-contract-lbl { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .cm-sb-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
 
     /* Dashboard scroll area */
-    .cm-dash { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 13px 16px; }
+    .cm-dash { flex: 1; overflow-y: auto; overflow-x: hidden; }
 
-    /* Dashboard header */
-    .cm-dash-hdr { display: flex; align-items: center; gap: 9px; margin-bottom: 11px; }
+    /* Contract header row */
+    .cm-dash-contract-hdr {
+      display: flex; align-items: center; gap: 7px;
+      padding: 11px 14px 0; overflow: hidden;
+    }
     .cm-dash-back { font-size: 8.5px; color: rgba(28,28,28,0.38); flex-shrink: 0; }
-    .cm-dash-title { font-size: 12px; font-weight: 700; color: #1c1c1c; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .cm-dash-badge { font-size: 7px; padding: 2px 7px; border-radius: 10px; display: flex; align-items: center; gap: 3px; flex-shrink: 0; }
-    .cm-dash-badge.blue { background: rgba(37,99,235,0.08); color: #2563eb; border: 1px solid rgba(37,99,235,0.18); }
-    .cm-dash-badge.muted { background: rgba(28,28,28,0.05); color: rgba(28,28,28,0.4); border: 1px solid rgba(28,28,28,0.1); }
+    .cm-dash-title { font-size: 11px; font-weight: 700; color: #1c1c1c; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cm-dash-badge {
+      font-family: var(--mono); font-size: 7px; letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 2px 7px; border-radius: 4px; display: flex; align-items: center; gap: 3px; flex-shrink: 0;
+    }
+    .cm-dash-badge.blue  { background: rgba(37,99,235,0.08);  color: #2563eb; border: 1px solid rgba(37,99,235,0.18); }
+    .cm-dash-badge.muted { background: rgba(28,28,28,0.05);   color: rgba(28,28,28,0.4); border: 1px solid rgba(28,28,28,0.1); }
+
+    /* Contract tabs: Overview / Obligations / Reports */
+    .cm-contract-tabs {
+      display: flex; align-items: center;
+      border-bottom: 1px solid rgba(28,28,28,0.08);
+      padding: 6px 14px 0; gap: 2px;
+    }
+    .cm-ctab { padding: 5px 10px; font-size: 8.5px; color: rgba(28,28,28,0.4); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+    .cm-ctab.active { color: #1c1c1c; font-weight: 600; border-bottom-color: #1c1c1c; }
+
+    /* Padded content area inside dashboard */
+    .cm-content { padding: 12px 14px; }
 
     /* Section dividers */
     .cm-sec { display: flex; align-items: center; gap: 8px; margin: 10px 0 6px; }
-    .cm-sec-lbl { font-size: 7px; font-weight: 600; letter-spacing: 0.18em; color: rgba(28,28,28,0.38); white-space: nowrap; }
+    .cm-sec-lbl { font-family: var(--mono); font-size: 7px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(28,28,28,0.38); white-space: nowrap; }
     .cm-sec-hr { flex: 1; height: 1px; background: rgba(28,28,28,0.08); }
 
     /* Widget grids */
     .cm-grid { display: grid; gap: 6px; margin-bottom: 6px; }
     .cm-g3 { grid-template-columns: 2fr 1fr 1fr; }
-    .cm-gfin { grid-template-columns: 1fr 2fr 1fr; }
-    .cm-g2 { grid-template-columns: 1fr 1fr; }
 
     /* Widget cards */
     .cm-card { background: #fff; border: 1px solid rgba(28,28,28,0.09); border-radius: 9px; padding: 10px 12px; }
-    .cm-ct { font-size: 7px; font-weight: 600; letter-spacing: 0.12em; color: #1c1c1c; margin-bottom: 8px; }
-    .cm-cbody { font-size: 8px; color: rgba(28,28,28,0.6); line-height: 1.6; }
-    .cm-bignum { font-size: 20px; font-weight: 700; color: #1c1c1c; line-height: 1; }
-    .cm-small { font-size: 7px; color: rgba(28,28,28,0.38); margin-top: 2px; }
-    .cm-pr { font-size: 6.5px; letter-spacing: 0.1em; color: rgba(28,28,28,0.38); margin-top: 7px; text-transform: uppercase; }
+    .cm-ct { font-family: var(--mono); font-size: 7px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(28,28,28,0.5); margin-bottom: 8px; }
+    .cm-pr { font-family: var(--mono); font-size: 6.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(28,28,28,0.38); margin-top: 7px; }
     .cm-pn { font-size: 8px; font-weight: 600; color: #1c1c1c; }
     .cm-kdr { display: flex; justify-content: space-between; padding: 2px 0; }
-    .cm-kdl { font-size: 7px; color: rgba(28,28,28,0.38); letter-spacing: 0.08em; }
+    .cm-kdl { font-family: var(--mono); font-size: 6.5px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(28,28,28,0.38); }
     .cm-kdrv { font-size: 7px; color: #1c1c1c; }
 
-    /* Payment rows */
-    .cm-prow { display: flex; align-items: center; gap: 5px; padding: 4px 0; border-bottom: 1px solid rgba(28,28,28,0.06); }
-    .cm-prow:last-child { border-bottom: none; }
-    .cm-pdot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
-    .cm-plbl { flex: 1; font-size: 7.5px; font-weight: 600; color: #1c1c1c; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .cm-pamt { font-size: 7.5px; font-weight: 700; color: #1c1c1c; flex-shrink: 0; }
-    .cm-pdate { font-size: 7px; color: rgba(28,28,28,0.38); flex-shrink: 0; width: 40px; text-align: right; }
-
-    /* Donut legend */
+    /* Donut legend rows */
     .cm-legrow { display: flex; align-items: center; gap: 5px; margin-top: 4px; }
-    .cm-leglbl { font-size: 6.5px; letter-spacing: 0.08em; color: rgba(28,28,28,0.4); flex: 1; }
+    .cm-leglbl { font-family: var(--mono); font-size: 6.5px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(28,28,28,0.4); flex: 1; }
     .cm-legval { font-size: 7px; font-weight: 700; color: #1c1c1c; }
+    .cm-pdot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
 
-    /* Deadline rows */
-    .cm-dlrow { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; }
-    .cm-dlrow:last-child { margin-bottom: 0; }
-    .cm-ddays { font-size: 7.5px; font-weight: 700; border-radius: 5px; padding: 2px 5px; min-width: 24px; text-align: center; flex-shrink: 0; }
-    .cm-dred  { background: rgba(220,38,38,0.1);  color: #dc2626; }
-    .cm-dgold { background: rgba(179,134,0,0.1);  color: #b38600; }
-    .cm-dblue { background: rgba(37,99,235,0.1);  color: #2563eb; }
-    .cm-dtitle { font-size: 7.5px; font-weight: 600; color: #1c1c1c; }
-    .cm-dparty { font-size: 6.5px; color: rgba(28,28,28,0.38); }
+    /* Obligation task rows */
+    .cm-ob-row { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid rgba(28,28,28,0.06); }
+    .cm-ob-row:last-child { border-bottom: none; }
+    .cm-ob-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .cm-ob-content { flex: 1; overflow: hidden; }
+    .cm-ob-title { font-size: 7.5px; font-weight: 600; color: #1c1c1c; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cm-ob-meta { font-size: 6.5px; color: rgba(28,28,28,0.38); margin-top: 1px; }
+    .cm-ob-right { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0; }
+    .cm-ob-amt { font-size: 7.5px; font-weight: 700; color: #1c1c1c; }
+    .cm-ob-badge {
+      font-family: var(--mono); font-size: 6.5px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase; padding: 1px 5px; border-radius: 4px;
+    }
+    .cm-ob-badge.confirmed { background: rgba(22,163,74,0.08);  color: #16a34a; }
+    .cm-ob-badge.overdue   { background: rgba(220,38,38,0.08);  color: #dc2626; }
+    .cm-ob-badge.pending   { background: rgba(179,134,0,0.07);  color: #b38600; }
+
+    /* Right toolbar: 52px icon bar, B&W only */
+    .cm-toolbar {
+      width: 36px; background: #fff;
+      border-left: 1px solid rgba(28,28,28,0.08);
+      flex-shrink: 0;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 10px 0; gap: 6px;
+    }
+    .cm-tool-btn {
+      width: 26px; height: 26px; border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(28,28,28,0.32);
+    }
+    .cm-tool-btn.active { background: rgba(28,28,28,0.06); color: #1c1c1c; }
+    .cm-tool-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 
     /* ── PRIVACY ── */
     #privacy {
@@ -1183,9 +1205,9 @@
 
       <!-- macOS chrome -->
       <div class="cm-chrome">
-        <div class="cm-dot" style="background:#FF5F5A"></div>
-        <div class="cm-dot" style="background:#FFBD2E"></div>
-        <div class="cm-dot" style="background:#00CA4E"></div>
+        <div class="cm-dot" style="background:#ff5f57"></div>
+        <div class="cm-dot" style="background:#febc2e"></div>
+        <div class="cm-dot" style="background:#28c840"></div>
       </div>
 
       <!-- App shell -->
@@ -1194,123 +1216,138 @@
         <!-- TopBar -->
         <div class="cm-topbar">
           <div class="cm-logo-block">
-            <div class="cm-logo-text">The Bull</div>
-          </div>
-          <div class="cm-tabs">
-            <div class="cm-tab">Node Cluster</div>
-            <div class="cm-tab active">Dashboard</div>
-            <div class="cm-tab gold">+ New Contract</div>
+            <span class="cm-logo-text">The Bull</span>
           </div>
           <div class="cm-avatar">OF</div>
         </div>
 
-        <!-- Main area: sidebar + dashboard -->
+        <!-- Main area: sidebar + dashboard + right toolbar -->
         <div class="cm-main">
 
           <!-- Left sidebar -->
           <div class="cm-sidebar">
-            <div class="cm-sb-sec">NAVIGATION</div>
-            <div class="cm-sb-item">◻ Overview</div>
-            <div class="cm-sb-item active">◻ Contracts</div>
-            <div class="cm-sb-item">◻ Bull AI</div>
-            <div class="cm-sb-sec">CONTRACTS</div>
-            <div class="cm-sb-contract"><div class="cm-sb-dot" style="background:#2563eb"></div>Hartmann Lease</div>
-            <div class="cm-sb-contract"><div class="cm-sb-dot" style="background:#b38600"></div>BioTech Vendor</div>
-            <div class="cm-sb-contract"><div class="cm-sb-dot" style="background:#16a34a"></div>Torres NDA</div>
-            <div class="cm-sb-contract"><div class="cm-sb-dot" style="background:#dc2626"></div>Realty Corp Lease</div>
+            <div class="cm-sb-sec">Workspace</div>
+            <div class="cm-sb-item">⬜ Home</div>
+            <div class="cm-sb-item active">⬜ Contracts</div>
+            <div class="cm-sb-item">⬜ Elle AI</div>
+            <div class="cm-sb-sec">Contracts</div>
+            <div class="cm-sb-contract"><div class="cm-sb-dot" style="background:#2563eb"></div><span class="cm-sb-contract-lbl">Rivera Purchase Agmt</span></div>
+            <div class="cm-sb-contract"><div class="cm-sb-dot" style="background:#b38600"></div><span class="cm-sb-contract-lbl">BioTech Vendor Deal</span></div>
+            <div class="cm-sb-contract"><div class="cm-sb-dot" style="background:#16a34a"></div><span class="cm-sb-contract-lbl">Torres NDA</span></div>
+            <div class="cm-sb-contract"><div class="cm-sb-dot" style="background:#dc2626"></div><span class="cm-sb-contract-lbl">Hartmann Lease</span></div>
           </div>
 
-          <!-- Dashboard scroll -->
+          <!-- Dashboard -->
           <div class="cm-dash">
 
-            <!-- Header -->
-            <div class="cm-dash-hdr">
-              <span class="cm-dash-back">← Dashboard</span>
-              <span class="cm-dash-title">Hartmann Commercial Lease</span>
-              <span class="cm-dash-badge blue">● active</span>
-              <span class="cm-dash-badge muted">commercial lease</span>
+            <!-- Contract header -->
+            <div class="cm-dash-contract-hdr">
+              <span class="cm-dash-back">← Contracts</span>
+              <span class="cm-dash-title">Rivera Purchase Agreement</span>
+              <span class="cm-dash-badge blue">● Active</span>
+              <span class="cm-dash-badge muted">Purchase and Sale</span>
             </div>
 
-            <!-- ORIENTATION -->
-            <div class="cm-sec"><span class="cm-sec-lbl">ORIENTATION</span><div class="cm-sec-hr"></div></div>
-            <div class="cm-grid cm-g3">
-              <div class="cm-card">
-                <div class="cm-ct">CONTRACT SUMMARY</div>
-                <div class="cm-cbody">12-month commercial office lease between Hartmann Real Estate LLC (Landlord) and BioTech Innovations LLC (Tenant). Monthly rent of $9,200. Tenant responsible for all utilities and maintenance beyond standard wear.</div>
-              </div>
-              <div class="cm-card">
-                <div class="cm-ct">PARTIES</div>
-                <div class="cm-bignum">2</div>
-                <div class="cm-small">to this agreement</div>
-                <div class="cm-pr">LANDLORD</div><div class="cm-pn">Hartmann Real Estate</div>
-                <div class="cm-pr">TENANT</div><div class="cm-pn">BioTech Innovations</div>
-              </div>
-              <div class="cm-card">
-                <div class="cm-ct">KEY DATES</div>
-                <div class="cm-kdr"><span class="cm-kdl">START</span><span class="cm-kdrv">Jan 1, 2026</span></div>
-                <div class="cm-kdr"><span class="cm-kdl">END</span><span class="cm-kdrv">Dec 31, 2026</span></div>
-                <div class="cm-kdr"><span class="cm-kdl">DURATION</span><span class="cm-kdrv">12 months</span></div>
-              </div>
+            <!-- Tabs: Overview / Obligations / Reports -->
+            <div class="cm-contract-tabs">
+              <div class="cm-ctab active">Overview</div>
+              <div class="cm-ctab">Obligations</div>
+              <div class="cm-ctab">Reports</div>
             </div>
 
-            <!-- FINANCIAL -->
-            <div class="cm-sec"><span class="cm-sec-lbl">FINANCIAL</span><div class="cm-sec-hr"></div></div>
-            <div class="cm-grid cm-gfin">
-              <div class="cm-card">
-                <div class="cm-ct">TOTAL VALUE</div>
-                <div class="cm-bignum">$110k</div>
-                <div class="cm-small">total contract value</div>
-              </div>
-              <div class="cm-card">
-                <div class="cm-ct">PAYMENT SCHEDULE</div>
-                <div class="cm-prow"><div class="cm-pdot" style="background:#16a34a"></div><div class="cm-plbl">Security Deposit</div><div class="cm-pamt">$18,400</div><div class="cm-pdate">confirmed</div></div>
-                <div class="cm-prow"><div class="cm-pdot" style="background:#dc2626"></div><div class="cm-plbl">Monthly Rent — Feb</div><div class="cm-pamt">$9,200</div><div class="cm-pdate">overdue</div></div>
-                <div class="cm-prow"><div class="cm-pdot" style="background:#b38600"></div><div class="cm-plbl">Monthly Rent — Mar</div><div class="cm-pamt">$9,200</div><div class="cm-pdate">Mar 1</div></div>
-                <div class="cm-prow"><div class="cm-pdot" style="background:#b38600"></div><div class="cm-plbl">CAM Charges Q1</div><div class="cm-pamt">$4,800</div><div class="cm-pdate">Mar 31</div></div>
-              </div>
-              <div class="cm-card" style="display:flex;flex-direction:column;align-items:center;gap:6px;">
-                <div class="cm-ct" style="align-self:flex-start;">OUTSTANDING</div>
-                <svg width="52" height="52" viewBox="0 0 60 60">
-                  <circle cx="30" cy="30" r="22" fill="none" stroke="rgba(28,28,28,0.08)" stroke-width="5"/>
-                  <circle cx="30" cy="30" r="22" fill="none" stroke="#16a34a" stroke-width="5" stroke-dasharray="41.5 138.2" stroke-dashoffset="0" transform="rotate(-90 30 30)"/>
-                  <circle cx="30" cy="30" r="22" fill="none" stroke="#b38600" stroke-width="5" stroke-dasharray="55.3 138.2" stroke-dashoffset="-41.5" transform="rotate(-90 30 30)"/>
-                  <circle cx="30" cy="30" r="22" fill="none" stroke="#dc2626" stroke-width="5" stroke-dasharray="41.4 138.2" stroke-dashoffset="-96.8" transform="rotate(-90 30 30)"/>
-                </svg>
-                <div style="width:100%;">
-                  <div class="cm-legrow"><div class="cm-pdot" style="background:#16a34a"></div><span class="cm-leglbl">CONFIRMED</span><span class="cm-legval">$18k</span></div>
-                  <div class="cm-legrow"><div class="cm-pdot" style="background:#b38600"></div><span class="cm-leglbl">PENDING</span><span class="cm-legval">$55k</span></div>
-                  <div class="cm-legrow"><div class="cm-pdot" style="background:#dc2626"></div><span class="cm-leglbl">OVERDUE</span><span class="cm-legval">$9k</span></div>
+            <!-- Overview tab content -->
+            <div class="cm-content">
+
+              <!-- 3-col: Overview | Parties | Contract Health -->
+              <div class="cm-grid cm-g3">
+                <div class="cm-card">
+                  <div class="cm-ct">Overview</div>
+                  <div class="cm-kdr"><span class="cm-kdl">Type</span><span class="cm-kdrv">Purchase and Sale</span></div>
+                  <div class="cm-kdr"><span class="cm-kdl">Jurisdiction</span><span class="cm-kdrv">New York</span></div>
+                  <div class="cm-kdr"><span class="cm-kdl">Date</span><span class="cm-kdrv">Mar 15, 2026</span></div>
+                  <div class="cm-kdr"><span class="cm-kdl">Value</span><span class="cm-kdrv">$1,240,000</span></div>
                 </div>
-              </div>
-            </div>
-
-            <!-- OBLIGATIONS -->
-            <div class="cm-sec"><span class="cm-sec-lbl">OBLIGATIONS</span><div class="cm-sec-hr"></div></div>
-            <div class="cm-grid cm-g2">
-              <div class="cm-card">
-                <div class="cm-ct">CONTRACT HEALTH</div>
-                <div style="display:flex;align-items:center;gap:13px;">
-                  <svg width="50" height="50" viewBox="0 0 60 60">
-                    <circle cx="30" cy="30" r="22" fill="none" stroke="rgba(28,28,28,0.08)" stroke-width="4"/>
-                    <circle cx="30" cy="30" r="22" fill="none" stroke="#16a34a" stroke-width="4" stroke-dasharray="69.1 138.2" stroke-linecap="round" transform="rotate(-90 30 30)"/>
-                    <text x="30" y="35" text-anchor="middle" font-size="11" font-weight="700" font-family="'Inter', sans-serif" fill="#1c1c1c">50%</text>
+                <div class="cm-card">
+                  <div class="cm-ct">Parties</div>
+                  <div class="cm-pr">Seller</div>
+                  <div class="cm-pn">Rivera Holdings LLC</div>
+                  <div class="cm-pr">Buyer</div>
+                  <div class="cm-pn">Arredondo Capital</div>
+                </div>
+                <!-- Contract Health donut — chart colors, NOT status colors -->
+                <div class="cm-card" style="display:flex;flex-direction:column;align-items:center;">
+                  <div class="cm-ct" style="align-self:flex-start;width:100%;">Contract Health</div>
+                  <svg width="64" height="64" viewBox="0 0 60 60" style="margin:2px 0 4px;">
+                    <circle cx="30" cy="30" r="22" fill="none" stroke="rgba(28,28,28,0.07)" stroke-width="5"/>
+                    <!-- Confirmed 60% → slot 1: #29a8c8 (sky teal) — 138.2×0.60=82.9 -->
+                    <circle cx="30" cy="30" r="22" fill="none" stroke="#29a8c8" stroke-width="5" stroke-dasharray="82.9 138.2" stroke-dashoffset="0" transform="rotate(-90 30 30)"/>
+                    <!-- Overdue 10% → slot 2: #e5602a (burnt orange) — 138.2×0.10=13.8 -->
+                    <circle cx="30" cy="30" r="22" fill="none" stroke="#e5602a" stroke-width="5" stroke-dasharray="13.8 138.2" stroke-dashoffset="-82.9" transform="rotate(-90 30 30)"/>
+                    <!-- Pending 30% → slot 3: #1c3e52 (dark navy) — 138.2×0.30=41.5 -->
+                    <circle cx="30" cy="30" r="22" fill="none" stroke="#1c3e52" stroke-width="5" stroke-dasharray="41.5 138.2" stroke-dashoffset="-96.7" transform="rotate(-90 30 30)"/>
                   </svg>
-                  <div style="display:flex;gap:10px;">
-                    <div><div style="font-size:16px;font-weight:700;color:#b38600;line-height:1;">3</div><div class="cm-kdl">PENDING</div></div>
-                    <div><div style="font-size:16px;font-weight:700;color:#16a34a;line-height:1;">3</div><div class="cm-kdl">CONFIRMED</div></div>
-                    <div><div style="font-size:16px;font-weight:700;color:#dc2626;line-height:1;">1</div><div class="cm-kdl">OVERDUE</div></div>
+                  <div style="width:100%">
+                    <div class="cm-legrow"><div class="cm-pdot" style="background:#29a8c8"></div><span class="cm-leglbl">Confirmed</span><span class="cm-legval">6</span></div>
+                    <div class="cm-legrow"><div class="cm-pdot" style="background:#e5602a"></div><span class="cm-leglbl">Overdue</span><span class="cm-legval">1</span></div>
+                    <div class="cm-legrow"><div class="cm-pdot" style="background:#1c3e52"></div><span class="cm-leglbl">Pending</span><span class="cm-legval">3</span></div>
                   </div>
                 </div>
               </div>
-              <div class="cm-card">
-                <div class="cm-ct">UPCOMING DEADLINES</div>
-                <div class="cm-dlrow"><div class="cm-ddays cm-dred">2d</div><div><div class="cm-dtitle">Monthly Rent — Feb</div><div class="cm-dparty">BioTech Innovations</div></div></div>
-                <div class="cm-dlrow"><div class="cm-ddays cm-dgold">5d</div><div><div class="cm-dtitle">CAM Reconciliation</div><div class="cm-dparty">Hartmann Real Estate</div></div></div>
-                <div class="cm-dlrow"><div class="cm-ddays cm-dblue">12d</div><div><div class="cm-dtitle">Renewal Option Notice</div><div class="cm-dparty">BioTech Innovations</div></div></div>
-              </div>
-            </div>
 
+              <!-- Financial obligations -->
+              <div class="cm-sec"><span class="cm-sec-lbl">Financial Obligations</span><div class="cm-sec-hr"></div></div>
+              <div class="cm-card">
+                <div class="cm-ob-row">
+                  <div class="cm-ob-dot" style="background:#16a34a"></div>
+                  <div class="cm-ob-content">
+                    <div class="cm-ob-title">Earnest Money Deposit</div>
+                    <div class="cm-ob-meta">Arredondo Capital · upon execution</div>
+                  </div>
+                  <div class="cm-ob-right">
+                    <div class="cm-ob-amt">$24,800</div>
+                    <div class="cm-ob-badge confirmed">confirmed</div>
+                  </div>
+                </div>
+                <div class="cm-ob-row">
+                  <div class="cm-ob-dot" style="background:#dc2626"></div>
+                  <div class="cm-ob-content">
+                    <div class="cm-ob-title">Due Diligence Fee</div>
+                    <div class="cm-ob-meta">Arredondo Capital · Mar 22, 2026</div>
+                  </div>
+                  <div class="cm-ob-right">
+                    <div class="cm-ob-amt">$5,000</div>
+                    <div class="cm-ob-badge overdue">overdue</div>
+                  </div>
+                </div>
+                <div class="cm-ob-row">
+                  <div class="cm-ob-dot" style="background:#b38600"></div>
+                  <div class="cm-ob-content">
+                    <div class="cm-ob-title">Closing Payment</div>
+                    <div class="cm-ob-meta">Arredondo Capital · Apr 15, 2026</div>
+                  </div>
+                  <div class="cm-ob-right">
+                    <div class="cm-ob-amt">$1,210,200</div>
+                    <div class="cm-ob-badge pending">pending</div>
+                  </div>
+                </div>
+              </div>
+
+            </div><!-- /cm-content -->
           </div><!-- /cm-dash -->
+
+          <!-- Right toolbar: 52px icon bar, B&W only -->
+          <div class="cm-toolbar">
+            <div class="cm-tool-btn active">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div class="cm-tool-btn">
+              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div class="cm-tool-btn">
+              <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+          </div>
+
         </div><!-- /cm-main -->
       </div><!-- /cm-body -->
     </div><!-- /cm-frame -->
